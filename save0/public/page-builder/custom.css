@@ -1,0 +1,147 @@
+/* CUSTOM CSS */
+
+.gjs-devices-c{
+    padding: 0;
+}
+
+.btn{
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.btn-new-page{
+    color: #fff;
+    background-color: transparent;
+    background-image: none;
+    border-color: #fff;
+    width: 80%;
+}
+
+p{
+    text-align: center;
+}
+
+.w-100{
+    width: 100%;
+}
+.w-50{
+    width: 50%;
+}
+
+.myButton-save {
+    box-shadow: 0px 0px 0px 2px #9fb4f2;
+    background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+    background-color: #7892c2;
+    border-radius: 10px;
+    border: 1px solid #4e6096;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 12px;
+    padding: 12px 37px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #283966;
+}
+
+.myButton-save:hover {
+    background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+    background-color: #476e9e;
+}
+
+.myButton-save:active {
+    position: relative;
+    top: 1px;
+}
+
+
+.myButton-close {
+    box-shadow: 0px 0px 0px 2px #9fb4f2;
+    background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+    background-color: #7892c2;
+    border-radius: 10px;
+    border: 1px solid #4e6096;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 12px;
+    padding: 12px 37px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #283966;
+}
+
+.myButton-close:hover {
+    background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+    background-color: #476e9e;
+}
+
+.myButton-close:active {
+    position: relative;
+    top: 1px;
+}
+
+
+.css-input {
+    padding: 8px;
+    font-size: 14px;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(66, 66, 66, .75);
+}
+
+.css-input:focus {
+    outline: none;
+}
+
+.gjs-dashed tbody[data-highlightable] {
+    outline: none !important;
+}
+
+#wrapper tbody[data-gjs-type="tbody"]{
+    outline: none !important;
+}
+
+.t-img{
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.tsp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.tsc{
+    margin: auto;
+}
+
+.gjs-block-label{
+    height: 100% !important;
+    width: 100% !important;
+}

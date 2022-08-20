@@ -1,0 +1,24 @@
+/*Left menu*/
+.bal-left-menu-container {
+    .bal-nav {
+        background-color: $navmenuBgColor;
+        color: $navmenuColor;
+
+        .bal-left-menu {
+            li.bal-menu-item {
+                &.bal-menu-line {
+                    border-top: 1px solid darken( $navmenuColor,20%);
+                }
+
+                &:hover {
+                    color: lighten( $navmenuColor,20%);
+                }
+
+                &.active {
+                    background-color: $navmenuActiveBgColor;
+                    color: $navmenuActiveColor;
+                }
+            }
+        }
+    }
+}

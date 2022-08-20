@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="523" height="589" viewBox="0 0 523 589">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3a3a3a;
+      }
+
+      .cls-2 {
+        fill: #222;
+      }
+    </style>
+  </defs>
+  <rect id="Rounded_Rectangle_1" data-name="Rounded Rectangle 1" class="cls-1" x="233" width="55" height="26" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_2" data-name="Rounded Rectangle 2" class="cls-1" x="131" y="50" width="265" height="28" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_3" data-name="Rounded Rectangle 3" class="cls-1" x="39" y="110" width="449" height="51" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_4" data-name="Rounded Rectangle 4" class="cls-1" y="190" width="253" height="233" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_4_copy" data-name="Rounded Rectangle 4 copy" class="cls-1" x="270" y="190" width="253" height="233" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_5" data-name="Rounded Rectangle 5" class="cls-1" x="10" y="439" width="165" height="29" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_5_copy" data-name="Rounded Rectangle 5 copy" class="cls-1" x="270" y="439" width="165" height="29" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_6" data-name="Rounded Rectangle 6" class="cls-1" x="9" y="492" width="221" height="49" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_6_copy" data-name="Rounded Rectangle 6 copy" class="cls-1" x="270" y="492" width="221" height="49" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_7" data-name="Rounded Rectangle 7" class="cls-2" x="12" y="554" width="100" height="35" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_7_copy" data-name="Rounded Rectangle 7 copy" class="cls-2" x="270" y="554" width="100" height="35" rx="10" ry="10"/>
+</svg>

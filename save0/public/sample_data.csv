@@ -1,0 +1,5 @@
+id,owner_id,name,email,country_code,phone,favourites,blocked,trashed,is_subscribed,deleted_at,created_at,updated_at
+1,1,Mohammad Prince,mprince2k16@gmdasdasdaail.com,880,1825731327,0,0,0,0,NULL,03-03-21 10:09,03-03-21 11:15
+2,1,mprince2k16,mprince2k16@gmail.com,0,1825731327,0,0,0,1,NULL,03-03-21 12:03,03-03-21 12:16
+3,6,Mohammad Prince,mprince2k16@gmail.com,93,NULL,0,0,0,0,NULL,08-03-21 18:55,08-03-21 18:55
+4,4,Mohammad Prince,mprince2k16@gmail.com,93,NULL,0,0,0,0,NULL,09-03-21 13:13,09-03-21 13:13

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Bal - Email Editor</title>
+    <meta name="description" lang="en" content="Bal – Email Newsletter Builder - This is a drag & drop email builder plugin based on Jquery and PHP for developer. You can simply integrate this script in your web project and create custom email template with drag & drop">
+    <meta name="keywords" lang="en" content="bounce, bulk mailer, campaign, campaign email, campaign monitor, drag & drop email builder, drag & drop email editor, mailchimp, mailer, newsletter, newsletter email, responsive, retina ready, subscriptions, templates">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="assets/css/email-editor.bundle.min.css" rel="stylesheet" />
+    <link href="assets/css/colorpicker.css" rel="stylesheet" />
+    <link href="assets/css/editor-color.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <div class="bal-editor-demo">
+
+    </div>
+    <div id="previewModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Preview</h4>
+            </div>
+            <div class="modal-body">
+            <div class="">
+              <label for="">URL : </label> <span class="preview_url"></span>
+            </div>
+              <iframe id="previewModalFrame" width="100%" height="400px"></iframe>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+    </div>
+    <!-- for demo version -->
+    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+
+    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="assets/vendor/jquery-nicescroll/dist/jquery.nicescroll.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+    <!--for ace editor  -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/ace.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/theme-monokai.js" type="text/javascript"></script>
+
+    <!--for tinymce  -->
+    <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+
+    <script src="assets/js/colorpicker.js"></script>
+    <script src="assets/js/bal-email-editor-plugin.js?v=22"></script>
+    <script>
+        
+        var _templateListItems;
+
+    var  _emailBuilder=  $('.bal-editor-demo').emailBuilder({
+            lang: 'en',
+            elementJsonUrl: 'elements-1.json?e',
+            langJsonUrl: 'lang-1.json?ree',
+            loading_color1: 'red',
+            loading_color2: 'green',
+            showLoading: true,
+
+            blankPageHtmlUrl: 'template-blank-page.html',
+            loadPageHtmlUrl: 'template-load-page.html',
+
+            //left menu
+            showElementsTab: true,
+            showPropertyTab: true,
+            showCollapseMenu: true,
+            showBlankPageButton: true,
+            showCollapseMenuinBottom: true,
+
+            //setting items
+            showSettingsBar: true,
+            showSettingsPreview: true,
+            showSettingsExport: true,
+            showSettingsSendMail: true,
+            showSettingsSave: true,
+            showSettingsLoadTemplate: true,
+
+            //show context menu
+            showContextMenu: true,
+            showContextMenu_FontFamily: true,
+            showContextMenu_FontSize: true,
+            showContextMenu_Bold: true,
+            showContextMenu_Italic: true,
+            showContextMenu_Underline: true,
+            showContextMenu_Strikethrough: true,
+            showContextMenu_Hyperlink: true,
+
+            //show or hide elements actions
+            showRowMoveButton: true,
+            showRowRemoveButton: true,
+            showRowDuplicateButton: true,
+            showRowCodeEditorButton: true,
+            onElementDragStart: function(e) {
+                console.log('onElementDragStart html');
+            },
+            onElementDragFinished: function(e,contentHtml) {
+                console.log('onElementDragFinished html');
+                //console.log(contentHtml);
+
+            },
+
+            onBeforeRowRemoveButtonClick: function(e) {
+                console.log('onBeforeRemoveButtonClick html');
+
+                /*
+                  if you want do not work code in plugin ,
+                  you must use e.preventDefault();
+                */
+                //e.preventDefault();
+            },
+            onAfterRowRemoveButtonClick: function(e) {
+                console.log('onAfterRemoveButtonClick html');
+            },
+            onBeforeRowDuplicateButtonClick: function(e) {
+                console.log('onBeforeRowDuplicateButtonClick html');
+                //e.preventDefault();
+            },
+            onAfterRowDuplicateButtonClick: function(e) {
+                console.log('onAfterRowDuplicateButtonClick html');
+            },
+            onBeforeRowEditorButtonClick: function(e) {
+                console.log('onBeforeRowEditorButtonClick html');
+                //e.preventDefault();
+            },
+            onAfterRowEditorButtonClick: function(e) {
+                console.log('onAfterRowDuplicateButtonClick html');
+            },
+            onBeforeShowingEditorPopup: function(e) {
+                console.log('onBeforeShowingEditorPopup html');
+                //e.preventDefault();
+            },
+            onBeforeSettingsSaveButtonClick: function(e) {
+                console.log('onBeforeSaveButtonClick html');
+
+            },
+            onPopupUploadImageButtonClick: function() {
+                console.log('onPopupUploadImageButtonClick html');
+
+            },
+            onSettingsPreviewButtonClick: function(e, getHtml) {
+                console.log('onPreviewButtonClick html');
+
+            },
+
+            onSettingsExportButtonClick: function(e, getHtml) {
+                console.log('onSettingsExportButtonClick html');
+
+                //e.preventDefault();
+            },
+            onBeforeSettingsLoadTemplateButtonClick: function(e) {
+
+                $('.template-list').html('<div style="text-align:center">Loading...</div>');
+
+
+            },
+            onSettingsSendMailButtonClick: function(e) {
+                console.log('onSettingsSendMailButtonClick html');
+                //e.preventDefault();
+            },
+            onPopupSendMailButtonClick: function(e, _html) {
+                console.log('onPopupSendMailButtonClick html');
+
+
+            },
+            onBeforeChangeImageClick: function(e) {
+                console.log('onBeforeChangeImageClick html');
+            },
+            onBeforePopupSelectTemplateButtonClick: function(e) {
+                console.log('onBeforePopupSelectTemplateButtonClick html');
+
+            },
+            onBeforePopupSelectImageButtonClick: function(e) {
+                console.log('onBeforePopupSelectImageButtonClick html');
+
+            },
+            onPopupSaveButtonClick: function() {
+                console.log('onPopupSaveButtonClick html');
+
+            }
+        });
+
+    _emailBuilder.setAfterLoad(function(e) {
+              console.log('onAfterLoad html');
+
+          });
+
+
+
+
+    </script>
+</body>
+
+</html>

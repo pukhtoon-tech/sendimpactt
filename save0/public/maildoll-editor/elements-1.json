@@ -1,0 +1,131 @@
+{
+    "elements": [{
+        "name": "Typography",
+        "items": [{
+                "name": "Page header",
+                "icon": "fa fa-header",
+                "content": "maildoll-editor/elements/page-header.html"
+            }, {
+                "name": "Heading",
+                "icon": "fa fa-header",
+                "content": "maildoll-editor/elements/heading.html"
+            }, {
+                "name": "paragraph",
+                "icon": "fa fa-paragraph",
+                "content": "maildoll-editor/elements/paragraph.html"
+            }, {
+                "name": "Image left text",
+                "icon": "fa fa-align-left ",
+                "content": "maildoll-editor/elements/image-left-text.html"
+            }, {
+                "name": "2 column text",
+                "icon": "fa fa-columns",
+                "content": "maildoll-editor/elements/2-column-text.html"
+            }, {
+                "name": "Image right text",
+                "icon": "fa fa-align-right",
+                "content": "maildoll-editor/elements/image-right-text.html"
+            },
+            {
+                "name": "unordered list",
+                "icon": "fa fa-list-ul",
+                "content": "maildoll-editor/elements/unordered-list.html"
+            }, {
+                "name": "ordered list",
+                "icon": "fa fa-list-ol",
+                "content": "maildoll-editor/elements/ordered-list.html"
+            }, {
+                "name": "jumbotron",
+                "icon": "fa fa-header",
+                "content": "maildoll-editor/elements/jumbotron.html"
+            }, {
+                "name": "features",
+                "icon": "fa fa-certificate",
+                "content": "maildoll-editor/elements/features.html"
+            }, {
+                "name": "Service List",
+                "icon": "fa fa-life-ring",
+                "content": "maildoll-editor/elements/service-list.html"
+            }, {
+                "name": "Price table",
+                "icon": "fa fa-usd",
+                "content": "maildoll-editor/elements/price-table.html"
+            }
+        ]
+    }, {
+        "name": "Media",
+        "items": [{
+            "name": "Image",
+            "icon": "fa fa-picture-o",
+            "content": "maildoll-editor/elements/image-full.html"
+        }, {
+            "name": "2 Image",
+            "icon": "fa fa-columns",
+            "content": "maildoll-editor/elements/image-2-column.html"
+        }, {
+            "name": "Video",
+            "icon": "fa fa-video-camera",
+            "content": "maildoll-editor/elements/video.html"
+        }]
+    }, {
+        "name": "Layout",
+        "items": [{
+            "name": "Divider",
+            "icon": "fa fa-minus",
+            "content": "maildoll-editor/elements/divider.html"
+        }, {
+            "name": "Divider (dotted)",
+            "icon": "fa fa-minus",
+            "content": "maildoll-editor/elements/divider-dotted.html"
+        }, {
+            "name": "Divider (dashed)",
+            "icon": "fa fa-minus",
+            "content": "maildoll-editor/elements/divider-dashed.html"
+        }, {
+            "name": "View in browser",
+            "icon": "fa fa-globe",
+            "content": "maildoll-editor/elements/view-browser.html"
+        }]
+    }, {
+        "name": "Button",
+        "items": [{
+            "name": "Button",
+            "icon": "fa fa-square-o",
+            "content": "maildoll-editor/elements/button-1.html"
+        }, {
+            "name": "2 Button ",
+            "icon": "fa fa-square-o",
+            "content": "maildoll-editor/elements/button-2.html"
+        }, {
+            "name": "3 Button ",
+            "icon": "fa fa-square-o",
+            "content": "maildoll-editor/elements/button-3.html"
+        }]
+    }, {
+        "name": "Social",
+        "items": [{
+            "name": "Social links 1",
+            "icon": "fa fa-share-square-o",
+            "content": "maildoll-editor/elements/social-1.html"
+        }, {
+            "name": "Social links 2",
+            "icon": "fa fa-share",
+            "content": "maildoll-editor/elements/social-2.html"
+        }, {
+            "name": "Social links 3",
+            "icon": "fa fa-share-square",
+            "content": "maildoll-editor/elements/social-3.html"
+        }]
+    }, {
+        "name": "Footer",
+        "items": [{
+            "name": "Adress",
+            "icon": "fa fa-minus",
+            "content": "maildoll-editor/elements/address.html"
+        }, {
+            "name": "Adress with Logo",
+            "icon": "fa fa-minus",
+            "content": "maildoll-editor/elements/address-logo.html"
+        }]
+    }]
+}

@@ -1,0 +1,154 @@
+.bal-content-wrapper {
+    background-color: #E9EAEA;
+
+    &.active {
+        border: 1px dashed #000;
+    }
+}
+
+.editor-elements-placeholder {
+    background-color: lighten(#E9EAEA,2%);
+    border: 2px dashed darken(#E9EAEA,10%);
+}
+
+.sortable-row-actions {
+    .row-action {
+        color: #FFFFFF;
+    }
+
+    .row-remove {
+        background-color: $elementsRowRemoveBgColor;
+
+        &:hover {
+            background-color: lighten( $elementsRowRemoveBgColor,7%);
+        }
+    }
+
+    .row-move {
+        background-color: $elementsRowMoveBgColor;
+
+        &:hover {
+            background-color: lighten( $elementsRowMoveBgColor,7%);
+        }
+    }
+
+    .row-code {
+        background-color: $elementsRowCodeBgColor;
+
+        &:hover {
+            background-color: lighten( $elementsRowCodeBgColor,7%);
+        }
+    }
+
+    .row-duplicate {
+        background-color: $elementsRowDuplicateBgColor;
+
+        &:hover {
+            background-color: lighten( $elementsRowDuplicateBgColor,7%);
+        }
+    }
+}
+
+.bal-left-menu-container {
+    .bal-elements {
+        background-color: $elementsBgColor;
+        color: $elementsColor;
+
+        .bal-elements-container {
+            .bal-element-boxs {
+                .form-control {
+                    background-color: $elementsInputBgColor;
+                    border: 1px solid $elementsInputBorderColor;
+                    color: $elementsInputTextColor;
+                }
+            }
+
+            .bal-social-content-box {
+                input[type="text"] {
+                    background-color: $elementsInputBgColor;
+                    color: $elementsInputTextColor;
+                    border: 1px solid $elementsInputBorderColor;
+                }
+            }
+
+            .bal-elements-accordion {
+                .bal-elements-accordion-item {
+                    .bal-elements-accordion-item-title {
+                        background-color: $accordionBgColor;
+                        color: $accordionColor;
+
+                        &:hover {
+                            background-color: $accordionActiveBgColor;
+                        }
+
+                        &.active {
+                            background-color: $accordionActiveBgColor;
+                        }
+
+                        &:after {
+                            border-right: 1px solid $accordionArrowColor;
+                            border-bottom: 1px solid $accordionArrowColor;
+                        }
+                    }
+                }
+            }
+
+            .bal-elements-list {
+                .bal-elements-list-item {
+                    background-color: $accordionElementsListItemBgColor;
+                    color: $accordionElementsListItemColor;
+                }
+            }
+
+            .bal-text-style-box {
+                .bal-icon-boxs {
+                    .bal-icon-box-item {
+                        background: $elementsIconBoxBgColor;
+
+                        &.active {
+                            background: $elementsIconBoxActiveBgColor;
+                        }
+                    }
+                }
+            }
+
+            .bg-item {
+                background-color: $elementsIconBoxBgColor;
+            }
+        }
+
+        .bal-settings {
+            background-color: $settingBgColor;
+            color: $settingColor;
+
+            ul {
+                border-top: 1px solid $settingItemBorderColor;
+            }
+
+            .bal-setting-item {
+                border-right: 1px solid $settingItemBorderColor;
+
+                &.active {
+                    background-color: darken($settingBgColor,3%);
+                }
+            }
+
+            .bal-setting-content {
+                background-color: darken( $accordionElementsListItemBgColor,5%);
+                color: $elementsColor;
+
+                ul {
+                    li {
+                        &.active {
+                            background-color: $accordionElementsListItemBgColor;
+                        }
+                    }
+                }
+
+                .bal-setting-device-content {
+                    background-color: $accordionElementsListItemBgColor;
+                }
+            }
+        }
+    }
+}

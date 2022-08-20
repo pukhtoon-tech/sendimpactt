@@ -1,0 +1,42 @@
+.rtl {
+    direction: rtl !important;
+}
+
+.rtl-no-padding{
+    top: 0px !important;
+}
+
+.rem46{
+    left: 46rem !important;
+}
+
+.rem50{
+    right: 50rem !important;
+}
+
+.rem54{
+    left: 54rem !important;
+}
+
+.rem55{
+    left: 55rem !important;
+}
+
+.rem68{
+    left: 68rem !important;
+}
+
+.rem70{
+    left: 70rem !important;
+}
+
+.rem76{
+    left: 76rem !important;
+}
+
+.side-menu__icon{
+    margin-right: 20px !important;
+}
+
+
+

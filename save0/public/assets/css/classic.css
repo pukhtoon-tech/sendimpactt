@@ -1,0 +1,112 @@
+.app{
+    background-color: #23282D;
+}
+
+.side-nav>ul>li>.side-menu.side-menu--active:before {
+    display: none;
+}
+
+.side-nav>ul>li>.side-menu.side-menu--active:after {
+    display: none;
+}
+
+.side-nav .side-menu {
+    border-radius: 0 !important;
+}
+
+.side-nav .side-menu:hover {
+    /* color: #6930c3; */
+    border-radius: 0;
+}
+
+.content {
+    border-radius: 5px;
+}
+
+.side-nav>ul>li>.side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
+    background-color:#191E23;
+    color: #00B9EB;
+    border-radius: 0;
+}
+
+.report-box:before {
+    display: none;
+}
+
+.side-nav>ul ul.side-menu__sub-open {
+    background-color: #fff;
+}
+
+.side-nav>ul ul li:nth-child(1)>a {
+    color: #377af5;
+}
+
+.side-nav>ul ul li a:not(.side-menu--active) {
+    color: #377af5;
+}
+
+.side-nav>ul>li>.side-menu.side-menu--active,
+.side-nav>ul>li>.side-menu.side-menu--active .side-menu__icon:before {
+    background-color: #0073AA;
+}
+
+.side-nav>ul>li>.side-menu.side-menu--active .side-menu__icon,
+.side-nav>ul>li>.side-menu.side-menu--active .side-menu__title {
+    color: #fff;
+}
+
+/* Asaduzzaman  */
+html body {
+    padding-left: 0;
+}
+*>.intro-x:nth-child(1) {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+.side-nav .side-nav__devider {
+    background-color: #434c54;
+}
+.side-nav {
+    width: 250px;
+    padding-right: 0;
+}
+.mldl-active-menu {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.mldl-active-menu:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 12px solid transparent;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid #F1F5F8;
+}
+
+.side-nav>ul ul.side-menu__sub-open {
+    background-color: #3c444c;
+    border-radius: 0;
+}
+
+.side-nav>ul ul li>a {
+    color: #ecf0f1 !important;
+    background: #2f363b;
+}
+
+.side-nav>ul ul li a:not(.side-menu--active) {
+    color: #c3c3c3 !important;
+    background: #3c444c;
+}
+.side-menu.side-menu--active.side-menu--open {
+margin-bottom: 0;
+}
+
+.side-nav>ul ul {
+background-color: transparent;
+}
