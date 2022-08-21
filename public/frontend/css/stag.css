@@ -1,0 +1,40 @@
+.nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none
+}
+
+
+.nav-pills .nav-link {
+    padding: 12px;
+    margin-right: 1rem;
+    border-bottom: 1px solid transparent;
+    max-width: 120px;
+    width: 120px;
+}
+.nav-pills .nav-link:focus {
+    border: 0;
+    box-shadow: none;
+    outline: none;
+}
+.nav-pills .nav-link:hover {
+    border-bottom: 3px solid #495057;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    font-weight: 700;
+    border-bottom: 3px solid darkorange;
+}
+
+.tab-content>.tab-pane {
+    display: none
+}
+
+.tab-content>.active {
+    display: block
+}

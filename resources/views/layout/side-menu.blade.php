@@ -33,6 +33,21 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('testing') }}"
+                    class="side-menu {{ request()->routeIs('testing') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('testing') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="home"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Settings New)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+
 
             <li>
                 <a href="{{ route('profile.index') }}"
