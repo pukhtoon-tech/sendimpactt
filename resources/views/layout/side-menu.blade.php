@@ -7,11 +7,11 @@
 @section('content')
 @include('../layout/components/mobile-menu')
 <div class="flex">
-    <!-- BEGIN: Side Menu -->
+    <!-- BEGIN: Side Menu     <h2 class="text-xl">{{ orgName() }}</h2> -->
     <nav class="side-nav">
         <a href="{{ route('dashboard') }}" class="intro-x flex mt-3 items-center text-gray-50"
             style="justify-content: center; font-size: 36px;">
-            <h2 class="text-xl">{{ orgName() }}</h2>
+            <h2 class="text-xl"> <span style="color: sandybrown;">Send</span>impactt </h2>
         </a>
         <div class="side-nav__devider my-6"></div>
 

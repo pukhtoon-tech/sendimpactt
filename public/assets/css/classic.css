@@ -1,5 +1,6 @@
 .app{
     background-color: #23282D;
+    overflow-y: hidden !important;
 }
 
 .side-nav>ul>li>.side-menu.side-menu--active:before {
@@ -16,11 +17,17 @@
 
 .side-nav .side-menu:hover {
     /* color: #6930c3; */
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 .content {
-    border-radius: 0;
+    border-radius: 0 !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    height: 100vh !important;
+}
+.content::-webkit-scrollbar {
+    display: none;
 }
 
 .side-nav>ul>li>.side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
