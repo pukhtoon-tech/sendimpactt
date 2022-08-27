@@ -1,5 +1,6 @@
 .app{
     background-color: #23282D;
+    overflow-y: hidden !important;
 }
 
 .side-nav>ul>li>.side-menu.side-menu--active:before {
@@ -16,11 +17,17 @@
 
 .side-nav .side-menu:hover {
     /* color: #6930c3; */
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 .content {
-    border-radius: 5px;
+    border-radius: 0 !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    height: 100vh !important;
+}
+.content::-webkit-scrollbar {
+    display: none;
 }
 
 .side-nav>ul>li>.side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
@@ -69,7 +76,14 @@ html body {
 .side-nav {
     width: 250px;
     padding-right: 0;
+    height: 100vh;
+    overflow-y: scroll;
 }
+.side-nav::-webkit-scrollbar {
+    display: none;
+}
+
+
 .mldl-active-menu {
     width: 100%;
     height: 100%;

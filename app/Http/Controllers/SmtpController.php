@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\SmtpServer;
 use App\Models\User;
 use App\Models\EmailService;
 use App\Models\Campaign;
 use App\Models\SenderEmailId;
-use Auth;
 use Mail;
 use Swift_SmtpTransport;
 use Swift_Mailer;
@@ -20,10 +20,23 @@ class SmtpController extends Controller
 
     public function index()
     {
+
+        $emptyId = EmailService::where('user_id', 0)->get();
+if(count($emptyId) > 0) {
+        foreach ($emptyId as $one) {
+            $ee = User::where('email', $one->from)->first();
+            if('object' === gettype($ee)) {
+            $e_server = EmailService::where('id', $one->id)->first();
+            $e_server->user_id = $ee->id;
+            $e_server->save();
+            }
+        }
+    }
+
         if(Auth::user()->user_type == 'Admin'){
             $email_providers = EmailService::all();
         }else{
-            $email_providers = EmailService::where('from', Auth::user()->email)->first();
+            $email_providers = EmailService::where('user_id', Auth::id())->first();
         }
         // $email_providers = EmailService::all();
         return view('smtp.index', compact('email_providers'));
@@ -69,6 +82,7 @@ class SmtpController extends Controller
             
             $e_server = new EmailService;
             $e_server->name = $request->input('provider_name') . ' ' .$provider_server;
+            $e_server->user_id = Auth::id();
             $e_server->provider_name = $request->input('provider_name');
             $e_server->driver = $request->input('driver');
             $e_server->host = $request->input('host');
@@ -154,9 +168,26 @@ class SmtpController extends Controller
                     notify()->success('New SMTP Server added');
                     return back();
             }else{
+                try{
+                    $transport = new Swift_SmtpTransport(
+                        $request->input('host'),
+                        $request->input('port'),
+                        $request->input('encryption')
+                    );
+                    $transport->setUsername($request->input('username'));
+                    $transport->setPassword($request->input('password'));
+                    $mailer = new \Swift_Mailer($transport);
+                    $mailer->getTransport()->start();
+                } catch (\Swift_TransportException $e) {
+                    \Artisan::call('optimize:clear');
+                    notify()->error(translate('Provided Information is invalid, Please revisit your information'));
+                    return back();
+                }
+
                         //save email server for customer as well
                         $e_server = EmailService::where('id', $mail)->first();
                         $e_server->provider_name = $request->input('provider_name');
+                        $e_server->user_id = Auth::id();
                         $e_server->driver = $request->input('driver');
                         $e_server->host = $request->input('host');
                         $e_server->port = $request->input('port');
@@ -215,7 +246,7 @@ class SmtpController extends Controller
       }
 
         $status = EmailService::where('provider_name', $mail)
-                                ->where('owner_id', Auth::user()->id)
+                                ->where('user_id', Auth::id())
                                 ->first();
         $active = false;
 
@@ -230,7 +261,7 @@ class SmtpController extends Controller
             $status->save();
 
             /*deactivate all theme*/
-            $providers = EmailService::where('owner_id', Auth::user()->id)->get();
+            $providers = EmailService::where('user_id', Auth::id())->get();
 
             foreach ($providers as $provider) {
                 if ($active) {
@@ -264,6 +295,26 @@ class SmtpController extends Controller
         return back();
       }
 
+
+
+
+         try{
+             $transport = new Swift_SmtpTransport(
+                 getUserActiveEmailDetailsCustomers($id)->host,
+                 getUserActiveEmailDetailsCustomers($id)->port,
+                 getUserActiveEmailDetailsCustomers($id)->encryption);
+             $transport->setUsername(getUserActiveEmailDetailsCustomers($id)->username);
+             $transport->setPassword(getUserActiveEmailDetailsCustomers($id)->password);
+             $mailer = new \Swift_Mailer($transport);
+             $mailer->getTransport()->start();
+         } catch (\Swift_TransportException $e) {
+             notify()->error(translate('Provided Information is invalid, Please revisit your information'));
+             return back();
+         } catch (\Exception $e) {
+             notify()->error(translate('Please revisit your information'));
+             return back();
+         }
+
          try {
 
             // backup mailing configuration
@@ -280,7 +331,7 @@ class SmtpController extends Controller
             $transport->setPassword(getUserActiveEmailDetailsCustomers($id)->password);
             
             $maildoll = new Swift_Mailer($transport);
-            
+
             // set mailtrap mailer
             Mail::setSwiftMailer($maildoll);
             
@@ -313,7 +364,7 @@ class SmtpController extends Controller
             return back();
                 
             }else{
-                 // set mailing configuration
+             /*    // set mailing configuration
             $transport = new Swift_SmtpTransport(
                                         getUserActiveEmailDetails($id)->host, 
                                         getUserActiveEmailDetails($id)->port, 
@@ -342,7 +393,7 @@ class SmtpController extends Controller
             //     $message->from(getUserActiveEmailDetails($id)->sender_email->sender_email_address)
             //             ->to(org('test_connection_email'), Str::ucfirst(getSmtpServerName($id)) . ' Test Connection')
             //             ->subject(Str::ucfirst(getSmtpServerName($id)) . ' Test Connection');
-            // });
+            // });sender_email_ids
             
             Mail::send('testing.mail', [], function($message) use ($id)
             {
@@ -354,6 +405,8 @@ class SmtpController extends Controller
             Mail::setSwiftMailer($backup);
 
             notify()->success(translate('Connection Secure'));
+            return back();*/
+            notify()->success(translate('Connection InSecure'));
             return back();
             }
            
@@ -380,7 +433,7 @@ class SmtpController extends Controller
             switch ($mail) {
             case 'gmail':
 
-                $getAdminEmail = EmailService::where('owner_id', $getAdmin->id)->where('provider_name', 'gmail')->first();
+                $getAdminEmail = EmailService::where('user_id', $getAdmin->id)->where('provider_name', 'gmail')->first();
                 
                 $gmail = SmtpServer::firstOrNew(['mail_name' =>  $mail]);
                 $gmail->mail_name     = $mail;
@@ -415,7 +468,7 @@ class SmtpController extends Controller
 
             case 'yahoo':
 
-                $getAdminEmail = EmailService::where('owner_id', $getAdmin->id)->where('provider_name', 'yahoo')->first();
+                $getAdminEmail = EmailService::where('user_id', $getAdmin->id)->where('provider_name', 'yahoo')->first();
                 
                 $yahoo = SmtpServer::firstOrNew(['mail_name' =>  $mail]);
                 $yahoo->mail_name     = $mail;
@@ -449,7 +502,7 @@ class SmtpController extends Controller
 
             case 'webmail':
 
-                $getAdminEmail = EmailService::where('owner_id', $getAdmin->id)->where('provider_name', 'webmail')->first();
+                $getAdminEmail = EmailService::where('user_id', $getAdmin->id)->where('provider_name', 'webmail')->first();
                 
                 $webmail = SmtpServer::firstOrNew(['mail_name' =>  $mail]);
                 $webmail->mail_name     = $mail;
@@ -482,7 +535,7 @@ class SmtpController extends Controller
 
             case 'mailgun':
 
-                $getAdminEmail = EmailService::where('owner_id', $getAdmin->id)->where('provider_name', 'mailgun')->first();
+                $getAdminEmail = EmailService::where('user_id', $getAdmin->id)->where('provider_name', 'mailgun')->first();
                 
                 $mailgun = SmtpServer::firstOrNew(['mail_name' =>  $mail]);
                 $mailgun->mail_name     = $mail;
@@ -515,7 +568,7 @@ class SmtpController extends Controller
 
             case 'zoho':
 
-                $getAdminEmail = EmailService::where('owner_id', $getAdmin->id)->where('provider_name', 'zoho')->first();
+                $getAdminEmail = EmailService::where('user_id', $getAdmin->id)->where('provider_name', 'zoho')->first();
                 
                 $zoho = SmtpServer::firstOrNew(['mail_name' =>  $mail]);
                 $zoho->mail_name     = $mail;
@@ -548,7 +601,7 @@ class SmtpController extends Controller
 
             case 'elastic':
 
-                $getAdminEmail = EmailService::where('owner_id', $getAdmin->id)->where('provider_name', 'elastic')->first();
+                $getAdminEmail = EmailService::where('user_id', $getAdmin->id)->where('provider_name', 'elastic')->first();
                 
                 $elastic = SmtpServer::firstOrNew(['mail_name' =>  $mail]);
                 $elastic->mail_name     = $mail;

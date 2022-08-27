@@ -102,7 +102,7 @@
         <img src="{{ notFound('template-not-found.png') }}" class="m-auto no-shadow" alt="#sms-not-found">
     @endforelse
     <!-- END: Blog Layout -->
-        {{ $templates->links('vendor.pagination.custom') }}
+        {{ $templates->links('vendor.pagination.default') }}
 </div>
 
 @endsection

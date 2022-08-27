@@ -7,11 +7,11 @@
 @section('content')
 @include('../layout/components/mobile-menu')
 <div class="flex">
-    <!-- BEGIN: Side Menu -->
+    <!-- BEGIN: Side Menu     <h2 class="text-xl">{{ orgName() }}</h2> -->
     <nav class="side-nav">
-        <a href="{{ route('dashboard') }}" class="intro-x flex items-center text-gray-50"
+        <a href="{{ route('dashboard') }}" class="intro-x flex mt-3 items-center text-gray-50"
             style="justify-content: center; font-size: 36px;">
-            <h2 class="text-xl">{{ orgName() }}</h2>
+            <h2 class="text-xl"> <span style="color: sandybrown;">Send</span>impactt </h2>
         </a>
         <div class="side-nav__devider my-6"></div>
 
@@ -33,8 +33,11 @@
                 </a>
             </li>
 
+            
 
-            <li>
+
+
+            <li style="display: none;">
                 <a href="{{ route('profile.index') }}"
                     class="side-menu {{ request()->routeIs('profile.index') ? 'side-menu--active' : '' }}">
                     <div class="{{ request()->routeIs('profile.index') ? 'mldl-active-menu' : 'flex items-center' }}">
@@ -211,7 +214,7 @@
 
             {{-- SMTP Management --}}
 
-            <li>
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('smtp.index*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -246,7 +249,7 @@
 
             {{-- SMS Management --}}
 
-            <li>
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('sms.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -320,7 +323,23 @@
 
             {{-- Template builder --}}
 
+            
             <li>
+                <a href="{{ route('template_builder') }}"
+                    class="side-menu {{ request()->routeIs('template_builder') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('template_builder') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="git-pull-request"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Template Builder New)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li style="display: none;">
 
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('templates.*') || request()->routeIs('template.builder.*') ? 'side-menu--active side-menu--open' : ''
@@ -369,7 +388,7 @@
 
             {{-- Sms builder --}}
 
-            <li>
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('builder.sms.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -419,6 +438,21 @@
             {{-- Contacts --}}
 
             <li>
+                <a href="{{ route('email_contacts.contacts') }}"
+                    class="side-menu {{ request()->routeIs('email_contacts.contacts') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('email_contacts.contacts') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="send"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Contacts New)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('email.contacts*') || request()->routeIs('email.contacts.list') || request()->routeIs('phone.contacts.list') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -494,6 +528,20 @@
             {{-- Groups --}}
 
             <li>
+                <a href="{{ route('group.group_two') }}"
+                    class="side-menu {{ request()->routeIs('group.group_two') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('group.group_two') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="users"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Groups New)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('group.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -537,24 +585,39 @@
                 </ul>
             </li>
 
-            {{-- Autoresponder --}}
+            
+
+            {{-- Campaign --}}
+
             <li>
-                <a href="{{ route('autoresponder.index') }}"
-                    class="side-menu {{ request()->routeIs('autoresponder.*') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('autoresponder.*') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('campaign.email-campaign') }}"
+                    class="side-menu {{ request()->routeIs('campaign.email-campaign') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('campaign.email-campaign') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
-                            <i data-feather="share-2"></i>
+                            <i data-feather="align-left"></i>
                         </div>
                         <div class="side-menu__title">
-                            @translate(Autoresponder)
+                            @translate(Email Campaign)
                         </div>
                     </div>
                 </a>
             </li>
 
-            {{-- Campaign --}}
-
             <li>
+                <a href="{{ route('campaign.sms-campaign') }}"
+                    class="side-menu {{ request()->routeIs('campaign.sms-campaign') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('campaign.sms-campaign') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="git-merge"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(SMS Campaign)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('campaign.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -651,6 +714,20 @@
                 </ul>
             </li>
 
+            {{-- Autoresponder --}}
+            <li>
+                <a href="{{ route('autoresponder.index') }}"
+                    class="side-menu {{ request()->routeIs('autoresponder.*') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('autoresponder.*') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="share-2"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Autoresponder)
+                        </div>
+                    </div>
+                </a>
+            </li>
 
 
             {{-- Mail Activity --}}
@@ -696,7 +773,7 @@
 
             {{-- Sms Log --}}
 
-            <li>
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('log.sms') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -790,7 +867,7 @@
 
             {{-- Subscription --}}
 
-            <li>
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('subscription.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -942,7 +1019,7 @@
 
             {{-- Payment Setup --}}
 
-            <li>
+            <li class="d_none">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('payment.setup.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -994,7 +1071,7 @@
 
             {{-- Bounced Email --}}
 
-            <li>
+            <li style="display: none;">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('bounce.emails') ? 'side-menu--active side-menu--open' : ''
                     }}">
@@ -1040,6 +1117,49 @@
                     </li>
 
                 </ul>
+            </li>
+
+            <li>
+                <a href="{{ route('survey') }}"
+                    class="side-menu {{ request()->routeIs('survey') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('survey') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="sliders"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Survey)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{{ route('testing_url.testing') }}"
+                    class="side-menu {{ request()->routeIs('testing_url.testing') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('testing_url.testing') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="settings"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Settings)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('logout') }}"
+                    class="side-menu {{ request()->routeIs('logout') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('logout') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="log-out"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Logout)
+                        </div>
+                    </div>
+                </a>
             </li>
 
             {{-- Task Manager --}}
@@ -1111,6 +1231,8 @@
                     </div>
                 </a>
             </li>
+
+           
 
             {{-- CHAT PROVIDER::END --}}
 

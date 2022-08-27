@@ -19,6 +19,9 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
         Route::get('/template-builder/originate/editor', [TemplateBuilderController::class, 'originate'])
                 ->name('template.builder.originate')->middleware('saas.expiry');
 
+        Route::get('/template-builder/template-builder', [TemplateBuilderController::class, 'template_new'])
+                ->name('template_builder')->middleware('saas.expiry');   
+
         Route::any('/template-builder/originate/create', [TemplateBuilderController::class, 'originateCreate'])
                 ->name('template.builder.originate.create');
 

@@ -24,6 +24,10 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'check.saa
 Route::get('/subscription', [SubscriptionPlanController::class, 'index'])
     ->name('subscription.index')
     ->middleware('can:Admin');
+    
+    Route::get('/subscription_plan/{id}', [SubscriptionPlanController::class, 'index_edit'])
+    ->name('subscription_plan.index')
+    ->middleware('can:Admin');    
 
 Route::get('/subscription/edit/{id}', [SubscriptionPlanController::class, 'edit'])
     ->name('subscription.edit')

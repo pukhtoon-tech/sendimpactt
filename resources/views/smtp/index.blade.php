@@ -5,6 +5,15 @@
 @endsection
 
 @section('subcontent')
+
+    <style>
+        .disabled-link{
+            cursor: default;
+            pointer-events: none;
+            text-decoration: none;
+            color: grey;
+        }
+    </style>
 <h2 class="intro-y text-lg font-medium mt-10">@translate(Mail Servers)</h2>
 <div class="grid grid-cols-12 gap-6 mt-5">
 
@@ -43,7 +52,7 @@
         @forelse ($email_provider as $provider)
             <div class="box">
             <div class="flex items-start px-5 pt-5 pb-5">
-                <div class="w-full flex flex-col lg:flex-row">
+                <div class="w-full">
                     
                     <h2 class="block font-medium text-base mt-5">{{ Str::upper($provider->provider_name) }} SERVER</h2>
 
@@ -56,7 +65,7 @@
                         <h3 class="block mt-3">Encryption: {{ $provider->encryption }}</h3>
                     @endcan
                         <h3 class="block mt-3">Sender Email: {{ $provider->sender_email->sender_email_address ?? $provider->from }}</h3>
-                        <h3 class="block mt-3">Sender Name: {{ $provider->sender_email->sender_name ?? $provider->name }}</h3>
+                        <h3 class="block mt-3">Sender Name: {{ $provider->sender_email->sender_name ?? $provider->from_name }}</h3>
                     
                     </div>
 
@@ -75,10 +84,12 @@
                         <a href="{{ route('smtp.configure', $provider->id) }}"
                            class="button button--sm text-white bg-theme-4 mr-2">@translate(Update Sender Information)</a>
                         @endcan
-
-                         <a href="{{ route('smtp.connection.test', $provider->id) }}"
-                           class="button button--sm text-white bg-theme-7 mr-2">@translate(Test Connection)</a>
-
+                            <a href="{{ route('smtp.connection.test', $provider->id) }}"
+                               class="button button--sm text-white bg-theme-7 mr-2"
+                               @if(!empty($provider->host) && !empty($provider->port) && !empty($provider->encryption) && !empty($provider->username) && !empty($provider->password))
+                               style="pointer-events: none">@translate(Test Connection)
+                                @endif
+                            </a>
                     </div>
 
                 </div>
@@ -113,7 +124,7 @@
         @forelse ($email_provider as $provider)
             <div class="box">
             <div class="flex items-start px-5 pt-5 pb-5">
-                <div class="w-full flex flex-col lg:flex-row">
+                <div class="w-full">
                     
                     <h2 class="block font-medium text-base mt-5">{{ Str::upper($provider->provider_name) }} SERVER</h2>
 
@@ -125,7 +136,7 @@
                         <h3 class="block mt-3">Username: {{ $provider->name }}</h3>
                         <h3 class="block mt-3">Encryption: {{ $provider->encryption }}</h3>
                         <h3 class="block mt-3">Sender Email: {{ $provider->from ?? null }}</h3>
-                        <h3 class="block mt-3">Sender Name: {{ $provider->name ?? null }}</h3>
+                        <h3 class="block mt-3">Sender Name: {{ $provider->from_name ?? null }}</h3>
                     @endcan
                     </div>
 
@@ -145,8 +156,15 @@
                            class="button button--sm text-white bg-theme-4 mr-2">@translate(Update Sender Information)</a>
                         @endcan
 
-                         <a href="{{ route('smtp.connection.test', $provider->id) }}"
-                           class="button button--sm text-white bg-theme-7 mr-2">@translate(Test Connection)</a>
+                                <a href="{{ route('smtp.connection.test', $provider->id) }}"
+                                   class="button button--sm text-white bg-theme-7 mr-2
+                                   @if(empty($provider->host) || empty($provider->port) || empty($provider->encryption) || empty($provider->username) || empty($provider->password))
+                                           disabled-link">
+                                    @else
+                                           ">
+                                    @endif
+                                        @translate(Test Connection)
+                                </a>
 
                     </div>
 

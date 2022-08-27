@@ -485,9 +485,11 @@ html {
 
 .goog-te-gadget .goog-te-combo {
     padding: 10px 20px;
-    border-radius: 50px;
+    border-radius: 0.5rem;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.8) !important;
+    width: 100%;
+    cursor: pointer;
 }
 
 .goog-te-gadget .goog-te-combo:focus {

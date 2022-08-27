@@ -2119,7 +2119,7 @@ function emailGroupEmails($group_id)
             return EmailService::where('id',$id)->get()->first();
 
             // return EmailService::where('id', $id)->with(['sender_email' => function($query){
-            //     $query->where('owner_id', Auth::id());
+            //     $query->where('user_id', Auth::id());
             // }])->first();
         }
 
@@ -2353,7 +2353,7 @@ function chatProviders()
    
    function getSmtpServerWiseListCustomer()
    {
-       return EmailService::where('from', Auth::user()->email)->get()->groupBy('provider_name');
+       return EmailService::where('user_id', Auth::user()['id'])->get()->groupBy('provider_name');
    }
 
    function getSmtpServerName($id)

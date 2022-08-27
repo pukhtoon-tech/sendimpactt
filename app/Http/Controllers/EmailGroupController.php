@@ -37,6 +37,10 @@ class EmailGroupController extends Controller
     {
         return view('group.set_group');
     }
+    public function group_new()
+    {
+        return view('group.group_two');
+    }
 
     /**
      * createGroup
