@@ -29,6 +29,9 @@
 <div class="tab-content" id="pills-tabContent">
 
 @include('email_contacts.components.contact-list-content')  
+@include('email_contacts.components.email-list-content')
+@include('email_contacts.components.phone-list-content')
+@include('email_contacts.components.bulk-content')      
 
 
 </div>
