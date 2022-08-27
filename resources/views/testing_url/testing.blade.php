@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="{{ filePath('frontend/css/stag.css')}}">
     </head>
 @section('subhead')
-    <title>@translate(Testing)</title>
+    <title>@translate(Settings)</title>
     
 @endsection
 

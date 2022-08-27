@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class TestingC extends Controller
 {
-    public function testing()
+    public function Settings()
     {
         return view('testing_url.testing');
     }

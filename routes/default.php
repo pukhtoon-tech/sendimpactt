@@ -48,8 +48,8 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('installed')
         ->name('dashboard');
 
-        Route::get('/testing', [TestingC::class, 'testing'])->middleware('installed')
-        ->name('testing');
+        Route::get('/settings', [TestingC::class, 'Settings'])->middleware('installed')
+        ->name('testing_url.testing');
     
 
     Route::get('logout', [AuthController::class, 'logout'])->middleware('installed')

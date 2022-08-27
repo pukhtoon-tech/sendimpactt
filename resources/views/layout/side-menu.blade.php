@@ -1119,10 +1119,25 @@
                 </ul>
             </li>
 
+            <!-- <li>
+                <a href="{{ route('testing_url.testing') }}"
+                    class="side-menu {{ request()->routeIs('testing_url.testing') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('testing_url.testing') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="sliders"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Survey)
+                        </div>
+                    </div>
+                </a>
+            </li> -->
+
+
             <li>
-                <a href="{{ route('testing') }}"
-                    class="side-menu {{ request()->routeIs('testing') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('testing') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('testing_url.testing') }}"
+                    class="side-menu {{ request()->routeIs('testing_url.testing') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('testing_url.testing') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="settings"></i>
                         </div>
