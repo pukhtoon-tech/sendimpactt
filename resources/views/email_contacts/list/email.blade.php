@@ -81,7 +81,7 @@
         </div>
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-         {{ emailList()->links('vendor.pagination.custom') }}
+         {{ emailList()->links('vendor.pagination.default') }}
         <!-- END: Pagination -->
     </div>
 

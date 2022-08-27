@@ -1,4 +1,5 @@
-            <button type="submit" class="button w-50 ml-8 mt-5 mr-2 mb-3 flex items-center justify-center bg-theme-1 text-white campaign-email"> 
+           @if(count(emailGroups('email')) > 0)
+            <button type="submit" class="button w-50 ml-8 mt-5 mr-2 mb-3 flex items-center justify-center bg-theme-1 text-white campaign-email">
                 <i data-feather="activity" class="w-4 h-4 mr-2"></i> 
                     @translate(Save Campaign) 
             </button>
@@ -53,11 +54,15 @@
             {{-- Groups:END --}}
 
             <button type="submit" 
-                    class="button w-50 ml-8 mt-5 mr-2 mb-3 flex items-center justify-center bg-theme-1 text-white campaign-email"> 
+                    class="button w-50 ml-8 mt-5 mr-2 mb-3 flex items-center justify-center bg-theme-1 text-white">
             <i data-feather="activity" class="w-4 h-4 mr-2"></i> 
                  @translate(Save Campaign) 
             </button>
-
+           @else
+               <button type="submit" class="button w-50 ml-8 mt-5 mr-2 mb-3 flex items-center justify-center bg-theme-1 text-white campaign-email">
+                  Nothing in the list
+               </button>
+@endif
 <input type="hidden" value="{{ route('campaign.emails.store') }}" id="campaign_email_url">
 <input type="hidden" value="{{ route('campaign.index') }}" id="campaign_list_url">
 

@@ -15,6 +15,7 @@ class CreateEmailServicesTable extends Migration
     {
         Schema::create('email_services', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
             $table->longText('name')->nullable();
             $table->longText('provider_name')->nullable();
             $table->longText('driver')->nullable();

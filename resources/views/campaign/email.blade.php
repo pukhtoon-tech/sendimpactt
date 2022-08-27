@@ -272,7 +272,7 @@
         </div>
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-         {{ $campaigns->links('vendor.pagination.custom') }}
+{{--         {{ $campaigns->links('vendor.pagination.custom') }}--}}
         <!-- END: Pagination -->
     </div>
 
