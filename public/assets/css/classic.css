@@ -20,7 +20,7 @@
 }
 
 .content {
-    border-radius: 5px;
+    border-radius: 0;
 }
 
 .side-nav>ul>li>.side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
@@ -69,7 +69,14 @@ html body {
 .side-nav {
     width: 250px;
     padding-right: 0;
+    height: 100vh;
+    overflow-y: scroll;
 }
+.side-nav::-webkit-scrollbar {
+    display: none;
+}
+
+
 .mldl-active-menu {
     width: 100%;
     height: 100%;

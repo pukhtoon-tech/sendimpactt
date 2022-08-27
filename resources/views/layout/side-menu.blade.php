@@ -9,7 +9,7 @@
 <div class="flex">
     <!-- BEGIN: Side Menu -->
     <nav class="side-nav">
-        <a href="{{ route('dashboard') }}" class="intro-x flex items-center text-gray-50"
+        <a href="{{ route('dashboard') }}" class="intro-x flex mt-3 items-center text-gray-50"
             style="justify-content: center; font-size: 36px;">
             <h2 class="text-xl">{{ orgName() }}</h2>
         </a>
@@ -957,7 +957,7 @@
 
             {{-- Payment Setup --}}
 
-            <li>
+            <li class="d_none">
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('payment.setup.*') ? 'side-menu--active side-menu--open' : ''
                     }}">

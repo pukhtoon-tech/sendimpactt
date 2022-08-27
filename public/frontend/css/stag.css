@@ -1,3 +1,9 @@
+.pl_0 {
+    padding-left: 0 !important;
+}
+body {
+    overflow-y: scroll !important;
+}
 .nav {
     display: -ms-flexbox;
     display: flex;
@@ -13,8 +19,8 @@
     padding: 12px;
     margin-right: 1rem;
     border-bottom: 1px solid transparent;
-    max-width: 120px;
-    width: 120px;
+    max-width: 150px;
+    width: 150px;
 }
 .nav-pills .nav-link:focus {
     border: 0;
