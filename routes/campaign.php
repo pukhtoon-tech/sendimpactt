@@ -24,6 +24,11 @@ Route::group(['middleware' => ['auth', 'email.verified','installed', 'saas.user.
     Route::get('/campaign', [CampaignController::class, 'index'])
         ->name('campaign.index');
 
+        Route::get('/campaigns', [CampaignController::class, 'email_campaign'])
+        ->name('campaign.email-campaign');
+        Route::get('/campaignsms', [CampaignController::class, 'sms_campaign'])
+        ->name('campaign.sms-campaign');
+
     Route::get('/campaign/type/{type}', [CampaignController::class, 'type'])
         ->name('campaign.type');
 

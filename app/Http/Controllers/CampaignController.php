@@ -70,6 +70,13 @@ class CampaignController extends Controller
         
     }
 
+    public function email_campaign() {
+        return view('campaign.email-campaign');
+    }
+    public function sms_campaign() {
+        return view('campaign.sms-campaign');
+    }
+
     public function type($type)
     {
 

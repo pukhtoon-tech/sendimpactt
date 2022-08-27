@@ -615,6 +615,34 @@
             {{-- Campaign --}}
 
             <li>
+                <a href="{{ route('campaign.email-campaign') }}"
+                    class="side-menu {{ request()->routeIs('campaign.email-campaign') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('campaign.email-campaign') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="home"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Email Campaign)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('campaign.sms-campaign') }}"
+                    class="side-menu {{ request()->routeIs('campaign.sms-campaign') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('campaign.sms-campaign') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="home"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(SMS Campaign)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
                 <a href="javascript:;" class="side-menu {{
                         request()->routeIs('campaign.*') ? 'side-menu--active side-menu--open' : ''
                     }}">
