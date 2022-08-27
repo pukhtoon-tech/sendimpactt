@@ -20,6 +20,17 @@ class SmtpController extends Controller
 
     public function index()
     {
+
+        $emptyId = EmailService::where('user_id', 0)->get();
+
+        foreach ($emptyId as $one) {
+            $ee = \http\Client\Curl\User::where('email', $one->from)->first();
+
+            $e_server = EmailService::where('id', $one->id)->first();
+            $e_server->user_id = $ee->id;
+            $e_server->save();
+        }
+
         if(Auth::user()->user_type == 'Admin'){
             $email_providers = EmailService::all();
         }else{
