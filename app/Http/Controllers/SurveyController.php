@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TestingC extends Controller
+class SurveyController extends Controller
 {
-    public function Settings()
+    public function survey()
     {
-        return view('testing_url.testing');
+        return view('survey.survey');
     }
     //END
 }

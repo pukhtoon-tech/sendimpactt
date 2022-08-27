@@ -28,6 +28,7 @@
   </li>
   @endcan
 
+  @can('Customer')
   <li class="nav-item" role="presentation">
   <button class="nav-link" id="pills-user-tab" data-toggle="pill" data-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="false">User</button>  
 </li>
@@ -46,6 +47,7 @@
 <li class="nav-item" role="presentation">
   <button class="nav-link" id="pills-billing-tab" data-toggle="pill" data-target="#pills-billing" type="button" role="tab" aria-controls="pills-billing" aria-selected="false">Billing</button>  
 </li>
+@endcan
   
 </ul>
 <div class="tab-content" id="pills-tabContent">
@@ -54,19 +56,18 @@
   
   @can('Admin')
   @include('testing_url.components.organization-setup-content')
- 
-
   @include('testing_url.components.subscription-content')
-
   @include('testing_url.components.payment-setup-content')
   @endcan
+
+  @can('Customer')
   @include('testing_url.components.user-content')
   @include('testing_url.components.domain-content')
   @include('testing_url.components.mail-server-content')
   @include('testing_url.components.sms-setting-content')
   @include('testing_url.components.api-content')
   @include('testing_url.components.billing-content')
-
+  @endcan
 
 </div>
             

@@ -8,7 +8,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TestingC;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SmtpController;
 use App\Http\Controllers\SendingServerController;
@@ -48,8 +49,11 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('installed')
         ->name('dashboard');
 
-        Route::get('/settings', [TestingC::class, 'Settings'])->middleware('installed')
+        Route::get('/settings', [SettingsController::class, 'Settings'])->middleware('installed')
         ->name('testing_url.testing');
+
+         Route::get('/survey', [SurveyController::class, 'survey'])->middleware('installed')
+        ->name('survey');
     
 
     Route::get('logout', [AuthController::class, 'logout'])->middleware('installed')

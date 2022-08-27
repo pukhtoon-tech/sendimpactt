@@ -1119,10 +1119,10 @@
                 </ul>
             </li>
 
-            <!-- <li>
-                <a href="{{ route('testing_url.testing') }}"
-                    class="side-menu {{ request()->routeIs('testing_url.testing') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('testing_url.testing') ? 'mldl-active-menu' : 'flex items-center' }}">
+            <li>
+                <a href="{{ route('survey') }}"
+                    class="side-menu {{ request()->routeIs('survey') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('survey') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="sliders"></i>
                         </div>
@@ -1131,7 +1131,7 @@
                         </div>
                     </div>
                 </a>
-            </li> -->
+            </li>
 
 
             <li>
@@ -1143,6 +1143,20 @@
                         </div>
                         <div class="side-menu__title">
                             @translate(Settings)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('logout') }}"
+                    class="side-menu {{ request()->routeIs('logout') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('logout') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="log-out"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Logout)
                         </div>
                     </div>
                 </a>
@@ -1217,6 +1231,8 @@
                     </div>
                 </a>
             </li>
+
+           
 
             {{-- CHAT PROVIDER::END --}}
 
