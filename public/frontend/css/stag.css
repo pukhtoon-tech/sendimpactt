@@ -20,7 +20,7 @@ body {
     margin-right: 1rem;
     border-bottom: 1px solid transparent;
     max-width: 150px;
-    width: 150px;
+    /* width: 140px; */
 }
 .nav-pills .nav-link:focus {
     border: 0;

@@ -25,6 +25,10 @@ class EmailContactController extends Controller
     {
         return view('email_contacts.index');
     }
+    public function index_two()
+    {
+        return view('email_contacts.contacts');
+    }
 
     /**
      * Store a newly created resource in storage.

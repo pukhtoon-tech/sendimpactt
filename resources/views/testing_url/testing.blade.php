@@ -14,25 +14,59 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">My Profile</button>
   </li>
+
+  @can('Admin')
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Organization Setup</button>
   </li>
+  
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Subscription</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-payment-tab" data-toggle="pill" data-target="#pills-payment" type="button" role="tab" aria-controls="pills-payment" aria-selected="false">Payment Setup</button>
   </li>
+  @endcan
+
+  <li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-user-tab" data-toggle="pill" data-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="false">User</button>  
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-domain-tab" data-toggle="pill" data-target="#pills-domain" type="button" role="tab" aria-controls="pills-domain" aria-selected="false">Domain</button>  
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-mail-server-tab" data-toggle="pill" data-target="#pills-mail-server" type="button" role="tab" aria-controls="pills-mail-server" aria-selected="false">Mail Server</button>  
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-sms-settings-tab" data-toggle="pill" data-target="#pills-sms-settings" type="button" role="tab" aria-controls="pills-sms-settings" aria-selected="false">SMS Settings</button>  
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-api-tab" data-toggle="pill" data-target="#pills-api" type="button" role="tab" aria-controls="pills-api" aria-selected="false">API Integration</button>  
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-billing-tab" data-toggle="pill" data-target="#pills-billing" type="button" role="tab" aria-controls="pills-billing" aria-selected="false">Billing</button>  
+</li>
+  
 </ul>
 <div class="tab-content" id="pills-tabContent">
 
   @include('testing_url.components.my-profile-content')  
-
+  
+  @can('Admin')
   @include('testing_url.components.organization-setup-content')
+ 
 
   @include('testing_url.components.subscription-content')
 
   @include('testing_url.components.payment-setup-content')
+  @endcan
+  @include('testing_url.components.user-content')
+  @include('testing_url.components.domain-content')
+  @include('testing_url.components.mail-server-content')
+  @include('testing_url.components.sms-setting-content')
+  @include('testing_url.components.api-content')
+  @include('testing_url.components.billing-content')
+
 
 </div>
             

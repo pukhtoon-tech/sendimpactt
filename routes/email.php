@@ -25,6 +25,9 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::get('/contacts/list', [EmailContactController::class, 'index'])
         ->name('email.contacts.index');
 
+        Route::get('/contacts', [EmailContactController::class, 'index_two'])
+        ->name('email_contacts.contacts');
+
     Route::get('/email/list', [EmailContactController::class, 'emailList'])
         ->name('email.contacts.list');
 

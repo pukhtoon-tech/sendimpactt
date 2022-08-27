@@ -335,6 +335,22 @@
 
             {{-- Template builder --}}
 
+            
+            <li>
+                <a href="{{ route('template_builder') }}"
+                    class="side-menu {{ request()->routeIs('template_builder') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('template_builder') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="home"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Template Builder New)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+
             <li>
 
                 <a href="javascript:;" class="side-menu {{
@@ -432,6 +448,21 @@
             </li>
 
             {{-- Contacts --}}
+
+            <li>
+                <a href="{{ route('email_contacts.contacts') }}"
+                    class="side-menu {{ request()->routeIs('email_contacts.contacts') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('email_contacts.contacts') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="home"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(Contacts New)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
 
             <li>
                 <a href="javascript:;" class="side-menu {{

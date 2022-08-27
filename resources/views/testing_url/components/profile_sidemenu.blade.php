@@ -21,4 +21,19 @@
                 </div>
                
             </div>
+            <div class="intro-y box mt-5">
+                <div class="relative flex items-center p-5">
+                    <div class="w-12 h-12 image-fit">
+                        <img alt="Maildoll" class="rounded-full" src="{{ avatar() }}">
+                    </div>
+                    <div class="ml-4 mr-auto">
+                        <div class="font-medium text-base">Plans</div>
+                        <div class="text-gray-600">{{ userInfo()->user_type }}</div>
+                    </div>                 
+                </div>
+                <div class="p-4">
+                    <label>@translate(Plans) <small>@translate(optional)</small></label>
+                    <input type="text" name="nid" class="input w-full border mt-2" placeholder="Input Plan" value="{{ userInfo()->personal->nid ?? null }}">
+                </div>  
+            </div>
         </div>
