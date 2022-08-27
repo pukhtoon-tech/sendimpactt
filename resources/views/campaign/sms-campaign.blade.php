@@ -12,18 +12,21 @@
 
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="pills-ec-tab" data-toggle="pill" data-target="#pills-ec" type="button" role="tab" aria-controls="pills-ec" aria-selected="true">SMS Campaign</button>
+    <button class="nav-link active" id="pills-sc-tab" data-toggle="pill" data-target="#pills-sc" type="button" role="tab" aria-controls="pills-sc" aria-selected="true">SMS Campaign</button>
   </li>
 
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-es-tab" data-toggle="pill" data-target="#pills-es" type="button" role="tab" aria-controls="pills-es" aria-selected="true">SMS Schedule</button>
+    <button class="nav-link" id="pills-ss-tab" data-toggle="pill" data-target="#pills-ss" type="button" role="tab" aria-controls="pills-ss" aria-selected="true">SMS Schedule</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-ct-tab" data-toggle="pill" data-target="#pills-ct" type="button" role="tab" aria-controls="pills-ct" aria-selected="true">SMS Log</button>
+    <button class="nav-link" id="pills-sl-tab" data-toggle="pill" data-target="#pills-sl" type="button" role="tab" aria-controls="pills-sl" aria-selected="true">SMS Log</button>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
-  
+
+    @include('campaign.components.sms-campaign-content')
+    @include('campaign.components.sms-schedule-content')      
+    @include('campaign.components.sms-log-content')            
 
 </div>
             
