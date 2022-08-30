@@ -25,7 +25,7 @@
 
             <div class="mt-6">
             <div class="input-form"> 
-                <label class="flex flex-col sm:flex-row"> @translate(Email)</label> 
+                <label class="flex flex-col sm:flex-row"> @translate(Email)</label>
                 <input type="email" name="email" class="input w-full border mt-2" id="email" placeholder="Ex: jhondoe@mail.com" data-parsley-type="email">
                 <small>@translate(Empty email field will not count as an email contact.)</small>
                  </div>

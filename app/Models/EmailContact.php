@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class EmailContact extends Model
 {
@@ -25,7 +26,11 @@ class EmailContact extends Model
     /*Check the email is active*/
     public function scopeFavourite($query)
     {
-        return $query->where('favourites', 1)->where('blocked', 0);
+        return $query->where('favourites', 1)->where('blocked', 0)->where('owner_id', Auth::id());
+    }
+
+    public function scopeEmailOwner($query) {
+        return $query->where('owner_id', Auth::id());
     }
 
     /*Check the email is active*/

@@ -102,7 +102,7 @@
                     </table>
 
                     <div class="p-5 flex flex-col sm:flex-row items-center text-center sm:text-left text-gray-600">
-                            {{ $emails->links('vendor.pagination.custom') }}
+                            {{ $emails->links('vendor.pagination.default') }}
                     </div>
 
                 </div>

@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0",
+        "php": "^7.3",
         "aman00323/emailchecker": "^2.2",
         "barryvdh/laravel-dompdf": "^0.9.0",
         "brunocfalcao/blade-feather-icons": "^2.0.1",
@@ -24,9 +24,10 @@
         "laravel/ui": "^3.1",
         "laravolt/avatar": "^4.0",
         "maatwebsite/excel": "^3.1",
-        "mckenziearts/laravel-notify": "^2.2",
+        "mckenziearts/laravel-notify": "^2.3",
         "nexmo/laravel": "^2.4",
         "paypal/rest-api-sdk-php": "^1.14",
+        "phpoffice/phpspreadsheet": "1.16.*",
         "plivo/plivo-php": "^4.17",
         "realrashid/sweet-alert": "^3.2",
         "romanzipp/laravel-queue-monitor": "^2.0",
@@ -34,8 +35,7 @@
         "sentry/sentry-laravel": "^2.3",
         "spatie/laravel-mailable-test": "^2.2.3",
         "stripe/stripe-php": "^7.67",
-        "twilio/sdk": "^6.16.0",
-	"phpoffice/phpspreadsheet": "1.16.*"
+        "twilio/sdk": "^6.16.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5.6",

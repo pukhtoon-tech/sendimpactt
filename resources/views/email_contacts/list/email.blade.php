@@ -107,7 +107,7 @@
 
             <div class="mt-3">
             <div class="input-form"> 
-                <label class="flex flex-col sm:flex-row"> @translate(Name)*</label> 
+                <label class="flex flex-col sm:flex-row"> @translate(Name)*</label>
                 <input type="text" name="name" data-parsley-required class="input w-full border mt-2" placeholder="Ex: John Doe" required>
             </div>
             </div>
