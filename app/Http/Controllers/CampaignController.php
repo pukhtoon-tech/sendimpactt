@@ -51,16 +51,30 @@ class CampaignController extends Controller
         set_time_limit(-1);
     }
 
-    public function index()
+    public function index($name = null)
     {
         try {
 
-            if (templateCount() > 0 && smsTemplateCount() > 0) {
-                $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
-                return view('campaign.index', compact('campaigns'));
-            }else{
-                Alert::warning(translate('Warning'), translate('You have No Email Template & SMS Body.'));
-                return redirect()->route('dashboard');
+            if (is_null($name)) {
+                if (templateCount() > 0 && smsTemplateCount() > 0) {
+                    $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
+                    return view('campaign.index', compact('campaigns'));
+                } else {
+                    Alert::warning(translate('Warning'), translate('You have No Email Template & SMS Body.'));
+                    return redirect()->route('dashboard');
+                }
+            } else {
+                if ($name == 'sms' && smsTemplateCount() > 0) {
+                    $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
+                    return view('campaign.index', compact('campaigns'));
+                } elseif ($name == 'email' && templateCount() > 0) {
+                    $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
+                    return view('campaign.index', compact('campaigns'));
+                } else {
+                    $name = strtoupper($name);
+                    Alert::warning(translate('Warning'), translate("You have No $name Template"));
+                    return redirect()->route('dashboard');
+                }
             }
 
         } catch (\Throwable $th) {

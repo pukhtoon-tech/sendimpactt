@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth', 'email.verified','installed', 'saas.user.
      * CAMPAIGN
      */
 
-    Route::get('/campaign', [CampaignController::class, 'index'])
+    Route::get('/campaign/{name?}', [CampaignController::class, 'index'])
         ->name('campaign.index');
 
         Route::get('/campaigns', [CampaignController::class, 'email_campaign'])

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-class EmailContact extends Model
+class   EmailContact extends Model
 {
     use HasFactory, SoftDeletes;
 

@@ -45,7 +45,9 @@ class EmailContactController extends Controller
       }
 
         $request->validate([
-            'name' => 'required'
+            'fname' => 'required',
+            'lname' => 'required',
+            'cname' => 'required',
         ]);
 
 
@@ -53,7 +55,10 @@ class EmailContactController extends Controller
         try {
             $email = new EmailContact();
             $email->owner_id = userId();
-            $email->name = $request->name;
+            $email->name = $request->fname . ' ' . $request->lname;
+            $email->first_name = $request->fname;
+            $email->last_name = $request->lname;
+            $email->company_name = $request->cname;
             $email->email = $request->email;
             $email->country_code = $request->country_code;
             $email->phone = $request->phone;

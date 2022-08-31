@@ -33,7 +33,9 @@
                 <thead>
                     <tr>
                         <th class="whitespace-no-wrap">@translate(SL.)</th>
-                        <th class="text-center whitespace-no-wrap">@translate(Name)</th>
+                        <th class="text-center whitespace-no-wrap">@translate(First Name)</th>
+                        <th class="text-center whitespace-no-wrap">@translate(Last Name)</th>
+                        <th class="text-center whitespace-no-wrap">@translate(Company Name)</th>
                         <th class="text-center whitespace-no-wrap">@translate(Email)</th>
                         <th class="text-center whitespace-no-wrap">@translate(DATE)</th>
                         <th class="text-center whitespace-no-wrap">@translate(ACTION)</th>
@@ -49,9 +51,21 @@
                             </td>
                             <td class="text-center tooltip" title="@translate(Recipient Email)">
                             
-                                    {{ $email->name ?? 'No name' }}
+                                    {{ $email->first_name ?? $email->name ?? 'No first name' }}
                                 
                             </td>
+                            <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                {{ $email->last_name ?? 'No last name' }}
+
+                            </td>
+
+                            <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                {{ $email->company_name ?? 'No company' }}
+
+                            </td>
+
                             <td class="text-center tooltip" title="@translate(Campaign Name)">{{ $email->email ?? 'no email address' }}</td>
                             <td class="text-center tooltip" title="@translate(Mail Date)">{{ $email->created_at }}</td>
                             <td class="text-center">
@@ -107,9 +121,23 @@
 
             <div class="mt-3">
             <div class="input-form"> 
-                <label class="flex flex-col sm:flex-row"> @translate(Name)*</label>
-                <input type="text" name="name" data-parsley-required class="input w-full border mt-2" placeholder="Ex: John Doe" required>
+                <label class="flex flex-col sm:flex-row"> @translate(First Name)*</label>
+                <input type="text" name="fname" data-parsley-required class="input w-full border mt-2" placeholder="Ex: John" required>
             </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(Last Name)*</label>
+                    <input type="text" name="lname" data-parsley-required class="input w-full border mt-2" placeholder="Ex: Doe" required>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(Company Name)*</label>
+                    <input type="text" name="cname" data-parsley-required class="input w-full border mt-2" placeholder="Ex: MT Tech" required>
+                </div>
             </div>
 
             <div class="mt-6">
