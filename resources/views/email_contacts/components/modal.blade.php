@@ -16,11 +16,27 @@
         @csrf
 
             <div class="mt-3">
-            <div class="input-form"> 
-                <label class="flex flex-col sm:flex-row"> @translate(Name)*</label> 
-                <input type="text" name="name" class="input w-full border mt-2" placeholder="Ex: John Doe">
+            <div class="input-form">
+                <label class="flex flex-col sm:flex-row"> @translate(First Name)*</label>
+                <input type="text" name="fname" class="input w-full border mt-2" placeholder="Ex: John">
                 <small>@translate(Empty username field will make name from email.)</small>
             </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(Last Name)*</label>
+                    <input type="text" name="lname" class="input w-full border mt-2" placeholder="Ex: Doe">
+                    <small>@translate(Empty username field will make name from email.)</small>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(Company Name)*</label>
+                    <input type="text" name="cname" class="input w-full border mt-2" placeholder="Ex: MT Tech ">
+                    <small>@translate(Empty username field will make name from email.)</small>
+                </div>
             </div>
 
             <div class="mt-6">
@@ -53,15 +69,26 @@
 
                     </div>
 
-                    
-
-                <input type="number" name="phone" class="input w-full border" placeholder="Ex: 1825731327">
+                        <input type="number" name="phone" class="input w-full border" placeholder="Ex: 1825731327">
                     
                 </div>
 
                 
                     <small>@translate(Empty phone field will not count as a sms contact.)</small>
                  </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="input-form">
+
+                <label><strong>Select Category :</strong></label><br/>
+                    <select class="tail-select w-full"  multiple data-live-search="true" name="groups[]">
+                        @forelse(allEmailGroups() as $group)
+                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
             </div>
    
        <button type="submit"

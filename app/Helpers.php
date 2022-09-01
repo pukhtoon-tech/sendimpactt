@@ -842,6 +842,12 @@ function emailGroups($type)
     return EmailGroup::where('owner_id', Auth::user()->id)->where('type', $type)->get();
 }
 
+/*emailGroups*/
+function allEmailGroups()
+{
+    return EmailGroup::where('owner_id', Auth::user()->id)->get();
+}
+
 /*emailGroupEmails*/
 function emailGroupEmails($group_id)
 {

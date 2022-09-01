@@ -153,6 +153,20 @@
             </div>
 
             <div class="mt-6">
+                <div class="input-form">
+
+                    <label><strong>Email's Groups :</strong></label><br/>
+
+                    <select class="tail-select w-full"  multiple data-live-search="true" name="groups[]">
+                        @forelse(emailGroups('email') as $group)
+                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-6">
        
    
        <button type="submit"

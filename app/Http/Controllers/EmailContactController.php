@@ -6,6 +6,7 @@ use App\Models\EmailContact;
 use App\Models\CampaignEmail;
 use App\Models\Demo;
 use App\Http\Controllers\Controller;
+use App\Models\EmailListGroup;
 use Illuminate\Http\Request;
 use App\Exports\EmailContactExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -63,6 +64,28 @@ class EmailContactController extends Controller
             $email->country_code = $request->country_code;
             $email->phone = $request->phone;
             $email->save();
+
+            if ($request->groups) {
+                $list = array();
+                foreach ($request->groups as $val) {
+                    $data = array(
+                        'email_group_id' => $val,
+                        'email_id' => $email->id,
+                        'owner_id' => \Illuminate\Support\Facades\Auth::id()
+                        );
+                    array_push($list, $data);
+                }
+
+                EmailListGroup::insert(
+                    $list
+                );
+/*
+                $group = new EmailListGroup();
+                $group->email_group_id = $group_id;
+                $group->email_id = $email;
+                $group->owner_id = Auth::user()->id;
+                $group->save();*/
+            }
 
             Alert::success(translate('Success'), translate('New Email Contact Stored'));
             return back();

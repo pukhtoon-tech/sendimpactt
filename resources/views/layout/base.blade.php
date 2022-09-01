@@ -71,7 +71,7 @@
     @endif
 
     @yield('head')
-    
+
     <script src="{{ filePath('bladejs/google-translate.js') }}"></script>
 
     @notifyCss

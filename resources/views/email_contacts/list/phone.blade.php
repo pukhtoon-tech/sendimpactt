@@ -141,7 +141,7 @@
             </div>
 
             <div class="mt-6">
-            <div class="input-form mt-2">
+                <div class="input-form mt-2">
 
 
                 <label class="flex flex-col sm:flex-row"> @translate(Contact Number)*</label>
@@ -163,13 +163,26 @@
                     </div>
 
 
-
-                <input type="number" name="phone" class="input w-full border" placeholder="Ex: 1825731327">
+                    <input type="number" name="phone" class="input w-full border" placeholder="Ex: 1825731327">
 
                 </div>
 
 
                  </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="input-form">
+
+                    <label><strong>Phone's Groups :</strong></label><br/>
+
+                    <select class="tail-select w-full"  multiple data-live-search="true" name="groups[]">
+                        @forelse(emailGroups('sms') as $group)
+                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
             </div>
 
        <button type="submit"
