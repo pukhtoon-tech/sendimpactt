@@ -56,7 +56,7 @@ class CampaignController extends Controller
         try {
 
             if (is_null($name)) {
-                if (templateCount() > 0 && smsTemplateCount() > 0) {
+                if (templateCount() > 0 || smsTemplateCount() > 0) {
                     $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
                     return view('campaign.index', compact('campaigns'));
                 } else {
@@ -507,7 +507,7 @@ class CampaignController extends Controller
                                                             ->first();
                                                             
             $get_sender_email_address = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first();
-    
+
             if($get_sender_email_address->sender_email_address == null)
             {
                 Alert::warning('Hi,', translate('Please provider sender email address'));
@@ -529,9 +529,9 @@ class CampaignController extends Controller
         
             $maildoll = new Swift_Mailer($transport);
             }else{
-                
-                $getUserActiveEmailDetails = EmailService::where('from', Auth::user()->email)->first();
-                                                            
+
+                $getUserActiveEmailDetails = EmailService::where('user_id', Auth::id())->first();
+
                 $get_sender_email_address = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first();
                 if($get_sender_email_address->sender_email_address == null)
                 {
@@ -637,6 +637,7 @@ class CampaignController extends Controller
             }
 
         } catch (\Throwable $th) {
+            print_r($th->getMessage());die;
             Alert::error(translate('Whoops'), translate('Something went wrong try again'));
             return back()->withErrors($th->getMessage());
         }
@@ -695,25 +696,31 @@ class CampaignController extends Controller
                  */            
                 $email_limit = EmailSMSLimitRate::where('owner_id', Auth::user()->id)
                                                 ->first();
-                /**
-                 * Decreament from limit
-                 */
-                if($email_limit->email > 0) {
-                    EmailSMSLimitRate::where('owner_id', Auth::user()->id)
-                                    ->decrement('email', count($campaignEmails));
+
+                if (!is_null($email_limit)) {
+                    /**
+                     * Decreament from limit
+                     */
+                    if ($email_limit->email > 0) {
+                        EmailSMSLimitRate::where('owner_id', Auth::user()->id)
+                            ->decrement('email', count($campaignEmails));
+                    }
                 }
+
                 /**
                  * Check Current Limit
                  */
                 $current_email_limit = EmailSMSLimitRate::where('owner_id', Auth::user()->id)
                                                         ->first();
+            if (!is_null($current_email_limit)) {
                 /**
                  * Updating Due limit into Zero
                  */
                 if ($current_email_limit->email <= 0) {
                     $current_email_limit->email = 0;
                     $current_email_limit->save();
-                
+
+                }
             }
                 /**
                  * CAMPAIGN LOG

@@ -20,6 +20,7 @@ use App\Models\BouncedEmail;
 use Aman\EmailVerifier\EmailChecker;
 use Carbon\Carbon;
 use Mail;
+use Matrix\Exception;
 use Validator;
 use MultiMail;
 use Swift_SmtpTransport;
@@ -62,142 +63,145 @@ class SendEmails extends Command
     public function handle()
     {
 
-        // your schedule code
-        $schedules = ScheduleEmail::where(function($q) {
-            $q->where('status', '=', ScheduleEmail::PENDING);
-            $q->where('scheduled_at', '<=', Carbon::now());
-        })->get();
+        try {
+            // your schedule code
+            $schedules = ScheduleEmail::where(function ($q) {
+                $q->where('status', '=', ScheduleEmail::PENDING);
+                $q->where('scheduled_at', '<=', Carbon::now());
+            })->get();
 
-        foreach ($schedules as $schedule) {
-        	if ($schedule) {
-				$schedule->status = ScheduleEmail::SENT;
-				$schedule->sended_at = Carbon::now();
-				$schedule->save();
+            foreach ($schedules as $schedule) {
+                if ($schedule) {
+                    $schedule->status = ScheduleEmail::SENT;
+                    $schedule->sended_at = Carbon::now();
+                    $schedule->save();
 
-                $owner_id = $schedule->owner_id;
+                    $owner_id = $schedule->owner_id;
 
-                $campaign_id = $schedule->campaign_id;
+                    $campaign_id = $schedule->campaign_id;
 
-                $smtp_server = Campaign::where('id', $campaign_id)->first()->smtp_server_id; // version 3.0.0
+                    $smtp_server = Campaign::where('id', $campaign_id)->first()->smtp_server_id; // version 3.0.0
 
-                $getUserActiveEmailDetails = EmailService::where('active', 1)
-                                                            ->where('id', $smtp_server)
-                                                            ->select(
-                                                                'id',
-                                                                'driver',
-                                                                'host', 
-                                                                'port', 
-                                                                'username', 
-                                                                'password', 
-                                                                'encryption', 
-                                                                'from', 
-                                                                'from_name')
-                                                            ->first();
-                
-                $sender_email = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first()->sender_email_address;
-                $sender_name = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first()->sender_name;
-                
-                
-                $subject = Campaign::where('id', $campaign_id)->first()->name;
-                $template_id = Campaign::where('id', $campaign_id)->first()->template_id;
+                    $getUserActiveEmailDetails = EmailService::where('active', 1)
+                        ->where('user_id', $owner_id)
+                        ->select(
+                            'id',
+                            'driver',
+                            'host',
+                            'port',
+                            'username',
+                            'password',
+                            'encryption',
+                            'from',
+                            'from_name')
+                        ->first();
 
-                $campaignEmails = CampaignEmail::where('campaign_id', $campaign_id)
-                                            ->with('emails')
-                                            ->get();
+                    $sender_email = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first()->sender_email_address;
+                    $sender_name = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first()->sender_name;
 
-                $data['page'] = TemplateBuilder::where('id', $template_id)->first();
 
-                // backup mailing configuration
-                $backup = Mail::getSwiftMailer();
+                    $subject = Campaign::where('id', $campaign_id)->first()->name;
+                    $template_id = Campaign::where('id', $campaign_id)->first()->template_id;
 
-                // set mailing configuration
-                $transport = new Swift_SmtpTransport(
-                                            getUserActiveEmailDetails($getUserActiveEmailDetails->id)->host,
-                                            getUserActiveEmailDetails($getUserActiveEmailDetails->id)->port,
-                                            getUserActiveEmailDetails($getUserActiveEmailDetails->id)->encryption
-                                        );
+                    $campaignEmails = CampaignEmail::where('campaign_id', $campaign_id)
+                        ->with('emails')
+                        ->get();
 
-                $transport->setUsername(getUserActiveEmailDetails($getUserActiveEmailDetails->id)->username);
-                $transport->setPassword(getUserActiveEmailDetails($getUserActiveEmailDetails->id)->password);
+                    $data['page'] = TemplateBuilder::where('id', $template_id)->first();
 
-                $maildoll = new Swift_Mailer($transport);
+                    // backup mailing configuration
+                    $backup = Mail::getSwiftMailer();
 
-                // set mailtrap mailer
-                Mail::setSwiftMailer($maildoll);
+                    // set mailing configuration
+                    $transport = new Swift_SmtpTransport(
+                        getUserActiveEmailDetails($getUserActiveEmailDetails->id)->host,
+                        getUserActiveEmailDetails($getUserActiveEmailDetails->id)->port,
+                        getUserActiveEmailDetails($getUserActiveEmailDetails->id)->encryption
+                    );
 
-                foreach ($campaignEmails as $campaignEmail) {
+                    $transport->setUsername(getUserActiveEmailDetails($getUserActiveEmailDetails->id)->username);
+                    $transport->setPassword(getUserActiveEmailDetails($getUserActiveEmailDetails->id)->password);
 
-                    if($campaignEmail->emails != null)
-                    {
+                    $maildoll = new Swift_Mailer($transport);
 
-                        if (saas()) {
+                    // set mailtrap mailer
+                    Mail::setSwiftMailer($maildoll);
 
-                            if (user_email_limit_check(trimDomain(full_domain())) == 'HAS-LIMIT') {
+                    foreach ($campaignEmails as $campaignEmail) {
 
-                                /**
-                                 * Email sent record
-                                 * Email Tracker
-                                 */
-                                $tracker = new EmailTracker;
-                                $tracker->tracker = Str::uuid();
-                                $tracker->email_id = $campaignEmail->emails->id;
-                                $tracker->campaign_id = $campaign_id;
-                                $tracker->total_clicks = 0;
-                                $tracker->status = 0;
-                                $tracker->record = 'NOT OPEN';
-                                $tracker->save();
+                        if ($campaignEmail->emails != null) {
 
-                                user_email_limit_decrement(trimDomain(full_domain())); // user_email_limit_decrement
+                            if (saas()) {
 
-                                $data['tracker'] = $tracker;
-                            
-                                Mail::send('template_builder.template-detail', $data, function($message) use ($subject, $campaignEmail, $getUserActiveEmailDetails, $sender_email, $sender_name) {
-                                    $message->to($campaignEmail->emails->email)
-                                            ->setFrom(
-                                                [$sender_email => $sender_name]
-                                                )
-                                            ->setSubject($subject);
-                                });
+                                if (user_email_limit_check(trimDomain(full_domain())) == 'HAS-LIMIT') {
 
-                            }else {
-                                echo 'Email Limit Reached';
-                                return false;
-                            } // else
-                        }else {
-                                /**
-                                 * Email sent record
-                                 * Email Tracker
-                                 */
-                                $tracker = new EmailTracker;
-                                $tracker->tracker = Str::uuid();
-                                $tracker->email_id = $campaignEmail->emails->id;
-                                $tracker->campaign_id = $campaign_id;
-                                $tracker->total_clicks = 0;
-                                $tracker->status = 0;
-                                $tracker->record = 'NOT OPEN';
-                                $tracker->save();
+                                    /**
+                                     * Email sent record
+                                     * Email Tracker
+                                     */
+                                    $tracker = new EmailTracker;
+                                    $tracker->tracker = Str::uuid();
+                                    $tracker->email_id = $campaignEmail->emails->id;
+                                    $tracker->campaign_id = $campaign_id;
+                                    $tracker->total_clicks = 0;
+                                    $tracker->status = 0;
+                                    $tracker->record = 'NOT OPEN';
+                                    $tracker->save();
 
-                                $data['tracker'] = $tracker;
-                            
-                                Mail::send('template_builder.template-detail', $data, function($message) use ($subject, $campaignEmail, $getUserActiveEmailDetails, $sender_email, $sender_name) {
-                                    $message->to($campaignEmail->emails->email)
+                                    user_email_limit_decrement(trimDomain(full_domain())); // user_email_limit_decrement
+
+                                    $data['tracker'] = $tracker;
+
+                                    Mail::send('template_builder.template-detail', $data, function ($message) use ($subject, $campaignEmail, $getUserActiveEmailDetails, $sender_email, $sender_name) {
+                                        $message->to($campaignEmail->emails->email)
                                             ->setFrom(
                                                 [$sender_email => $sender_name]
                                             )
                                             ->setSubject($subject);
+                                    });
+
+                                } else {
+                                    echo 'Email Limit Reached';
+                                    return false;
+                                } // else
+                            } else {
+                                /**
+                                 * Email sent record
+                                 * Email Tracker
+                                 */
+                                $tracker = new EmailTracker;
+                                $tracker->tracker = Str::uuid();
+                                $tracker->email_id = $campaignEmail->emails->id;
+                                $tracker->campaign_id = $campaign_id;
+                                $tracker->total_clicks = 0;
+                                $tracker->status = 0;
+                                $tracker->record = 'NOT OPEN';
+                                $tracker->save();
+
+                                $data['tracker'] = $tracker;
+
+                                Mail::send('template_builder.template-detail', $data, function ($message) use ($subject, $campaignEmail, $getUserActiveEmailDetails, $sender_email, $sender_name) {
+                                    $message->to($campaignEmail->emails->email)
+                                        ->setFrom(
+                                            [$sender_email => $sender_name]
+                                        )
+                                        ->setSubject($subject);
                                 });
-                        } //else
+                            } //else
+                        }
                     }
+
+                    // reset to default configuration
+                    Mail::setSwiftMailer($backup);
+
+                    $tracker_uuid = $tracker->tracker;
+
+                    return $this->emailBounce($campaignEmails, $campaign_id, $tracker_uuid);
+
                 }
-
-                // reset to default configuration
-                Mail::setSwiftMailer($backup);
-
-                $tracker_uuid = $tracker->tracker;
-
-                return $this->emailBounce($campaignEmails, $campaign_id, $tracker_uuid);
-
-			}
+            }
+        } catch (Exception $exception) {
+            print_r($exception);
         }
     }
 
@@ -254,26 +258,32 @@ class SendEmails extends Command
                  */            
                 $email_limit = EmailSMSLimitRate::where('owner_id', $owner_id)
                                                 ->first();
-                /**
-                 * Decreament from limit
-                 */
-                if($email_limit->email > 0) {
-                    EmailSMSLimitRate::where('owner_id', $owner_id)
-                                    ->decrement('email', count($campaignEmails));
+
+                if (!is_null($email_limit)) {
+                    /**
+                     * Decreament from limit
+                     */
+                    if ($email_limit->email > 0) {
+                        EmailSMSLimitRate::where('owner_id', $owner_id)
+                            ->decrement('email', count($campaignEmails));
+                    }
                 }
+
                 /**
                  * Check Current Limit
                  */
                 $current_email_limit = EmailSMSLimitRate::where('owner_id', $owner_id)
                                                         ->first();
-                /**
-                 * Updating Due limit into Zero
-                 */
-                if ($current_email_limit->email <= 0) {
-                    $current_email_limit->email = 0;
-                    $current_email_limit->save();
-                
+        if (!is_null($current_email_limit)) {
+            /**
+             * Updating Due limit into Zero
+             */
+            if ($current_email_limit->email <= 0) {
+                $current_email_limit->email = 0;
+                $current_email_limit->save();
+
             }
+        }
 
 
                 /**
