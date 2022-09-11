@@ -113,7 +113,7 @@ class CampaignController extends Controller
     public function create()
     {
 
-        if (templateCount() > 0 && smsTemplateCount() > 0) {
+        if (templateCount() > 0 || smsTemplateCount() > 0) {
                 return view('campaign.set_campaign');
             }else{
                 Alert::warning(translate('Warning'), translate('You have No Email Template & SMS Body. Please Create An Email Template & SMS Body First.'));
@@ -582,7 +582,6 @@ class CampaignController extends Controller
                                 user_email_limit_decrement(trimDomain(full_domain())); // user_email_limit_decrement
 
                                 $data['tracker'] = $tracker;
-                                dd($data);
                                 Mail::send('template_builder.template-detail', $data, function($message) use ($subject, $campaignEmail, $get_sender_email_address) {
                                     $message->to($campaignEmail->emails->email)
                                             ->setFrom(
@@ -637,7 +636,6 @@ class CampaignController extends Controller
             }
 
         } catch (\Throwable $th) {
-            print_r($th->getMessage());die;
             Alert::error(translate('Whoops'), translate('Something went wrong try again'));
             return back()->withErrors($th->getMessage());
         }

@@ -74,8 +74,8 @@ Route::group(['middleware' => ['auth', 'email.verified','installed', 'saas.user.
     Route::post('/campaign/schedule-email/campaign-{campaign_id}/template-{template_id}/store', [CampaignController::class, 'scheduleSendEmailStore'])
         ->name('campaign.schedule.email.store')->middleware('saas.expiry'); 
 
-    Route::get('/campaign/schedule-emails', [CampaignController::class, 'scheduleSendEmails'])
-        ->name('campaign.schedule.emails'); 
+    Route::get('/campaign/schedule-emails/list', [CampaignController::class, 'scheduleSendEmails'])
+        ->name('campaign.schedule.emails');
 
     Route::get('/campaign/schedule-email/delete/{schedule_id}', [CampaignController::class, 'scheduleSendEmailDelete'])
         ->name('campaign.schedule.email.delete'); 
