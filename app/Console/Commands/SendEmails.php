@@ -82,19 +82,36 @@ class SendEmails extends Command
 
                     $smtp_server = Campaign::where('id', $campaign_id)->first()->smtp_server_id; // version 3.0.0
 
-                    $getUserActiveEmailDetails = EmailService::where('active', 1)
-                        ->where('user_id', $owner_id)
-                        ->select(
-                            'id',
-                            'driver',
-                            'host',
-                            'port',
-                            'username',
-                            'password',
-                            'encryption',
-                            'from',
-                            'from_name')
-                        ->first();
+                    $user = User::where('id', $owner_id)->first();
+                    if ($user->user_type == 'Admin') {
+                        $getUserActiveEmailDetails = EmailService::where('active', 1)
+                            ->where('id', $smtp_server)
+                            ->select(
+                                'id',
+                                'driver',
+                                'host',
+                                'port',
+                                'username',
+                                'password',
+                                'encryption',
+                                'from',
+                                'from_name')
+                            ->first();
+                    } else {
+                        $getUserActiveEmailDetails = EmailService::where('active', 1)
+                            ->where('user_id', $owner_id)
+                            ->select(
+                                'id',
+                                'driver',
+                                'host',
+                                'port',
+                                'username',
+                                'password',
+                                'encryption',
+                                'from',
+                                'from_name')
+                            ->first();
+                    }
 
                     $sender_email = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first()->sender_email_address;
                     $sender_name = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first()->sender_name;
