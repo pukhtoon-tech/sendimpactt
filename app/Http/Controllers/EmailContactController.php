@@ -134,7 +134,8 @@ class EmailContactController extends Controller
       }
       
       $request->validate([
-            'name' => 'required'
+            'fname' => 'required',
+            'lname' => 'required'
         ]);
 
          try {
@@ -144,11 +145,43 @@ class EmailContactController extends Controller
 
         if ($email_update != null) {
             $email_update->owner_id = userId();
-            $email_update->name = $request->name;
+            $email_update->name = $request->fname . ' ' . $request->lname;
+            $email_update->first_name = $request->fname;
+            $email_update->last_name = $request->lname;
+            $email_update->company_name = $request->cname;
             $email_update->email = $request->email;
             $email_update->country_code = $request->country_code;
             $email_update->phone = $request->phone;
             $email_update->save();
+
+            if ($request->groups) {
+                print_r($request->groups);die;
+                if (empty($request->groups)) {
+                    die;
+                }
+                $list = array();
+                foreach ($request->groups as $val) {
+                    $check_email = EmailListGroup::where('email_group_id', $val)->where('email_id', $email_update->id)->first();
+                    if ($check_email == null) {
+                        $data = array(
+                            'email_group_id' => $val,
+                            'email_id' => $email_update->id,
+                            'owner_id' => \Illuminate\Support\Facades\Auth::id()
+                        );
+                        array_push($list, $data);
+                    }
+                }
+
+                EmailListGroup::insert(
+                    $list
+                );
+                /*
+                                $group = new EmailListGroup();
+                                $group->email_group_id = $group_id;
+                                $group->email_id = $email;
+                                $group->owner_id = Auth::user()->id;
+                                $group->save();*/
+            }
             Alert::success(translate('Success'), translate('Information Updated'));
             return back();
         } else{
