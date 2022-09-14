@@ -202,6 +202,22 @@ function emailGroupCount()
     return EmailGroup::Active()->where('owner_id', Auth::user()->id)->where('type', 'email')->count();
 }
 
+function allEmailGroupCount()
+{
+    return EmailGroup::Active()->where('owner_id', Auth::user()->id)->count();
+}
+
+
+function selectedUserEmailGroups($id, $gID)
+{
+    $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $id)->where('email_group_id', $gID)->get();
+    if (count($data) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // SMSGroupCount
 function SMSGroupCount()
 {

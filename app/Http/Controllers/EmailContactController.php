@@ -140,7 +140,7 @@ class EmailContactController extends Controller
 
          try {
             
-         
+
         $email_update = EmailContact::where('id', $id)->first();
 
         if ($email_update != null) {
@@ -150,37 +150,31 @@ class EmailContactController extends Controller
             $email_update->last_name = $request->lname;
             $email_update->company_name = $request->cname;
             $email_update->email = $request->email;
-            $email_update->country_code = $request->country_code;
+            if ($request->phone = '') {
+                $email_update->country_code = $request->country_code;
+            }
             $email_update->phone = $request->phone;
             $email_update->save();
 
             if ($request->groups) {
-                print_r($request->groups);die;
-                if (empty($request->groups)) {
-                    die;
-                }
+                EmailListGroup::where('owner_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email_update->id)->delete();
                 $list = array();
                 foreach ($request->groups as $val) {
-                    $check_email = EmailListGroup::where('email_group_id', $val)->where('email_id', $email_update->id)->first();
-                    if ($check_email == null) {
-                        $data = array(
-                            'email_group_id' => $val,
-                            'email_id' => $email_update->id,
-                            'owner_id' => \Illuminate\Support\Facades\Auth::id()
-                        );
-                        array_push($list, $data);
-                    }
+                    $data = array(
+                        'email_group_id' => $val,
+                        'email_id' => $email_update->id,
+                        'owner_id' => \Illuminate\Support\Facades\Auth::id(),
+                        'created_at' => \Illuminate\Support\Carbon::now(),
+                        'updated_at' => \Illuminate\Support\Carbon::now(),
+                    );
+                    array_push($list, $data);
                 }
 
                 EmailListGroup::insert(
                     $list
                 );
-                /*
-                                $group = new EmailListGroup();
-                                $group->email_group_id = $group_id;
-                                $group->email_id = $email;
-                                $group->owner_id = Auth::user()->id;
-                                $group->save();*/
+            } else {
+                EmailListGroup::where('owner_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email_update->id)->delete();
             }
             Alert::success(translate('Success'), translate('Information Updated'));
             return back();
