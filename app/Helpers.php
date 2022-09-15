@@ -2201,9 +2201,12 @@ function emailGroupEmails($group_id)
          */
 
         $cols = ['id', 
-            'owner_id', 
-            'name', 
-            'email', 
+            'owner_id',
+            'first_name',
+            'last_name',
+            'company_name',
+            'name',
+            'email',
             'country_code', 
             'phone', 
             'favourites', 

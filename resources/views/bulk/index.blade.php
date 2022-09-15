@@ -113,6 +113,7 @@
     </div>
 
     <div class="box text-center mt-3">
+        Need to change the image as per new Table Structure
         <img src="{{ asset('sample/csv.png') }}" alt="sample-csv" class="w-full">
     </div>
 

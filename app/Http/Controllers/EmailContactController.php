@@ -563,13 +563,13 @@ class EmailContactController extends Controller
       }
 
       try {
-           $request->validate([
+           /*$request->validate([
             'csv' => 'required|max:20000|mimes:csv',
             ],[
                 'csv.required' => 'Upload file is required',
                 'csv.max' => 'File size must be smaller then 20MB',
                 'csv.mimes' => 'File must be csv',
-            ]);
+            ]);*/
 
             if (File::exists(public_path('uploads/csv/' . Auth::user()->id . '.csv'))) {
                 File::delete(public_path('uploads/csv/' . Auth::user()->id . '.csv'));
@@ -588,6 +588,9 @@ class EmailContactController extends Controller
                         $email = new EmailContact;
                         $email->owner_id = Auth::user()->id;
                         $email->name = $value['name'];
+                        $email->first_name = $value['first_name'];
+                        $email->last_name = $value['last_name'];
+                        $email->company_name = $value['company_name'];
                         $email->email = $value['email'];
                         $email->country_code = $value['country_code'];
                         $email->phone = $value['phone'];
@@ -638,8 +641,11 @@ class EmailContactController extends Controller
                 $output = fopen("php://output", "w");  
 
                 fputcsv($output, array('id', 
-                                       'owner_id', 
-                                       'name', 
+                                       'owner_id',
+                                       'first_name',
+                                       'last_name',
+                                       'company_name',
+                                       'name',
                                        'email', 
                                        'country_code', 
                                        'phone', 
@@ -652,7 +658,10 @@ class EmailContactController extends Controller
                                        'updated_at')
                                     );  
 
-                $query = "SELECT * from email_contacts ORDER BY id DESC"; 
+                $id = \Illuminate\Support\Facades\Auth::id();
+                $query = "SELECT id, owner_id, first_name, last_name, company_name, name, email, country_code, phone, 
+                                       favourites, blocked, trashed, is_subscribed, deleted_at, created_at, updated_at 
+                            from email_contacts where owner_id = $id ORDER BY id DESC";
 
                 $result = mysqli_query($connect, $query);
 
