@@ -587,7 +587,7 @@ class EmailContactController extends Controller
                     if (isset($value['owner_id'])) {
                         $email = new EmailContact;
                         $email->owner_id = Auth::user()->id;
-                        $email->name = $value['name'];
+                        $email->name = $value['first_name'] . ' ' . $value['last_name'];
                         $email->first_name = $value['first_name'];
                         $email->last_name = $value['last_name'];
                         $email->company_name = $value['company_name'];
