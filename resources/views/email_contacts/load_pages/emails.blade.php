@@ -34,7 +34,44 @@
                                 <x-feathericon-file-text/>
                             </span> 
                         </a>
-                        
+                        <a class="w-15 h-5 ml-5 flex items-center justify-center dark:text-gray-30"> | </a>
+                    </div>
+
+                    <style>
+                        .iconColor {
+                            color: #1C3FAA;
+                        }
+                    </style>
+                    <div class="flex items-center mt-3 sm:mt-0 border-t sm:border-0 border-gray-200 pt-5 sm:pt-0 mt-5 sm:mt-0 -mx-5 sm:mx-0 px-5 sm:px-0">
+                        <a href="javascript:void(0)" onclick="getFavourites()" class="activeFavourites w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300" title="@translate(Favourites List)">
+                            <x-feathericon-star class="iconColor" />
+                        </a>
+                        <a href="javascript:void(0)" onclick="getFavourites()" class="activeFavourites w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300" title="@translate(Favourites List)">
+                            <x-feathericon-star class="iconColor" />
+                        </a>
+                        <a href="javascript:;" onclick="pageLoad()" class="w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300" title="@translate(Fav)">
+                            <x-feathericon-refresh-cw/>
+                        </a>
+                        <a href="javascript:;" class="w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300 favourites-all" title="@translate(Add to favourite)">
+                            <x-feathericon-star/>
+                        </a>
+                        <a href="javascript:;" class="w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300 block-all" title="@translate(Blacklist email)">
+                            <x-feathericon-x-octagon/>
+                        </a>
+                        <a href="javascript:;" class="w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300 delete-all" title="@translate(Delete selected email)">
+                            <x-feathericon-trash/>
+                        </a>
+
+                        <a href="javascript:;" class="w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-300 send-email" title="@translate(Send test email)">
+                            <x-feathericon-send/>
+                        </a>
+
+                        <a href="{{ route('email.contacts.export') }}" title="@translate(Export CSV)" class="w-5 h-5 ml-5 flex items-center justify-center dark:text-gray-30">
+                            <span class="w-5 h-5 flex items-center justify-center">
+                                <x-feathericon-file-text/>
+                            </span>
+                        </a>
+
                     </div>
                     <div class="flex items-center sm:ml-auto">
                         <div class="dark:text-gray-300 ml-5">@translate(Total) {{ number_format(emailCount()) }} email(s)</div>
@@ -46,32 +83,51 @@
                     <table class='mx-auto w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
                         <thead class="bg-gray-900">
                             <tr class="text-white text-left">
-                                <th class="font-semibold text-sm uppercase px-6 py-4"> Users </th>
-                                <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Created </th>
-                                <th class="font-semibold text-sm uppercase px-6 py-4 text-right">Action</th>
+                                <th class="whitespace-no-wrap">@translate(SL.)</th>
+                                <th class="text-center whitespace-no-wrap">@translate(First Name)</th>
+                                <th class="text-center whitespace-no-wrap">@translate(Last Name)</th>
+                                <th class="text-center whitespace-no-wrap">@translate(Company Name)</th>
+                                <th class="text-center whitespace-no-wrap"><p>@translate(EMAIL)</p><hr><p>@translate(PHONE)</p></th>
+                                <th class="text-center whitespace-no-wrap">@translate(DATE)</th>
+                                <th class="text-center whitespace-no-wrap">@translate(ACTION)</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 myTable">
                             @forelse ($emails as $email)
                             <tr>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center space-x-6">
-                                        <div class="inline-flex w-10 h-10"> 
-                                            <img class='w-10 h-10 object-cover rounded-full' 
-                                                alt='{{ $email->email ?? 'No Email' }}' 
-                                                src='{{ emailAvatar($email->email ?? 'No Email') }}' /> 
-                                        </div>
-                                        <div>
-                                            <p> <label for="{{ $email->id }}">{{ $email->name ?? 'No name' }}</label> </p>
-                                            <p class="text-gray-500 text-sm font-semibold tracking-wide"> <label for="{{ $email->id }}">{{ Str::limit($email->email, 50) ?? 'No email address' }}</label></p>
-                                            <p class="text-gray-500 text-sm font-semibold tracking-wide"> <label for="{{ $email->id }}">
-                                                {{ $email->phone != null ?? '+'}}{{ $email->country_code }}{{ $email->phone ?? 'No phone number'}}
-                                                </label>
-                                            </p>
-                                        </div>
+                                <td class="text-center">
+                                    <div class="w-10 h-10 image-fit zoom-in">
+                                        <img alt="#{{$loop->iteration}}" class="tooltip rounded-full" src="{{ commonAvatar($loop->iteration) }}" title="{{ $loop->iteration }}">
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-center"> {{ $email->created_at->diffForHumans() }} </td>
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    {{ $email->first_name ?? $email->name ?? 'No first name' }}
+
+                                </td>
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    {{ $email->last_name ?? 'No last name' }}
+
+                                </td>
+
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    {{ $email->company_name ?? 'No company' }}
+
+                                </td>
+
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    <p class="text-gray-500 text-sm font-semibold tracking-wide">
+                                        <label for="{{ $email->id }}">{{ Str::limit($email->email, 50) ?? 'No email address' }}</label>
+                                    </p>
+                                    <hr>
+                                    <p class="text-gray-500 text-sm font-semibold tracking-wide">
+                                        <label for="{{ $email->id }}">{{ $email->phone != null ?? '+'}}{{ $email->country_code }}{{ $email->phone ?? 'No phone number'}}</label>
+                                    </p>
+                                </td>
+                                <td class="text-center tooltip" title="@translate(Mail Date)">{{ $email->created_at->format('Y-m-d') }}</td>
                                 <td class="py-4 text-right">
 
                                     <div class="flex-none flex justify-end mr-4">

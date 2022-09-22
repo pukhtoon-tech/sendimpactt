@@ -563,13 +563,6 @@ class EmailContactController extends Controller
       }
 
       try {
-           /*$request->validate([
-            'csv' => 'required|max:20000|mimes:csv',
-            ],[
-                'csv.required' => 'Upload file is required',
-                'csv.max' => 'File size must be smaller then 20MB',
-                'csv.mimes' => 'File must be csv',
-            ]);*/
 
             if (File::exists(public_path('uploads/csv/' . Auth::user()->id . '.csv'))) {
                 File::delete(public_path('uploads/csv/' . Auth::user()->id . '.csv'));
@@ -580,25 +573,54 @@ class EmailContactController extends Controller
                 $request->csv->move(public_path('/uploads/csv'), $imageName);
 
                 $file = asset('uploads/csv/' . Auth::user()->id . '.csv');
-                
+
                 $contacts = convert_csv_to_json($file);
 
                 foreach (json_decode($contacts, true) as $value) {
-                    if (isset($value['owner_id'])) {
-                        $email = new EmailContact;
-                        $email->owner_id = Auth::user()->id;
-                        $email->name = $value['first_name'] . ' ' . $value['last_name'];
-                        $email->first_name = $value['first_name'];
-                        $email->last_name = $value['last_name'];
-                        $email->company_name = $value['company_name'];
-                        $email->email = $value['email'];
-                        $email->country_code = $value['country_code'];
-                        $email->phone = $value['phone'];
-                        $email->favourites = $value['favourites'] ?? 0;
-                        $email->blocked = $value['blocked'] ?? 0;
-                        $email->trashed = $value['trashed'] ?? 0;
-                        $email->is_subscribed = $value['is_subscribed'] ?? 0;
-                        $email->save();
+                    $companyName = $value['company_name'] ?? null;
+                    $email1 = $value['email'] ?? null;
+                    $countryCode = $value['country_code'] ?? null;
+                    $phone = $value['phone'] ?? null;
+
+                    $companyName = trim($companyName);
+                    $email1 = trim($email1);
+                    $countryCode = trim($countryCode);
+                    $phone = trim($phone);
+
+
+                    $email = new EmailContact;
+                    $email->owner_id = Auth::user()->id;
+                    $email->name = $value['first_name'] . ' ' . $value['last_name'];
+                    $email->first_name = $value['first_name'];
+                    $email->last_name = $value['last_name'];
+                    $email->company_name = ($companyName == 'NULL' || $companyName == null ||
+                    $companyName == '') ? null : $companyName;
+                    $email->email = ($email1 == 'NULL' || $email1 == null ||
+                        $email1 == '') ? null : $email1;
+                    $email->country_code = ($countryCode == 'NULL' || $countryCode == null ||
+                        $countryCode == '' || $countryCode == 0) ? null : $countryCode;
+                    $email->phone = ($phone == 'NULL' || $phone == null ||
+                        $phone == '') ? null : $phone;
+                    $email->favourites = 0;
+                    $email->blocked = 0;
+                    $email->trashed = 0;
+                    $email->is_subscribed = 0;
+                    $email->file_name = $request->fileName ?? null;
+                    $email->save();
+                    if ($request->groups) {
+                        $list = array();
+                        foreach ($request->groups as $val) {
+                            $data = array(
+                                'email_group_id' => $val,
+                                'email_id' => $email->id,
+                                'owner_id' => \Illuminate\Support\Facades\Auth::id()
+                            );
+                            array_push($list, $data);
+                        }
+
+                        EmailListGroup::insert(
+                            $list
+                        );
                     }
                 }
             }

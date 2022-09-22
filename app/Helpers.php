@@ -2200,22 +2200,14 @@ function emailGroupEmails($group_id)
          * NEW CSV CONVERTER
          */
 
-        $cols = ['id', 
-            'owner_id',
+        $cols = [
             'first_name',
             'last_name',
             'company_name',
-            'name',
             'email',
             'country_code', 
-            'phone', 
-            'favourites', 
-            'blocked', 
-            'trashed', 
-            'is_subscribed', 
-            'deleted_at', 
-            'created_at', 
-            'updated_at'];
+            'phone'
+        ];
 
         $csv = file($csv_data);
         $output = [];
@@ -2225,7 +2217,7 @@ function emailGroupEmails($group_id)
                 $newLine = [];
                 $values = explode(',', $line);
                 foreach ($values as $col_index => $value) {
-                    if ($value != null) {
+                    if ($value != null && $value != '' && $value != 'NULL') {
                         $newLine[$cols[$col_index]] = $value;
                     }
                 }

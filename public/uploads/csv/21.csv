@@ -1,5 +1,5 @@
-id,owner_id,first_name,last_name,company_name,name,email,country_code,phone,favourites,blocked,trashed,is_subscribed,deleted_at,created_at,updated_at
-1,NULL,Mohammad Prince,mprince2k16@gmdasdasdaail.com,A,E,mprince2k16@gmdasdasdaail.com,880,1825731327,0,0,0,0,NULL,3/3/2021 10:09,3/3/2021 11:15
-2,NULL,mprince2k16,mprince2k16@gmail.com,B,E,mprince2k16@gmail.com,0,1825731327,0,0,0,1,NULL,3/3/2021 12:03,3/3/2021 12:16
-3,NULL,Mohammad Prince,mprince2k16@gmail.com,C,E,mprince2k16@gmail.com,93,NULL,0,0,0,0,NULL,8/3/2021 18:55,8/3/2021 18:55
-4,NULL,Mohammad Prince,mprince2k16@gmail.com,D,E,mprince2k16@gmail.com,93,NULL,0,0,0,0,NULL,9/3/2021 13:13,9/3/2021 13:13
+first_name,last_name,company_name,email,country_code,phone
+George,T. Evans,Mrsmants,A@yopmail.com,,NULL
+George1,G. Evans,Mrsmants1,B@yopmail.com,,NULL
+George2,H. Evans,Mrsmants2,NULL,93,123654789
+George3,I. Evans,Mrsmants3,NULL,93,12365479
