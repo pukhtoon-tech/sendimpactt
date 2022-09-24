@@ -186,8 +186,8 @@
             <img src="{{ avatar() }}" />
         </div>
         <div class="dropdown-box w-56">
-            <div class="dropdown-box__content box bg-theme-38 dark:bg-dark-6 text-white">
-                <div class="p-4 border-b border-theme-40 dark:border-dark-3">
+            <div class="dropdown-box__content box bg_theme_send dark:bg-dark-6 text-white">
+                <div class="p-4 border-b  dark:border-dark-3">
                     <div class="font-medium">{{ username() }}</div>
                     <div class="text-xs text-theme-41 dark:text-gray-600">{{ Auth::user()->user_type }}</div>
                     @can('Admin')
@@ -221,7 +221,7 @@
 
 
                 </div>
-                <div class="p-2 border-t border-theme-40 dark:border-dark-3">
+                <div class="p-2 border-t  dark:border-dark-3">
                     <a href="{{ route('logout') }}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md">
                         <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> @translate(Logout)
                     </a>

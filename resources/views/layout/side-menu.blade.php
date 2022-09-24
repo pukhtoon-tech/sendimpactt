@@ -438,14 +438,14 @@
             {{-- Contacts --}}
 
             <li>
-                <a href="{{ route('email_contacts.contacts') }}"
-                    class="side-menu {{ request()->routeIs('email_contacts.contacts') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('email_contacts.contacts') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('email.contacts.index') }}"
+                    class="side-menu {{ request()->routeIs('email.contacts.index') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('email.contacts.index') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="send"></i>
                         </div>
                         <div class="side-menu__title">
-                            @translate(Contacts New)
+                            @translate(Contacts)
                         </div>
                     </div>
                 </a>

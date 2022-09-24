@@ -21,7 +21,7 @@ function pageLoad(){
 }
 
 function getEmails(){
-    
+
     $('.activeEmail').addClass('bg-theme-22');
     $('.activeFavourites').removeClass('bg-theme-22');
     $('.activeBlocked').removeClass('bg-theme-22');
@@ -31,6 +31,38 @@ function getEmails(){
     $('.loader_card').removeClass('hidden');
     $('#loadPage').empty();
     $.get(emails_url, {_token:'{{ csrf_token() }}'},  function(data){
+        $('#loadPage').append(data);
+        $('.loader_card').addClass('hidden');
+    });
+}
+
+function getAllEmails(){
+
+    $('.activeEmail').removeClass('bg-theme-22');
+    $('.activeFavourites').addClass('bg-theme-22');
+    $('.activeBlocked').removeClass('bg-theme-22');
+    $('.activeTrashed').removeClass('bg-theme-22');
+
+    var all_emails_url = $('#allemails_url').val();
+    $('.loader_card').removeClass('hidden');
+    $('#loadPage').empty();
+    $.get(all_emails_url, {_token:'{{ csrf_token() }}'},  function(data){
+        $('#loadPage').append(data);
+        $('.loader_card').addClass('hidden');
+    });
+}
+
+function getAllPhone(){
+
+    $('.activeEmail').removeClass('bg-theme-22');
+    $('.activeFavourites').addClass('bg-theme-22');
+    $('.activeBlocked').removeClass('bg-theme-22');
+    $('.activeTrashed').removeClass('bg-theme-22');
+
+    var all_phone_url = $('#allphone_url').val();
+    $('.loader_card').removeClass('hidden');
+    $('#loadPage').empty();
+    $.get(all_phone_url, {_token:'{{ csrf_token() }}'},  function(data){
         $('#loadPage').append(data);
         $('.loader_card').addClass('hidden');
     });

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EmailListGroup;
 use Illuminate\Http\Request;
 use App\Exports\EmailContactExport;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 Use Alert;
 Use Auth;
@@ -202,6 +203,26 @@ class EmailContactController extends Controller
                               ->latest()
                               ->simplePaginate(20);
         return view('email_contacts.load_pages.emails', compact('emails'));
+    }
+
+    public function allEmails() {
+        $emails = EmailContact::where('owner_id', Auth::user()->id)
+            ->where('email', '!=', null)
+            ->orderBy('email')
+            ->Active()
+            ->latest()
+            ->simplePaginate(20);
+        return view('email_contacts.load_pages.all_emails', compact('emails'));
+    }
+
+    public function allPhones   () {
+        $emails = EmailContact::where('owner_id', Auth::user()->id)
+            ->where('phone', '!=', null)
+            ->orderBy('phone')
+            ->Active()
+            ->latest()
+            ->simplePaginate(20);
+        return view('email_contacts.load_pages.all_phones', compact('emails'));
     }
 
     /**
@@ -425,46 +446,95 @@ class EmailContactController extends Controller
 
      public function mailSearch(Request $request)
     {
-        $emails = EmailContact::where('email', 'LIKE' , '%' . $request->value . '%')->orderBy('email')->get();
+        $search = $request->value;
+        $emails = EmailContact::where(function ($q) use ($search) {
+
+                $q->orWhere('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                ->where('owner_id', \Illuminate\Support\Facades\Auth::id());
+            })->get();
+
+//        $emails = EmailContact::where('email', 'LIKE' , '%' . $request->value . '%')->orderBy('email')->get();
         $sendSearch = '';
 
-        foreach ($emails as $email)
-        {
-            $sendSearch = '<div class="intro-y">
-                            <div class="inline-block sm:block text-gray-700 dark:text-gray-500 bg-gray-100 dark:bg-dark-1 border-b border-gray-200 dark:border-dark-1">
-                                <div class="flex px-5 py-3">
-                                    <div class="w-56 flex-none flex items-center mr-10">
-                                        <input class="input flex-none border border-gray-500 checking" data-id="'.$email->id.'" name="check" type="checkbox">
-                                        <a href="javascript:;" class="w-5 h-5 flex-none ml-4 flex items-center justify-center text-gray-500">
-                                            <x-feathericon-star/>
+
+        if (count($emails) > 0) {
+            $sendSearch = '<thead class="bg-gray-900 height_45px">
+                            <tr class="text-white text-left">
+                                <th class="text-center whitespace-no-wrap">'. translate('SL') .'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("First Name").'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("Last Name").'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("Company Name").'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("EMAIL").'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("PHONE").'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("DATE").'</th>
+                                <th class="text-center whitespace-no-wrap">'.translate("ACTION").'</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 myTable">';
+            foreach ($emails as $index => $email) {
+                $loop = $index + 1;
+                $fav = ($email->favourites == 1) ? 'text-blue-300' : '';
+                $ph = ($email->phone != null) ? '+' : null;
+                $ph .= $email->country_code . $email->phone;
+                if ($email->email) {
+                    $em = $email->email;
+                } else {
+                    $em = 'No Email';
+                }
+
+                $sendSearch .= '<tr>
+                                <td class="text-center">
+                                   ' . $loop . '
+                                </td>   
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    ' . $email->first_name . '
+
+                                </td>
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    ' . $email->last_name . '
+
+                                </td>
+
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                    ' . $email->company_name . '
+
+                                </td>
+
+                                <td class="text-center tooltip" title="@translate(Recipient Email)">
+                                    <label for="{{ $email->id }}">' . Str::limit($email->email, 50) . '</label>
+                                </td>
+                                <td  class="text-center tooltip" title="@translate(Recipient Email)">
+                                    <label for="' . $email->id . '">' . $ph . '</label>
+                                </td>
+                                <td class="text-center tooltip" title="@translate(Mail Date)">' . $email->created_at->format('Y-m-d') . ' </td>
+                                <td class="py-4 text-center">
+
+                                    <div class="flex-none flex justify-end mr-4">
+                                        <input id="' . $email->id . '" class="input flex-none border border-gray-500 checking" data-id="' . $email->id . '"  data-email="' . $email->email . '" name="check" type="checkbox">
+                                        <a href="javascript:;" id="markAsFav" data-id="' . $email->id . '" class="w-5 h-5 flex-none ml-4 flex items-center justify-center text-gray-500">
+                                            <svg class="' . $fav . '" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                         </a>
-                                        <a href="javascript:;" class="w-5 h-5 flex-none ml-2 flex items-center justify-center text-gray-500">
-                                            <x-feathericon-trash/>
-                                        </a>
+
+                                    <a href="' . route('email.contact.show', $email->id) . '"
+                                        class="w-5 h-5 flex-none ml-4 flex items-center justify-center text-gray-500 tooltip"
+                                        title="@translate(Edit)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    </a>
+                                        
                                         <div class="w-6 h-6 flex-none image-fit relative ml-5 email">
-                                            <img alt="'. $email->email .'" class="rounded-full" src="'. emailAvatar($email->email) .'">
+                                            <img alt="' . $em . '" class="rounded-full" src="' . emailAvatar($em) . '">
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-3 w-full gap-4">
-                                        <div class="w-64 sm:w-auto truncate mr-10">
-                                        <span class="inbox__item--highlight">'. $email->email .'</span>
-                                    </div>
-
-                                    <div class="w-64 sm:w-auto truncate mr-10">
-                                        <span class="inbox__item--highlight">'. $email->name .'</span>
-                                    </div>
-
-                                    <div class="w-64 sm:w-auto truncate mr-10">
-                                        <span class="inbox__item--highlight">'. $email->phone .'</span>
-                                    </div>
-                                    </div>
-
-
-                                    <div class="inbox__item--time whitespace-no-wrap ml-auto pl-10">'. $email->created_at .'</div>
-                                </div>
-                            </div>
-                        </div>';
+                                </td>
+                            </tr>';
+            }
+            $sendSearch .= '</tbody>';
         }
 
         return $sendSearch;

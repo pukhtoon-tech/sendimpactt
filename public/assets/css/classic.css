@@ -1,5 +1,5 @@
 .app{
-    background-color: #23282D;
+    background-color: #20283E; /* old 2D2328 */
     overflow-y: hidden !important;
 }
 
@@ -107,6 +107,10 @@ html body {
     background-color: #3c444c;
     border-radius: 0;
 }
+.search_icon_mail {
+    right: 10px;
+}
+
 
 .side-nav>ul ul li>a {
     color: #ecf0f1 !important;
