@@ -71,7 +71,12 @@
                       </div>
                   </div>
                   <div class="overflow-x-auto sm:overflow-x-visible myTable">
-                      @forelse (App\Models\EmailContact::Active()->where('owner_id', Auth::user()->id)->latest()->get() as $email)
+                      @if($group->type == 'email')
+                      {{ $typee = 'email' }};
+                      @else
+                      {{ $typee = 'phone' }}
+                      @endif
+                      @forelse (App\Models\EmailContact::Active()->where($typee, '!=', null)->where('owner_id', Auth::user()->id)->latest()->get() as $email)
                           <div class="intro-y">
                               <div class="cursor-pointer inline-block sm:block text-gray-700 dark:text-gray-500 bg-gray-100 dark:bg-dark-1 border-b border-gray-200 dark:border-dark-1">
                                   <div class="flex px-5 py-3">
@@ -100,7 +105,7 @@
                                       </div>
 
                                       <div class="w-64 sm:w-auto truncate mr-10">
-                                          <span class="inbox__item--highlight">+{{ $email->country_code }}{{ $email->phone }}</span>
+                                          <span class="inbox__item--highlight">{{ $email->country_code != null ? '+' : '' }}{{ $email->country_code }}{{ $email->phone }}</span>
                                       </div>
                                       </div>
 

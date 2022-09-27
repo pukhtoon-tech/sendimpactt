@@ -43,6 +43,7 @@ use App\Models\EmailTracker;
 use App\Models\ScheduleEmail;
 use App\Models\ApiKey;
 use App\Models\VoiceServer;
+use Illuminate\Support\Facades\Auth;
 
 function formatCode($code)
 {
@@ -206,6 +207,36 @@ function allEmailGroupCount()
 {
     return EmailGroup::Active()->where('owner_id', Auth::user()->id)->count();
 }
+
+function getGroupNameOrID($email_id)
+{
+
+     $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $email_id)->pluck('email_group_id')->toArray();
+     if (count($data) > 0 ) {
+         return EmailGroup::Active()->where('owner_id', Auth::id())->whereIn('id', $data)->get();
+     } else {
+         return array();
+     }
+}
+
+function getGroupNameOrIDBySms($email_id) {
+    $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $email_id)->pluck('email_group_id')->toArray();
+    if (count($data) > 0 ) {
+        return EmailGroup::Active()->where('owner_id', Auth::id())->where('type', 'sms')->whereIn('id', $data)->get();
+    } else {
+        return array();
+    }
+}
+
+function getGroupNameOrIDByEmail($email_id) {
+    $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $email_id)->pluck('email_group_id')->toArray();
+    if (count($data) > 0 ) {
+        return EmailGroup::Active()->where('owner_id', Auth::id())->where('type', 'email')->whereIn('id', $data)->get();
+    } else {
+        return array();
+    }
+}
+
 
 
 function selectedUserEmailGroups($id, $gID)
@@ -2205,8 +2236,8 @@ function emailGroupEmails($group_id)
             'last_name',
             'company_name',
             'email',
-            'country_code', 
-            'phone'
+            'phone',
+            'country_code'
         ];
 
         $csv = file($csv_data);
@@ -2235,7 +2266,7 @@ function emailGroupEmails($group_id)
 
     function csv_path()
     {
-        return public_path('sample_data.csv');
+        return public_path('sample.csv');
     }
 
     /**

@@ -528,14 +528,14 @@
             {{-- Groups --}}
 
             <li>
-                <a href="{{ route('group.group_two') }}"
-                    class="side-menu {{ request()->routeIs('group.group_two') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('group.group_two') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('group.index') }}"
+                    class="side-menu {{ request()->routeIs('group.index') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('group.index') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="users"></i>
                         </div>
                         <div class="side-menu__title">
-                            @translate(Groups New)
+                            @translate(Groups)
                         </div>
                     </div>
                 </a>

@@ -59,6 +59,7 @@
                                     <div class="mt-6">
                                         <div class="input-form">
                                             <button type="submit" class="button w-24 bg-theme-1 text-white">Import</button>
+                                            <a href="{{ route('bulk.sample.csv') }}" class="button w-24 bg-theme-1 text-white">Sample Sheet</a>
                                         </div>
                                     </div>
 
@@ -110,7 +111,6 @@
                             </div>
                             <div class="text-center mt-6">
                                 <a href="{{ route('bulk.export') }}" class="button w-24 bg-theme-1 text-white">Export Contacts</a>
-                                <a href="{{ route('bulk.sample.csv') }}" class="button w-24 bg-theme-1 text-white">Sample Sheet</a>
                             </div>
 
                         </div>

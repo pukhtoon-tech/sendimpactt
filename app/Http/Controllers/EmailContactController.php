@@ -452,7 +452,10 @@ class EmailContactController extends Controller
                 $q->orWhere('first_name', 'like', "%{$search}%")
                     ->orWhere('last_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
-                ->where('owner_id', \Illuminate\Support\Facades\Auth::id());
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->where('owner_id', \Illuminate\Support\Facades\Auth::id())
+                    ->Active()
+                    ->latest();
             })->get();
 
 //        $emails = EmailContact::where('email', 'LIKE' , '%' . $request->value . '%')->orderBy('email')->get();

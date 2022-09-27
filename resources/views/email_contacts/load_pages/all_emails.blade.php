@@ -2,7 +2,7 @@
                 
             <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
                 <div class="w-full flex sm:w-auto relative mr-auto mt-3 sm:mt-0">
-                    <input type="text" onkeyup="search(this)" class=" input w-full sm:w-64 box px-4 text-gray-700 dark:text-gray-300 placeholder-theme-13" placeholder="Search mail">
+                    <input type="text" onkeyup="search(this)" class=" input w-full sm:w-64 box px-4 text-gray-700 dark:text-gray-300 placeholder-theme-13" placeholder="Search">
                     <div class="absolute search_icon_mail">
                         <x-feathericon-search class="mt-2"/>
                     </div>
@@ -75,6 +75,7 @@
                                 <th class="text-center whitespace-no-wrap">@translate(Last Name)</th>
                                 <th class="text-center whitespace-no-wrap">@translate(Company Name)</th>
                                 <th class="text-center whitespace-no-wrap">@translate(EMAIL)</th>
+                                <th class="text-center whitespace-no-wrap">@translate(Groups)</th>
                                 <th class="text-center whitespace-no-wrap">@translate(DATE)</th>
                                 <th class="text-center whitespace-no-wrap">@translate(ACTION)</th>
                             </tr>
@@ -108,6 +109,17 @@
                                 <td class="text-center tooltip" title="@translate(Recipient Email)">
                                     <label for="{{ $email->id }}">{{ Str::limit($email->email, 50) ?? 'No email address' }}</label>
                                 </td>
+                                <td  class="text-center tooltip" title="@translate(Recipient Groups)">
+                                    @forelse(getGroupNameOrIDByEmail($email->id) as $key => $val)
+                                        @if($key != 0)
+                                            {{ ',' }}
+                                        @endif
+                                        {{ $val->name }}
+                                    @empty
+                                        No Group Assign
+                                    @endforelse
+                                </td>
+
                                 <td class="text-center tooltip" title="@translate(Mail Date)">{{ $email->created_at->format('Y-m-d') }}</td>
                                 <td class="py-4 text-center">
 

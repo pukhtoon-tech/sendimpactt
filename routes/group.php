@@ -51,5 +51,7 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::any('/group/update/{id}', [EmailGroupController::class, 'update'])
         ->name('group.update');
 
+    Route::get('/group/list/{group_id?}', [EmailGroupController::class, 'groupFilter'])
+        ->name('group.group_id');
 
 });
