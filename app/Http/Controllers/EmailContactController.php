@@ -11,10 +11,10 @@ use Illuminate\Http\Request;
 use App\Exports\EmailContactExport;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-Use Alert;
-Use Auth;
-Use Carbon\Carbon;
-Use File;
+use Alert;
+use Auth;
+use Carbon\Carbon;
+use File;
 
 class EmailContactController extends Controller
 {
@@ -27,6 +27,7 @@ class EmailContactController extends Controller
     {
         return view('email_contacts.index');
     }
+
     public function index_two()
     {
         return view('email_contacts.contacts');
@@ -35,16 +36,16 @@ class EmailContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
         $request->validate([
             'fname' => 'required',
@@ -53,8 +54,76 @@ class EmailContactController extends Controller
         ]);
 
 
-
         try {
+            if (!is_null($request->email)) {
+                $email = EmailContact::where('email', $request->email)
+                    ->where('owner_id', userId())
+                    ->where('deleted_at', null)->first();
+                if ($email != null) {
+                    $email->update(array(
+                        'owner_id' => userId(),
+                        'name' => $request->fname . ' ' . $request->lname,
+                        'first_name' => $request->fname,
+                        'last_name' => $request->lname,
+                        'company_name' => $request->cname,
+                        'country_code' => $request->country_code,
+                        'phone' => $request->phone,
+                    ));
+
+                    if ($request->groups) {
+                        $list = array();
+                        foreach ($request->groups as $val) {
+                            $data = array(
+                                'email_group_id' => $val,
+                                'email_id' => $email->id,
+                                'owner_id' => userId()
+                            );
+                            array_push($list, $data);
+                        }
+
+                        EmailListGroup::insert(
+                            $list
+                        );
+                    }
+                    Alert::success(translate('Success'), translate('New Contact Stored'));
+                    return back();
+                }
+            }
+
+            if (!is_null($request->phone)) {
+                $email = EmailContact::where('phone', $request->phone)
+                    ->where('owner_id', userId())
+                    ->where('deleted_at', null)->first();
+
+                if ($email != null) {
+                    $email->update(array(
+                        'owner_id' => userId(),
+                        'name' => $request->fname . ' ' . $request->lname,
+                        'first_name' => $request->fname,
+                        'last_name' => $request->lname,
+                        'company_name' => $request->cname,
+                        'email' => $request->email,
+                    ));
+                    if ($request->groups) {
+                        $list = array();
+                        foreach ($request->groups as $val) {
+                            $data = array(
+                                'email_group_id' => $val,
+                                'email_id' => $email->id,
+                                'owner_id' => userId()
+                            );
+                            array_push($list, $data);
+                        }
+
+                        EmailListGroup::insert(
+                            $list
+                        );
+                    }
+                    Alert::success(translate('Success'), translate('New Contact Stored'));
+                    return back();
+                }
+            }
+
             $email = new EmailContact();
             $email->owner_id = userId();
             $email->name = $request->fname . ' ' . $request->lname;
@@ -73,29 +142,23 @@ class EmailContactController extends Controller
                         'email_group_id' => $val,
                         'email_id' => $email->id,
                         'owner_id' => \Illuminate\Support\Facades\Auth::id()
-                        );
+                    );
                     array_push($list, $data);
                 }
 
                 EmailListGroup::insert(
                     $list
                 );
-/*
-                $group = new EmailListGroup();
-                $group->email_group_id = $group_id;
-                $group->email_id = $email;
-                $group->owner_id = Auth::user()->id;
-                $group->save();*/
             }
 
-            Alert::success(translate('Success'), translate('New Email Contact Stored'));
+            Alert::success(translate('Success'), translate('New Contact Stored'));
             return back();
 
         } catch (\Throwable $th) {
             Alert::error(translate('Whoops'), translate('Something went wrong'));
             return back()->withErrors($th->getMessage());
         }
-        
+
     }
 
 
@@ -111,7 +174,7 @@ class EmailContactController extends Controller
 
             if ($email != null) {
                 return view('email_contacts.show', compact('email'));
-            } else{
+            } else {
                 Alert::error(translate('Whoops'), translate('No Email Found'));
                 return back();
             }
@@ -119,77 +182,77 @@ class EmailContactController extends Controller
             Alert::error(translate('Whoops'), translate('Something went wrong'));
             return back()->withErrors($th->getMessage());
         }
-        
+
     }
 
     /**
      * UPDATE
      */
 
-     public function update(Request $request, $id)
-     {
+    public function update(Request $request, $id)
+    {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
-      
-      $request->validate([
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
+
+        $request->validate([
             'fname' => 'required',
             'lname' => 'required'
         ]);
 
-         try {
-            
+        try {
 
-        $email_update = EmailContact::where('id', $id)->first();
 
-        if ($email_update != null) {
-            $email_update->owner_id = userId();
-            $email_update->name = $request->fname . ' ' . $request->lname;
-            $email_update->first_name = $request->fname;
-            $email_update->last_name = $request->lname;
-            $email_update->company_name = $request->cname;
-            $email_update->email = $request->email;
-            if ($request->phone = '') {
-                $email_update->country_code = $request->country_code;
-            }
-            $email_update->phone = $request->phone;
-            $email_update->save();
+            $email_update = EmailContact::where('id', $id)->first();
 
-            if ($request->groups) {
-                EmailListGroup::where('owner_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email_update->id)->delete();
-                $list = array();
-                foreach ($request->groups as $val) {
-                    $data = array(
-                        'email_group_id' => $val,
-                        'email_id' => $email_update->id,
-                        'owner_id' => \Illuminate\Support\Facades\Auth::id(),
-                        'created_at' => \Illuminate\Support\Carbon::now(),
-                        'updated_at' => \Illuminate\Support\Carbon::now(),
-                    );
-                    array_push($list, $data);
+            if ($email_update != null) {
+                $email_update->owner_id = userId();
+                $email_update->name = $request->fname . ' ' . $request->lname;
+                $email_update->first_name = $request->fname;
+                $email_update->last_name = $request->lname;
+                $email_update->company_name = $request->cname;
+                $email_update->email = $request->email;
+                if ($request->phone = '') {
+                    $email_update->country_code = $request->country_code;
                 }
+                $email_update->phone = $request->phone;
+                $email_update->save();
 
-                EmailListGroup::insert(
-                    $list
-                );
+                if ($request->groups) {
+                    EmailListGroup::where('owner_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email_update->id)->delete();
+                    $list = array();
+                    foreach ($request->groups as $val) {
+                        $data = array(
+                            'email_group_id' => $val,
+                            'email_id' => $email_update->id,
+                            'owner_id' => \Illuminate\Support\Facades\Auth::id(),
+                            'created_at' => \Illuminate\Support\Carbon::now(),
+                            'updated_at' => \Illuminate\Support\Carbon::now(),
+                        );
+                        array_push($list, $data);
+                    }
+
+                    EmailListGroup::insert(
+                        $list
+                    );
+                } else {
+                    EmailListGroup::where('owner_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email_update->id)->delete();
+                }
+                Alert::success(translate('Success'), translate('Information Updated'));
+                return back();
             } else {
-                EmailListGroup::where('owner_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email_update->id)->delete();
+                Alert::error(translate('Whoops'), translate('Something went wrong. Check user exist first.'));
+                return back();
             }
-            Alert::success(translate('Success'), translate('Information Updated'));
-            return back();
-        } else{
-            Alert::error(translate('Whoops'), translate('Something went wrong. Check user exist first.'));
-            return back();
-        }
 
         } catch (\Throwable $th) {
             Alert::error(translate('Whoops'), translate('Something went wrong'));
             return back()->withErrors($th->getMessage());
-         }
+        }
 
-     }
+    }
 
     /**
      * EMAILS
@@ -198,14 +261,15 @@ class EmailContactController extends Controller
     public function emails()
     {
         $emails = EmailContact::where('owner_id', Auth::user()->id)
-                              ->orderBy('email')
-                              ->Active()
-                              ->latest()
-                              ->simplePaginate(20);
+            ->orderBy('email')
+            ->Active()
+            ->latest()
+            ->simplePaginate(20);
         return view('email_contacts.load_pages.emails', compact('emails'));
     }
 
-    public function allEmails() {
+    public function allEmails()
+    {
         $emails = EmailContact::where('owner_id', Auth::user()->id)
             ->where('email', '!=', null)
             ->orderBy('email')
@@ -215,7 +279,8 @@ class EmailContactController extends Controller
         return view('email_contacts.load_pages.all_emails', compact('emails'));
     }
 
-    public function allPhones   () {
+    public function allPhones()
+    {
         $emails = EmailContact::where('owner_id', Auth::user()->id)
             ->where('phone', '!=', null)
             ->orderBy('phone')
@@ -231,9 +296,9 @@ class EmailContactController extends Controller
 
     public function emailList()
     {
-       
+
         return view('email_contacts.list.email');
-        
+
     }
 
     /**
@@ -242,47 +307,47 @@ class EmailContactController extends Controller
 
     public function phoneLIst()
     {
-       
+
         return view('email_contacts.list.phone');
-        
+
     }
 
     /**
      * favourites
      */
 
-    public function favourite ()
+    public function favourite()
     {
-     
-            $favourites = EmailContact::where('owner_id', Auth::user()->id)->orderBy('email')->Favourite()->latest()->get();
-            return view('email_contacts.load_pages.favourites', compact('favourites'));
-      
+
+        $favourites = EmailContact::where('owner_id', Auth::user()->id)->orderBy('email')->Favourite()->latest()->get();
+        return view('email_contacts.load_pages.favourites', compact('favourites'));
+
     }
 
     /**
      * blocked
      */
 
-    public function blocked ()
+    public function blocked()
     {
-       
-            $blocks = EmailContact::where('owner_id', Auth::user()->id)->orderBy('email')->Blocked()->latest()->get();
-            return view('email_contacts.load_pages.blocked', compact('blocks'));
-      
+
+        $blocks = EmailContact::where('owner_id', Auth::user()->id)->orderBy('email')->Blocked()->latest()->get();
+        return view('email_contacts.load_pages.blocked', compact('blocks'));
+
     }
 
     /**
      * unblockAll
      */
 
-    public function unblockAll (Request $request)
+    public function unblockAll(Request $request)
     {
-       
-            
-            $ids = $request->ids;
-            $trashing = EmailContact::whereIn('id',explode(",",$ids))->update(['blocked' => 0]);
-            return response()->json(['status'=>true,'message'=> translate("Email contact unblocked successfully.")]);
-     
+
+
+        $ids = $request->ids;
+        $trashing = EmailContact::whereIn('id', explode(",", $ids))->update(['blocked' => 0]);
+        return response()->json(['status' => true, 'message' => translate("Email contact unblocked successfully.")]);
+
     }
 
     /**
@@ -291,172 +356,171 @@ class EmailContactController extends Controller
 
     public function trashedBin()
     {
-   
-            
-            $trashes = EmailContact::where('owner_id', Auth::user()->id)->TrashedBin()->latest()->get();
-            return view('email_contacts.load_pages.trashed', compact('trashes'));
-      
+
+
+        $trashes = EmailContact::where('owner_id', Auth::user()->id)->TrashedBin()->latest()->get();
+        return view('email_contacts.load_pages.trashed', compact('trashes'));
+
     }
 
     /**
      * destroyAll
      */
 
-     public function destroyAll(Request $request)
+    public function destroyAll(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
             Alert::warning('warning', 'This is demo purpose only');
             return back();
         }
-            
+
         $ids = $request->ids;
-        $trashing = EmailContact::whereIn('id',explode(",",$ids))->update(['trashed' => 1]);
-        EmailContact::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['status'=>true,'message'=> translate("Email contact deleted successfully.")]);
-      
+        $trashing = EmailContact::whereIn('id', explode(",", $ids))->update(['trashed' => 1]);
+        EmailContact::whereIn('id', explode(",", $ids))->delete();
+        return response()->json(['status' => true, 'message' => translate("Email contact deleted successfully.")]);
+
     }
 
     /**
      * destroy
      */
 
-     public function destroy($id)
+    public function destroy($id)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
-      
-            
-            EmailContact::where('id',$id)->delete();
-
-            $checkID = CampaignEmail::where('email_id', $id)->first();
-
-            if ($checkID != null) {
-                CampaignEmail::where('email_id', $id)->delete();
-            }
-
-            Alert::success(translate('Deleted'), translate('Contact Deleted'));
+            Alert::warning('warning', 'This is demo purpose only');
             return back();
-      
+        }
+
+
+        EmailContact::where('id', $id)->delete();
+
+        $checkID = CampaignEmail::where('email_id', $id)->first();
+
+        if ($checkID != null) {
+            CampaignEmail::where('email_id', $id)->delete();
+        }
+
+        Alert::success(translate('Deleted'), translate('Contact Deleted'));
+        return back();
+
     }
 
     /**
      * restoreAll
      */
 
-     public function restoreAll(Request $request)
+    public function restoreAll(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
-   
-            
-            $ids = $request->ids;
-            EmailContact::whereIn('id',explode(",",$ids))->restore();
-            $trashing = EmailContact::whereIn('id',explode(",",$ids))->update(['trashed' => 0]);
-            return response()->json(['status'=>true,'message'=> translate("Email contact restored successfully.")]);
-       
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
+
+
+        $ids = $request->ids;
+        EmailContact::whereIn('id', explode(",", $ids))->restore();
+        $trashing = EmailContact::whereIn('id', explode(",", $ids))->update(['trashed' => 0]);
+        return response()->json(['status' => true, 'message' => translate("Email contact restored successfully.")]);
+
     }
 
     /**
      * destroy
      */
 
-     public function permanentDestroyAll(Request $request)
+    public function permanentDestroyAll(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
-      
-    
-            $ids = $request->ids;
-            EmailContact::whereIn('id',explode(",",$ids))->forceDelete();
-            return response()->json(['status'=>true,'message'=> translate("Email contact destroyed successfully.")]);
-     
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
+
+
+        $ids = $request->ids;
+        EmailContact::whereIn('id', explode(",", $ids))->forceDelete();
+        return response()->json(['status' => true, 'message' => translate("Email contact destroyed successfully.")]);
+
     }
 
     /**
      * blacklistAll
      */
 
-     public function blacklistAll(Request $request)
+    public function blacklistAll(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
-    
-            
-            $ids = $request->ids;
-            $trashing = EmailContact::whereIn('id',explode(",",$ids))->update(['blocked' => 1]);
-            return response()->json(['status'=>true,'message'=> translate("Email contact blacklisted successfully.")]);
-      
+
+        $ids = $request->ids;
+        $trashing = EmailContact::whereIn('id', explode(",", $ids))->update(['blocked' => 1]);
+        return response()->json(['status' => true, 'message' => translate("Email contact blacklisted successfully.")]);
+
     }
 
     /**
      * favouriteAll
      */
 
-     public function favouriteAll(Request $request)
+    public function favouriteAll(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
-      
-        
-            $ids = $request->ids;
-            $trashing = EmailContact::whereIn('id',explode(",",$ids))->update(['favourites' => 1]);
-            return response()->json(['status'=>true,'message'=> translate("Email contact added to favourites successfully.")]);
-       
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
+
+
+        $ids = $request->ids;
+        $trashing = EmailContact::whereIn('id', explode(",", $ids))->update(['favourites' => 1]);
+        return response()->json(['status' => true, 'message' => translate("Email contact added to favourites successfully.")]);
+
     }
 
     /**
      * dislikeAll
      */
 
-     public function dislikeAll(Request $request)
+    public function dislikeAll(Request $request)
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
-       
-    
-            $ids = $request->ids;
-            $trashing = EmailContact::whereIn('id',explode(",",$ids))->update(['favourites' => 0]);
-            return response()->json(['status'=>true,'message'=> translate("Email contact removed from favourites successfully.")]);
-      
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
+
+
+        $ids = $request->ids;
+        $trashing = EmailContact::whereIn('id', explode(",", $ids))->update(['favourites' => 0]);
+        return response()->json(['status' => true, 'message' => translate("Email contact removed from favourites successfully.")]);
+
     }
 
     /**
      * mailSearch
      */
 
-     public function mailSearch(Request $request)
+    public function mailSearch(Request $request)
     {
         $search = $request->value;
         $emails = EmailContact::where(function ($q) use ($search) {
 
-                $q->orWhere('first_name', 'like', "%{$search}%")
-                    ->orWhere('last_name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('phone', 'like', "%{$search}%")
-                    ->where('owner_id', \Illuminate\Support\Facades\Auth::id())
-                    ->Active()
-                    ->latest();
-            })->get();
+            $q->orWhere('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->where('owner_id', \Illuminate\Support\Facades\Auth::id())
+                ->Active()
+                ->latest();
+        })->get();
 
 //        $emails = EmailContact::where('email', 'LIKE' , '%' . $request->value . '%')->orderBy('email')->get();
         $sendSearch = '';
@@ -465,14 +529,14 @@ class EmailContactController extends Controller
         if (count($emails) > 0) {
             $sendSearch = '<thead class="bg-gray-900 height_45px">
                             <tr class="text-white text-left">
-                                <th class="text-center whitespace-no-wrap">'. translate('SL') .'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("First Name").'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("Last Name").'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("Company Name").'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("EMAIL").'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("PHONE").'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("DATE").'</th>
-                                <th class="text-center whitespace-no-wrap">'.translate("ACTION").'</th>
+                                <th class="text-center whitespace-no-wrap">' . translate('SL') . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("First Name") . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("Last Name") . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("Company Name") . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("EMAIL") . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("PHONE") . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("DATE") . '</th>
+                                <th class="text-center whitespace-no-wrap">' . translate("ACTION") . '</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 myTable">';
@@ -552,24 +616,23 @@ class EmailContactController extends Controller
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
-     
-            $ids = $request->ids;
-            $emails = EmailContact::whereIn('email',explode(",",$ids))
-                        ->get()
-                        ->pluck('email')
-                        ->toArray();
-            
-            foreach($emails as $email)
-            {
-                \Artisan::call('mail:send-test SendTestMail ' . $email ); // test mail
-            }
-            return response()->json(['status'=>true,'message'=> translate("Test mail sent successfully.")]);
-      
-        
+
+        $ids = $request->ids;
+        $emails = EmailContact::whereIn('email', explode(",", $ids))
+            ->get()
+            ->pluck('email')
+            ->toArray();
+
+        foreach ($emails as $email) {
+            \Artisan::call('mail:send-test SendTestMail ' . $email); // test mail
+        }
+        return response()->json(['status' => true, 'message' => translate("Test mail sent successfully.")]);
+
+
     }
 
 
@@ -581,9 +644,9 @@ class EmailContactController extends Controller
     {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
         try {
             return Excel::download(new EmailContactExport, 'users.csv');
@@ -597,52 +660,52 @@ class EmailContactController extends Controller
      * markAsRead
      */
 
-     function markAsRead(Request $request)
-     {
+    function markAsRead(Request $request)
+    {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
-         $markAsRead = EmailContact::where('id', $request->id)->first();
+        $markAsRead = EmailContact::where('id', $request->id)->first();
 
-            if ($markAsRead->favourites == 1) {
-                $markAsRead->favourites = 0;
-            }else{
-                $markAsRead->favourites = 1;
-            }
-            
-            $markAsRead->save();
-         
-            return response()->json('success', 200);
-     }
+        if ($markAsRead->favourites == 1) {
+            $markAsRead->favourites = 0;
+        } else {
+            $markAsRead->favourites = 1;
+        }
 
-     /**
-      * bulk csv
-      */
+        $markAsRead->save();
 
-      public function bulkCsv()
-      {
-         return view('bulk.index');
-      }
+        return response()->json('success', 200);
+    }
 
-      public function importCsv(Request $request)
-      {
+    /**
+     * bulk csv
+     */
+
+    public function bulkCsv()
+    {
+        return view('bulk.index');
+    }
+
+    public function importCsv(Request $request)
+    {
 
         if (env('DEMO_MODE') === "YES") {
-        Alert::warning('warning', 'This is demo purpose only');
-        return back();
-      }
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
-      try {
+        try {
 
             if (File::exists(public_path('uploads/csv/' . Auth::user()->id . '.csv'))) {
                 File::delete(public_path('uploads/csv/' . Auth::user()->id . '.csv'));
             }
 
             if ($request->hasFile('csv')) {
-                $imageName = Auth::user()->id.'.'.$request->csv->getClientOriginalExtension();
+                $imageName = Auth::user()->id . '.' . $request->csv->getClientOriginalExtension();
                 $request->csv->move(public_path('/uploads/csv'), $imageName);
 
                 $file = asset('uploads/csv/' . Auth::user()->id . '.csv');
@@ -661,23 +724,87 @@ class EmailContactController extends Controller
                     $phone = trim($phone);
 
 
+                    if (!is_null($email1)) {
+                        $checkedUser = EmailContact::where('email', $email1)
+                            ->where('owner_id', userId())
+                            ->where('deleted_at', null)->first();
+                        if ($checkedUser != null) {
+                            $checkedUser->update(array(
+                                'owner_id' => userId(),
+                                'name' => $request->fname . ' ' . $request->lname,
+                                'first_name' => $request->fname,
+                                'last_name' => $request->lname,
+                                'company_name' => $request->cname,
+                                'country_code' => $request->country_code,
+                                'phone' => $phone,
+                            ));
+
+                            if ($request->groups) {
+                                $list = array();
+                                foreach ($request->groups as $val) {
+                                    $data = array(
+                                        'email_group_id' => $val,
+                                        'email_id' => $checkedUser->id,
+                                        'owner_id' => userId()
+                                    );
+                                    array_push($list, $data);
+                                }
+
+                                EmailListGroup::insert(
+                                    $list
+                                );
+                            }
+                            continue;
+                        }
+                    }
+
+                    if (!is_null($phone)) {
+                        $checkedUser = EmailContact::where('phone', $phone)
+                            ->where('owner_id', userId())
+                            ->where('deleted_at', null)->first();
+
+                        if ($checkedUser != null) {
+                            $checkedUser->update(array(
+                                'owner_id' => userId(),
+                                'name' => $request->fname . ' ' . $request->lname,
+                                'first_name' => $request->fname,
+                                'last_name' => $request->lname,
+                                'company_name' => $request->cname,
+                                'email' => $email1,
+                            ));
+                            if ($request->groups) {
+                                $list = array();
+                                foreach ($request->groups as $val) {
+                                    $data = array(
+                                        'email_group_id' => $val,
+                                        'email_id' => $checkedUser->id,
+                                        'owner_id' => userId()
+                                    );
+                                    array_push($list, $data);
+                                }
+
+                                EmailListGroup::insert(
+                                    $list
+                                );
+                            }
+                            continue;
+                        }
+                    }
+
+
                     $email = new EmailContact;
                     $email->owner_id = Auth::user()->id;
                     $email->name = $value['first_name'] . ' ' . $value['last_name'];
                     $email->first_name = $value['first_name'];
                     $email->last_name = $value['last_name'];
                     $email->company_name = ($companyName == 'NULL' || $companyName == null ||
-                    $companyName == '') ? null : $companyName;
+                        $companyName == '') ? null : $companyName;
                     $email->email = ($email1 == 'NULL' || $email1 == null ||
                         $email1 == '') ? null : $email1;
                     $email->country_code = ($countryCode == 'NULL' || $countryCode == null ||
                         $countryCode == '' || $countryCode == 0) ? null : $countryCode;
                     $email->phone = ($phone == 'NULL' || $phone == null ||
                         $phone == '') ? null : $phone;
-                    $email->favourites = 0;
-                    $email->blocked = 0;
-                    $email->trashed = 0;
-                    $email->is_subscribed = 0;
                     $email->file_name = $request->fileName ?? null;
                     $email->save();
                     if ($request->groups) {
@@ -700,79 +827,79 @@ class EmailContactController extends Controller
 
             Alert::success(translate('Success'), translate('CSV Imported'));
             return back();
-          } catch (\Throwable $th) {
-              Alert::error(translate('Whoops'), translate('Something went wrong'));
-              return back()->withErrors($th->getMessage());
-          }
-
+        } catch (\Throwable $th) {
+            Alert::error(translate('Whoops'), translate('Something went wrong'));
+            return back()->withErrors($th->getMessage());
         }
 
+    }
 
-        /**
-         * EXPORT
-         */
 
-         public function exportCsv()
-         {
+    /**
+     * EXPORT
+     */
 
-            if (env('DEMO_MODE') === "YES") {
-                Alert::warning('warning', 'This is demo purpose only');
-                return back();
-            }
-            
-            try {
+    public function exportCsv()
+    {
 
-                $connect = mysqli_connect(
-                    env('DB_HOST'), 
-                    env('DB_USERNAME'), 
-                    env('DB_PASSWORD'),
-                    env('DB_DATABASE')
-                );
+        if (env('DEMO_MODE') === "YES") {
+            Alert::warning('warning', 'This is demo purpose only');
+            return back();
+        }
 
-                header('Content-Type: text/csv; charset=utf-8');
+        try {
 
-                header('Content-Disposition: attachment; filename=data.csv');  
+            $connect = mysqli_connect(
+                env('DB_HOST'),
+                env('DB_USERNAME'),
+                env('DB_PASSWORD'),
+                env('DB_DATABASE')
+            );
 
-                $output = fopen("php://output", "w");  
+            header('Content-Type: text/csv; charset=utf-8');
 
-                fputcsv($output, array('id', 
-                                       'owner_id',
-                                       'first_name',
-                                       'last_name',
-                                       'company_name',
-                                       'name',
-                                       'email', 
-                                       'country_code', 
-                                       'phone', 
-                                       'favourites', 
-                                       'blocked', 
-                                       'trashed', 
-                                       'is_subscribed', 
-                                       'deleted_at', 
-                                       'created_at', 
-                                       'updated_at')
-                                    );  
+            header('Content-Disposition: attachment; filename=data.csv');
 
-                $id = \Illuminate\Support\Facades\Auth::id();
-                $query = "SELECT id, owner_id, first_name, last_name, company_name, name, email, country_code, phone, 
-                                       favourites, blocked, trashed, is_subscribed, deleted_at, created_at, updated_at 
+            $output = fopen("php://output", "w");
+
+            fputcsv($output, array('id',
+                    'owner_id',
+                    'first_name',
+                    'last_name',
+                    'company_name',
+                    'name',
+                    'email',
+                    'country_code',
+                    'phone',
+                    'file_name',
+                    'favourites',
+                    'blocked',
+                    'trashed',
+                    'is_subscribed',
+                    'deleted_at',
+                    'created_at',
+                    'updated_at')
+            );
+
+            $id = \Illuminate\Support\Facades\Auth::id();
+            $query = "SELECT id, owner_id, first_name, last_name, company_name, name, email, country_code, phone, 
+                                       file_name, favourites, blocked, trashed, is_subscribed, deleted_at, created_at, updated_at 
                             from email_contacts where owner_id = $id ORDER BY id DESC";
 
-                $result = mysqli_query($connect, $query);
+            $result = mysqli_query($connect, $query);
 
-                while($row = mysqli_fetch_assoc($result))
-                {  
-                    fputcsv($output, $row);
-                }
-
-                fclose($output);
-
-            } catch (\Throwable $th) {
-                Alert::error(translate('Whoops'), translate('Something went wrong'));
-                return back()->withErrors($th->getMessage());
+            while ($row = mysqli_fetch_assoc($result)) {
+                fputcsv($output, $row);
             }
 
-         }
+            fclose($output);
+
+        } catch (\Throwable $th) {
+            Alert::error(translate('Whoops'), translate('Something went wrong'));
+            return back()->withErrors($th->getMessage());
+        }
+
+    }
 
     /**
      * DOWNLOAD CSV
@@ -799,14 +926,13 @@ class EmailContactController extends Controller
      */
     function fetch_data(Request $request)
     {
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             $emails = EmailContact::where('owner_id', Auth::user()->id)
-                                            ->whereNotNull('email')
-                                            ->orderBy('email')
-                                            ->Active()
-                                            ->latest()
-                                            ->simplePaginate(20);
+                ->whereNotNull('email')
+                ->orderBy('email')
+                ->Active()
+                ->latest()
+                ->simplePaginate(20);
             return view('email_contacts.load_pages.emails', compact('emails'));
         }
     }

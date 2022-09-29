@@ -38,9 +38,7 @@
                     <div class="mt-3">
                         <label>@translate(Description)</label>
                         <div class="mt-2">
-                            <textarea data-simple-toolbar="true" class="editor" name="description" data-parsley-required>
-                                
-                            </textarea>
+                            <textarea placeholder="Description here..." data-simple-toolbar="true" rows="3" maxlength="100" class="input w-full border mt-2" name="description" data-parsley-required></textarea>
                         </div>
                     </div>
 

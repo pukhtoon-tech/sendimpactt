@@ -7,15 +7,17 @@
 
         <i data-feather="chevron-right" class="breadcrumb__icon"></i>
 
+        <a href="{{ url()->previous() }}" class="btn btn-default">Back</a>
 
-        @for($i = 1; $i <= count(Request::segments()); $i++)
-            {{ucfirst(Request::segment($i))}}
 
-            @if ($i + 1 == count(Request::segments()))
-                <i data-feather="chevron-right" class="breadcrumb__icon"></i>
-            @endif
+{{--        @for($i = 1; $i <= count(Request::segments()); $i++)--}}
+{{--            {{ucfirst(Request::segment($i))}}--}}
 
-        @endfor
+{{--            @if ($i + 1 == count(Request::segments()))--}}
+{{--                <i data-feather="chevron-right" class="breadcrumb__icon"></i>--}}
+{{--            @endif--}}
+
+{{--        @endfor--}}
 
     </div>
     <!-- END: Breadcrumb -->
