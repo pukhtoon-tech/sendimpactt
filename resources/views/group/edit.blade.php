@@ -12,7 +12,7 @@
 
   <div class="intro-y box py-10 sm:py-20 mt-5">
       <div class="flex items-center ml-8">
-          <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+          <a href="{{ route('group.index') }}" class=""><x-feathericon-arrow-left /></a>
       </div>
         <div class="wizard flex lg:flex-row justify-center px-5 sm:px-20">
             <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
@@ -42,9 +42,10 @@
                     <div class="mt-3">
                         <label>@translate(Description)</label>
                         <div class="mt-2">
-                            <textarea data-simple-toolbar="true" class="editor" name="description">
-                                {{ strip_tags($group->description) }}
-                            </textarea>
+                            <textarea placeholder="Description here..."
+                                      data-simple-toolbar="true" rows="3" maxlength="100"
+                                      class="input w-full border mt-2"
+                                      name="description" data-parsley-required>{{ trim(strip_tags($group->description)) }}</textarea>
                         </div>
                     </div>
 

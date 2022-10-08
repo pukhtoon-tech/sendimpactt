@@ -10,6 +10,9 @@
     </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box py-10 sm:py-20 mt-5">
+        <div class="flex items-center ml-8">
+            <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+        </div>
 
         {{-- EMAILS OR GROUPS --}}
                 <div class="grid grid-cols-12 gap-6 mt-5">

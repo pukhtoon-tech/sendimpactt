@@ -325,14 +325,28 @@
 
             
             <li>
-                <a href="{{ route('template_builder') }}"
-                    class="side-menu {{ request()->routeIs('template_builder') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('template_builder') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('templates.index') }}"
+                    class="side-menu {{ request()->routeIs('templates.index') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('templates.index') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="git-pull-request"></i>
                         </div>
                         <div class="side-menu__title">
-                            @translate(Template Builder New)
+                            @translate(Email Template Builder)
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('builder.sms.templates') }}"
+                   class="side-menu {{ request()->routeIs('builder.sms.templates') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('builder.sms.templates') ? 'mldl-active-menu' : 'flex items-center' }}">
+                        <div class="side-menu__icon">
+                            <i data-feather="git-pull-request"></i>
+                        </div>
+                        <div class="side-menu__title">
+                            @translate(SMS Template Builder)
                         </div>
                     </div>
                 </a>
@@ -604,9 +618,9 @@
             </li>
 
             <li>
-                <a href="{{ route('campaign.sms-campaign') }}"
-                    class="side-menu {{ request()->routeIs('campaign.sms-campaign') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('campaign.sms-campaign') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('campaign.type', 'sms') }}"
+                    class="side-menu {{ request()->routeIs('campaign/type/sms') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('campaign/type/sms') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="git-merge"></i>
                         </div>
