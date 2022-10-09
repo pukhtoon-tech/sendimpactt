@@ -3140,6 +3140,12 @@ function getTokenUserId($token)
        return Campaign::where('type', $type)->latest()->get();
    }
 
+
+   function allCampaignsByCustomer($type)
+   {
+       return Campaign::where('type', $type)->Active()->where('owner_id', Auth::id())->latest()->get();
+   }
+
    // checkCampaignExistsInAutoresponder
     function checkCampaignExistsInAutoresponder($campaign_id)
     {

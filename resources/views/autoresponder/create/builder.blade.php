@@ -107,7 +107,7 @@
                     <ul id="allFacets" class="facet-list w-full h-full rounded" style="height: 1000px; overflow: auto;">
                        
                     </ul>
-                    <button type="submit" class="button text-white bg-theme-1 shadow-md mr-2 mt-2 w-full">Submit</button>
+                    <button type="submit" class="button text-white bg-theme-1 shadow-md mr-2 mt-2" style="float: right;">Submit</button>
                     </form>
                 </div>
 

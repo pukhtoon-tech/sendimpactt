@@ -38,7 +38,7 @@
                     <div class="input-form mt-3"> 
                         <label class="flex flex-col sm:flex-row"> @translate(Choose Campaign Server To Get Emails)*</label> 
                         <select class="w-full form-select sm:w-1/2" name="campaign_id" required>
-                            @forelse (allCampaigns('email') as $campaign)
+                            @forelse (allCampaignsByCustomer('email') as $campaign)
                                 <option value="{{ $campaign->id }}" 
                                         class="normal-case">
                                         {{ Str::camel($campaign->name) }}

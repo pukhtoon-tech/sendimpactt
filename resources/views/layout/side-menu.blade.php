@@ -605,8 +605,8 @@
 
             <li>
                 <a href="{{ route('campaign.type', 'email') }}"
-                    class="side-menu {{ request()->routeIs('campaign.type') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('campaign.type') ? 'mldl-active-menu' : 'flex items-center' }}">
+                    class="side-menu {{ request()->is('campaign/type/email') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->is('campaign/type/email') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="align-left"></i>
                         </div>
@@ -619,8 +619,8 @@
 
             <li>
                 <a href="{{ route('campaign.type', 'sms') }}"
-                    class="side-menu {{ request()->routeIs('campaign/type/sms') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('campaign/type/sms') ? 'mldl-active-menu' : 'flex items-center' }}">
+                    class="side-menu {{ request()->is('campaign/type/sms') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->is('campaign/type/sms') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="git-merge"></i>
                         </div>
@@ -837,41 +837,56 @@
 
             {{-- Campaign Log --}}
 
+
             <li>
-                <a href="javascript:;" class="side-menu {{
-                        request()->routeIs('logs.campaign.*') ? 'side-menu--active side-menu--open' : ''
-                    }}">
-
-                    <div class="{{ request()->routeIs('logs.campaign.*') ? 'mldl-active-menu' : 'flex items-center' }}">
-                        <div class="side-menu__icon">
-                            <i data-feather="activity"></i>
-                        </div>
-                        <div class="side-menu__title">
-                            @translate(Campaign Logs)
-                            <i data-feather="chevron-down" class="side-menu__sub-icon"></i>
-                        </div>
+                <a href="{{ route('logs.campaign.index') }}"
+                   class="side-menu {{ request()->routeIs('logs.campaign.index') ? 'side-menu--active' : '' }}">
+                    <div class="side-menu__icon">
+                        <i data-feather="activity"></i>
                     </div>
-
+                    <div class="side-menu__title">
+                        @translate(Campaign Logs)
+                    </div>
                 </a>
-
-                <ul class="d-none {{
-                        request()->routeIs('logs.campaign.*') ? 'side-menu__sub-open' : ''
-                    }}">
-
-                    <li>
-                        <a href="{{ route('logs.campaign.index') }}"
-                            class="side-menu {{ request()->routeIs('logs.campaign.index') ? 'side-menu--active' : '' }}">
-                            <div class="side-menu__icon">
-                                <i data-feather="align-left"></i>
-                            </div>
-                            <div class="side-menu__title">
-                                @translate(Log List)
-                            </div>
-                        </a>
-                    </li>
-
-                </ul>
             </li>
+
+
+
+{{--            <li>--}}
+{{--                <a href="javascript:;" class="side-menu {{--}}
+{{--                        request()->routeIs('logs.campaign.*') ? 'side-menu--active side-menu--open' : ''--}}
+{{--                    }}">--}}
+
+{{--                    <div class="{{ request()->routeIs('logs.campaign.*') ? 'mldl-active-menu' : 'flex items-center' }}">--}}
+{{--                        <div class="side-menu__icon">--}}
+{{--                            <i data-feather="activity"></i>--}}
+{{--                        </div>--}}
+{{--                        <div class="side-menu__title">--}}
+{{--                            @translate(Campaign Logs)--}}
+{{--                            <i data-feather="chevron-down" class="side-menu__sub-icon"></i>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                </a>--}}
+
+{{--                <ul class="d-none {{--}}
+{{--                        request()->routeIs('logs.campaign.*') ? 'side-menu__sub-open' : ''--}}
+{{--                    }}">--}}
+
+{{--                    <li>--}}
+{{--                        <a href="{{ route('logs.campaign.index') }}"--}}
+{{--                            class="side-menu {{ request()->routeIs('logs.campaign.index') ? 'side-menu--active' : '' }}">--}}
+{{--                            <div class="side-menu__icon">--}}
+{{--                                <i data-feather="align-left"></i>--}}
+{{--                            </div>--}}
+{{--                            <div class="side-menu__title">--}}
+{{--                                @translate(Log List)--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+
+{{--                </ul>--}}
+{{--            </li>--}}
 
             {{-- Task Manager --}}
 
@@ -1133,19 +1148,19 @@
                 </ul>
             </li>
 
-            <li>
-                <a href="{{ route('survey') }}"
-                    class="side-menu {{ request()->routeIs('survey') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->routeIs('survey') ? 'mldl-active-menu' : 'flex items-center' }}">
-                        <div class="side-menu__icon">
-                            <i data-feather="sliders"></i>
-                        </div>
-                        <div class="side-menu__title">
-                            @translate(Survey)
-                        </div>
-                    </div>
-                </a>
-            </li>
+{{--            <li>--}}
+{{--                <a href="{{ route('survey') }}"--}}
+{{--                    class="side-menu {{ request()->routeIs('survey') ? 'side-menu--active' : '' }}">--}}
+{{--                    <div class="{{ request()->routeIs('survey') ? 'mldl-active-menu' : 'flex items-center' }}">--}}
+{{--                        <div class="side-menu__icon">--}}
+{{--                            <i data-feather="sliders"></i>--}}
+{{--                        </div>--}}
+{{--                        <div class="side-menu__title">--}}
+{{--                            @translate(Survey)--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
 
             <li>
