@@ -108,7 +108,7 @@
                                 </div>
                             </td>
 
-                            <td class="text-center">{{ $campaign->created_at->diffForHumans() }}</td>
+                            <td class="text-center">{{ $campaign->created_at->format('Y-m-d') }}</td>
 
 
                             <td class="text-center">

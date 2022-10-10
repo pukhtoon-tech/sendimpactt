@@ -10,9 +10,20 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
             
             <div class="w-full sm:w-auto ml-2 sm:mt-0 sm:ml-auto md:ml-0">
-                <div class="text-right relative text-gray-700 dark:text-gray-300">
-                    <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search..." id="bounceIndex">
-                    <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
+                <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
+
+                    <a href="{{ route('bounce.check') }}"
+                       class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
+                       title="@translate(Add new Campaign)">
+                        @translate(Bounce Check)
+                    </a>
+
+                    <div class="w-full sm:w-auto ml-2 sm:mt-0 sm:ml-auto md:ml-0">
+                        <div class="text-right relative text-gray-700 dark:text-gray-300">
+                            <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search..." id="bounceIndex">
+                            <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -44,7 +55,7 @@
                             
                             <td class="text-center">{{ $bounce->campaign->name ?? 'N\A' }}</td>
 
-                            <td class="text-center">{{ $bounce->created_at->diffForHumans() ?? 'N\A' }}</td>
+                            <td class="text-center">{{ $bounce->created_at->format('Y-m-d') ?? 'N\A' }}</td>
 
                         </tr>
                     @empty

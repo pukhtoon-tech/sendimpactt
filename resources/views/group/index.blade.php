@@ -78,7 +78,7 @@
                                 </span>
                             </td>
 
-                            <td class="text-center">{{ $group->created_at->diffForHumans() }}</td>
+                            <td class="text-center">{{ $group->created_at->format('Y-m-d') }}</td>
 
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">

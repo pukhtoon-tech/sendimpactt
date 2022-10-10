@@ -109,11 +109,11 @@
                                     <label for="{{ $block->id }}">{{ Str::limit($block->email, 50) ?? 'No email address' }}</label>
                                 </td>
                                 <td class="text-center tooltip" title="@translate(Recipient Phone)">
-                                    <label for="{{ $email->id }}">{{ ($email->phone != null) ? ($email->country_code != null) ? '+' .$email->country_code . $email->phone  :  $email->phone  : 'No Phone No' }}</label>
+                                    <label for="{{ $block->id }}">{{ ($block->phone != null) ? ($block->country_code != null) ? '+' .$block->country_code . $block->phone  :  $block->phone  : 'No Phone No' }}</label>
                                 </td>
 
                                 <td  class="text-center tooltip" title="@translate(Recipient Groups)">
-                                    @forelse(getGroupNameOrID($email->id) as $key => $val)
+                                    @forelse(getGroupNameOrID($block->id) as $key => $val)
                                         @if($key != 0)
                                             {{ ',' }}
                                         @endif

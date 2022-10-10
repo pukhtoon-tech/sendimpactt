@@ -204,7 +204,7 @@ if(value.length > 0){
 
                         $('#resultOfBoundBox').removeClass('hidden');
 
-                        if(result.success == true)
+                        if(result.success == 'true')
                         {
                             $checkBounce = '<div class="rounded-md px-5 py-4 mb-2 bg-theme-9 text-white">\n' +
                                 '     <div class="flex items-center">\n' +
@@ -212,7 +212,15 @@ if(value.length > 0){
                                 '     </div>\n' +
                                 '     <div class="mt-3">Email address is exist also has MX and DNS record</div>\n' +
                                 ' </div>';
-                        }else{
+                        }else if(result.success == 'format'){
+                            $checkBounce = '<div class="rounded-md px-5 py-4 mb-2 bg-theme-6 text-white">\n' +
+                                '     <div class="flex items-center">\n' +
+                                '         <div class="font-medium text-lg">'+ result.email +'</div>\n' +
+                                '     </div>\n' +
+                                '     <div class="mt-3">Your Email format is not correct</div>\n' +
+                                ' Email Format should like this (example@example.com)\n'
+                                ' </div>';
+                        } else {
                             $checkBounce = '<div class="rounded-md px-5 py-4 mb-2 bg-theme-6 text-white">\n' +
                                 '     <div class="flex items-center">\n' +
                                 '         <div class="font-medium text-lg">'+ result.email +'</div>\n' +

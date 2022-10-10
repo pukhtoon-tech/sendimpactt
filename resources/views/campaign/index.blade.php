@@ -93,7 +93,7 @@
                                 </div>
                             </td>
 
-                            <td class="text-center w-40">{{ $campaign->created_at->diffForHumans() }}</td>
+                            <td class="text-center w-40">{{ $campaign->created_at->format('Y-m-d') }}</td>
 
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
