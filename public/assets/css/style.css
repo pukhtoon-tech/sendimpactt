@@ -740,7 +740,7 @@ select::-ms-expand {
 
 .preview-template{
     width: 100%;
-    height: 400px;
+    height: 150px;
     background-repeat: no-repeat;
     background-size: contain; /* <------------------------- */
 }

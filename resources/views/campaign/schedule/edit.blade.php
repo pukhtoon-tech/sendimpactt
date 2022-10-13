@@ -14,6 +14,9 @@
     </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y grid grid-cols-12 gap-6 mt-5">
+        <div class="flex items-center ml-8">
+            <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+        </div>
         <div class="col-span-12 lg:col-span-12">
             <!-- BEGIN: Basic Datepicker -->
             <div class="intro-y box">

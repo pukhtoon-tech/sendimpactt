@@ -2612,6 +2612,12 @@ function chatProviders()
         return EmailTracker::where('campaign_id', $id)->count();
     }
 
+    function campaignName($id) {
+        $data = Campaign::where('id', $id)->first();
+
+        return $data->name ?? 'Not Found';
+    }
+
 
     function calendar($date = null)
     {

@@ -77,10 +77,28 @@
                 @translate(Add New Email Campaign)
             </a>
 
+            <a href="{{ route('campaign.schedule.emails') }}"
+               class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
+               title="@translate(Add new Campaign)">
+                @translate(Scheduled Campaign)
+            </a>
+
+            <a href="{{ route('tracker.emails.index') }}"
+               class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
+               title="@translate(Add new Campaign)">
+                @translate(Campaign Tracker)
+            </a>
+
+            <a href="{{ route('logs.campaign.index') }}"
+               class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
+               title="@translate(Add new Campaign)">
+                @translate(Campaign Logs)
+            </a>
+
             <a href="{{ route('bounce.emails') }}"
                class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
                title="@translate(Add new Campaign)">
-                @translate(Email Bounced)
+                @translate(Bounced Email)
             </a>
 
             <div class="w-full sm:w-auto ml-2 sm:mt-0 sm:ml-auto md:ml-0">
