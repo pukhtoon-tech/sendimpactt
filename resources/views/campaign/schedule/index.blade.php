@@ -14,7 +14,9 @@
 
 
     <div class="grid grid-cols-12 gap-6 mt-5">
-       
+        <div class="flex items-center ml-8">
+            <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+        </div>
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
             <table class="table table-report -mt-2">

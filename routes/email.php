@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmailContactController;
+use Illuminate\Support\Facades\Route;
 use Auth;
 
 
@@ -25,6 +25,9 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::get('/contacts/list', [EmailContactController::class, 'index'])
         ->name('email.contacts.index');
 
+        Route::get('/contacts', [EmailContactController::class, 'index_two'])
+        ->name('email_contacts.contacts');
+
     Route::get('/email/list', [EmailContactController::class, 'emailList'])
         ->name('email.contacts.list');
 
@@ -33,6 +36,12 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
 
     Route::get('/email-contacts/emails', [EmailContactController::class, 'emails'])
         ->name('email.contacts.emails');
+
+    Route::get('/email-contacts/emails/all', [EmailContactController::class, 'allEmails'])
+        ->name('email.contacts.emails.all');
+
+    Route::get('/email-contacts/phone/all', [EmailContactController::class, 'allPhones'])
+        ->name('email.contacts.phones.all');
 
     Route::get('/email-contacts/favourite', [EmailContactController::class, 'favourite'])
         ->name('email.contacts.favourite');

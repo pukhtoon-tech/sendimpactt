@@ -9,8 +9,11 @@
         <h2 class="intro-y text-lg font-medium mr-auto">@translate(Group Information)</h2>
     </div>
     <!-- BEGIN: Wizard Layout -->
-    <div class="intro-y box py-10 sm:py-20 mt-5">
 
+  <div class="intro-y box py-10 sm:py-20 mt-5">
+      <div class="flex items-center ml-8">
+          <a href="{{ route('group.index') }}" class=""><x-feathericon-arrow-left /></a>
+      </div>
         <div class="wizard flex lg:flex-row justify-center px-5 sm:px-20">
             <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
                 <button class="w-10 h-10 rounded-full button text-gray-600 bg-gray-200 dark:bg-dark-1">1</button>
@@ -39,9 +42,10 @@
                     <div class="mt-3">
                         <label>@translate(Description)</label>
                         <div class="mt-2">
-                            <textarea data-simple-toolbar="true" class="editor" name="description">
-                                {{ strip_tags($group->description) }}
-                            </textarea>
+                            <textarea placeholder="Description here..."
+                                      data-simple-toolbar="true" rows="3" maxlength="100"
+                                      class="input w-full border mt-2"
+                                      name="description" data-parsley-required>{{ trim(strip_tags($group->description)) }}</textarea>
                         </div>
                     </div>
 
@@ -71,7 +75,12 @@
                       </div>
                   </div>
                   <div class="overflow-x-auto sm:overflow-x-visible myTable">
-                      @forelse (App\Models\EmailContact::Active()->where('owner_id', Auth::user()->id)->latest()->get() as $email)
+                      @if($group->type == 'email')
+                      {{ $typee = 'email' }};
+                      @else
+                      {{ $typee = 'phone' }}
+                      @endif
+                      @forelse (App\Models\EmailContact::Active()->where($typee, '!=', null)->where('owner_id', Auth::user()->id)->latest()->get() as $email)
                           <div class="intro-y">
                               <div class="cursor-pointer inline-block sm:block text-gray-700 dark:text-gray-500 bg-gray-100 dark:bg-dark-1 border-b border-gray-200 dark:border-dark-1">
                                   <div class="flex px-5 py-3">
@@ -100,7 +109,7 @@
                                       </div>
 
                                       <div class="w-64 sm:w-auto truncate mr-10">
-                                          <span class="inbox__item--highlight">+{{ $email->country_code }}{{ $email->phone }}</span>
+                                          <span class="inbox__item--highlight">{{ $email->country_code != null ? '+' : '' }}{{ $email->country_code }}{{ $email->phone }}</span>
                                       </div>
                                       </div>
 

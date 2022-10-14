@@ -10,6 +10,9 @@
     </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box py-10 sm:py-20 mt-5">
+        <div class="flex items-center ml-8">
+            <a href="{{ route('group.index') }}" class=""><x-feathericon-arrow-left /></a>
+        </div>
         <div class="wizard flex lg:flex-row justify-center px-5 sm:px-20">
 
 

@@ -10,8 +10,10 @@
     </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box mt-5">
-        
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200 dark:border-dark-5">
+                <div class="flex items-center ml-8">
+                <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+            </div>
             <!-- BEGIN: Form Layout -->
                 <div class="intro-y box p-5">
                     <div>

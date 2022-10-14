@@ -17,6 +17,10 @@ class TemplateBuilderController extends Controller
     {
         return view('template_builder.originate');
     }
+    public function template_new()
+    {
+        return view('template_builder.test_new');
+    }
     
     public function originateCreate(Request $request)
     {

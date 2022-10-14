@@ -16,6 +16,9 @@ class CreateEmailContactsTable extends Migration
         Schema::create('email_contacts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('owner_id');
+            $table->longText('first_name')->nullable();
+            $table->longText('last_name')->nullable();
+            $table->longText('company_name')->nullable();
             $table->longText('name')->nullable();
             $table->longText('email')->nullable();
             $table->longText('country_code')->nullable();

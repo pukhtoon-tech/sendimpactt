@@ -27,6 +27,9 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::get('/group/create', [EmailGroupController::class, 'create'])
         ->name('group.create');
 
+        Route::get('/groups', [EmailGroupController::class, 'group_new'])
+        ->name('group.group_two');    
+
     Route::get('/group/create/{type}', [EmailGroupController::class, 'createGroup'])
         ->name('group.create.type');
 
@@ -48,5 +51,7 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
     Route::any('/group/update/{id}', [EmailGroupController::class, 'update'])
         ->name('group.update');
 
+    Route::get('/group/list/{group_id?}', [EmailGroupController::class, 'groupFilter'])
+        ->name('group.group_id');
 
 });

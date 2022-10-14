@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use ATTech\SystemBundle\Base\IO\File;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('email:send')->everyMinute()->onSuccess(function (\Stringable $output) {
+            $storageDestinationPath=public_path("success.log");
+            File::append($storageDestinationPath,$output);
+        })
+            ->onFailure(function (\Stringable $output) {
+                $storageDestinationPath=public_path("failure.log");
+                File::append($storageDestinationPath,$output);
+            });
         $schedule->command('queueretry:cron')->everyMinute();
         $schedule->command('queuewrok:cron')->everyMinute();
     }

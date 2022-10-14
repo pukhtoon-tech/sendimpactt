@@ -17,7 +17,7 @@
     <!-- BEGIN: Blog Layout -->
 
     @forelse ($templates as $template)
-        <div class="intro-y col-span-12 md:col-span-6 xl:col-span-4 box">
+        <div class="intro-y col-span-12 md:col-span-6 xl:col-span-2 box">
             <div class="flex items-center border-b border-gray-200 dark:border-dark-5 px-5 py-4">
                 <div class="w-10 h-10 flex-none image-fit">
                     <img alt="{{ $template->title }}" class="rounded-full" src="{{ commonAvatar($template->title) }}">
@@ -87,7 +87,7 @@
             </div>
 
 
-            <div class="p-5">
+            <div class="p-1">
                 <div class="h-60 xxl:h-60 image-fit">
                     
                     <div class="rounded-md preview-template">
@@ -102,7 +102,7 @@
         <img src="{{ notFound('template-not-found.png') }}" class="m-auto no-shadow" alt="#sms-not-found">
     @endforelse
     <!-- END: Blog Layout -->
-        {{ $templates->links('vendor.pagination.default') }}
+        {{ $templates->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 @endsection

@@ -42,6 +42,7 @@ class AutoresponderController extends Controller
 
         $responder = new Autoresponder;
         $responder->name = $request->name;
+        $responder->owner_id = \Illuminate\Support\Facades\Auth::id();
         $responder->campaign_id = $request->campaign_id;
 
         if($responder->status = 1)
@@ -127,6 +128,7 @@ class AutoresponderController extends Controller
 
         $responder = Autoresponder::where('id', $id)->first();
         $responder->name = $request->name;
+        $responder->owner_id = \Illuminate\Support\Facades\Auth::id();
         $responder->campaign_id = $request->campaign_id;
 
         if($responder->status = 1)

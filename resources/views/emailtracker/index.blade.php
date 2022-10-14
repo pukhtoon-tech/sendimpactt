@@ -6,12 +6,18 @@
 
 @section('subcontent')
   <h2 class="intro-y text-lg font-medium mt-10">@translate(Campaign Statistics)</h2>
+  <div class="flex items-center ml-8">
+      <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+  </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
 
         @include('components.tracker-statistics')
 
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+            <div class="flex items-center ml-8">
+                <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+            </div>
             <table class="table table-report -mt-2">
 
 
@@ -35,15 +41,15 @@
                         <tr class="intro-x">
                             <td class="text-center">
                                 <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="#{{ $campaign->campaign_name->name }}" 
-                                         class="tooltip rounded-full" 
-                                         src="{{ commonAvatar($campaign->campaign_name->name) }}" 
-                                         title="{{ $campaign->campaign_name->name }}">
+                                    <img alt="#{{ $campaign->campaign_id }}"
+                                         class="tooltip rounded-full"
+                                         src="{{ commonAvatar($campaign->campaign_id) }}"
+                                         title="{{ campaignName($campaign->campaign_id) }}">
                                 </div>
                             </td>
                             <td class="text-center tooltip" title="@translate(CAMPAIGN)">
                             
-                                    {{ $campaign->campaign_name->name }}
+                                    {{ campaignName($campaign->campaign_id) }}
                                 
                             </td>
                             <td class="text-center tooltip" title="@translate(SERVED)">

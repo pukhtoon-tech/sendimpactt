@@ -63,6 +63,8 @@
 
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
             <a href="{{ route('campaign.create.type', 'sms') }}" class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip" title="@translate(Add new Campaign)">@translate(Add New SMS Campaign)</a>
+{{--            <a href="{{ route('campaign.create.type', 'sms') }}" class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip" title="@translate(Add new Campaign)">@translate(Add New SMS Campaign)</a>--}}
+{{--            <a href="{{ route('campaign.create.type', 'sms') }}" class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip" title="@translate(Add new Campaign)">@translate(Add New SMS Campaign)</a>--}}
             <div class="w-full sm:w-auto ml-2 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="text-right relative text-gray-700 dark:text-gray-300">
                     <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search..." id="smsIndex">
@@ -106,7 +108,7 @@
                                 </div>
                             </td>
 
-                            <td class="text-center">{{ $campaign->created_at->diffForHumans() }}</td>
+                            <td class="text-center">{{ $campaign->created_at->format('Y-m-d') }}</td>
 
 
                             <td class="text-center">

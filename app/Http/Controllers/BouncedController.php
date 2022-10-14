@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BouncedEmail;
 use Illuminate\Http\Request;
 use Aman\EmailVerifier\EmailChecker;
 use Alert;
+use Illuminate\Support\Facades\Auth;
 
 class BouncedController extends Controller
 {
@@ -36,10 +38,25 @@ class BouncedController extends Controller
      */
     public function checker(Request $request)
     {
-        // $bounced = app(EmailChecker::class)
-        //             ->checkEmail($request->email,'boolean'); // old version
+        $domainPart = explode('@', $request->email)[1] ?? null;
 
+        if (!$domainPart) {
+            return response()->json(['success' => 'format', 'email' => $request->email], 200);
+        }
         $bounced = emailAddressVerify($request->email);
+
+        if (!$bounced) {
+            $bounce = new BouncedEmail();
+            $bounce->bounce = $bounced;
+            $bounce->owner_id = Auth::id();
+            $bounce->email = $request->email;
+            $bounce->save();
+            $bounced = 'false';
+        } else {
+            $bounced = 'true';
+        }
+
+
 
         // return response()->json(['success' => $bounced['success'], 'email' => $request->email], 200); // old version
         return response()->json(['success' => $bounced, 'email' => $request->email], 200);

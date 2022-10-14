@@ -16,7 +16,7 @@
             <!-- BEGIN: Company Information -->
             <div class="intro-y box lg:mt-5">
                 <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">@translate(Organization Setup)</h2>
+                    <h2 class="font-medium text-base mr-auto">@translate(Organization ashdfuhsdfkwshdkj)</h2>
                 </div>
                 <div class="p-5">
                 <form action="{{ route('org.setup') }}" method="post" enctype="multipart/form-data">

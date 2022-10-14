@@ -21,6 +21,17 @@ class SubscriptionPlanController extends Controller
     {
         return view('subscription.index');
     }
+    public function index_edit($id)
+    {
+        try {
+            $edit_plan = SubscriptionPlan::where('id', $id)->first();
+            return view('testing_url.edit', compact('edit_plan'));
+        } catch (\Throwable $th) {
+            Alert::error(translate('Whoops'), translate('Something went wrong'));
+            return back()->withErrors($th->getMessage());
+        }
+        //return view('testing_url.edit', compact('edit_plan'));
+    }
 
     /**
      * Store a newly created resource in storage.

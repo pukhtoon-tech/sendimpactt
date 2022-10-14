@@ -51,16 +51,30 @@ class CampaignController extends Controller
         set_time_limit(-1);
     }
 
-    public function index()
+    public function index($name = null)
     {
         try {
 
-            if (templateCount() > 0 && smsTemplateCount() > 0) {
-                $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
-                return view('campaign.index', compact('campaigns'));
-            }else{
-                Alert::warning(translate('Warning'), translate('You have No Email Template & SMS Body.'));
-                return redirect()->route('dashboard');
+            if (is_null($name)) {
+                if (templateCount() > 0 || smsTemplateCount() > 0) {
+                    $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
+                    return view('campaign.index', compact('campaigns'));
+                } else {
+                    Alert::warning(translate('Warning'), translate('You have No Email Template & SMS Body.'));
+                    return redirect()->route('dashboard');
+                }
+            } else {
+                if ($name == 'sms' && smsTemplateCount() > 0) {
+                    $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
+                    return view('campaign.index', compact('campaigns'));
+                } elseif ($name == 'email' && templateCount() > 0) {
+                    $campaigns = Campaign::where('owner_id', Auth::user()->id)->latest()->paginate(10);
+                    return view('campaign.index', compact('campaigns'));
+                } else {
+                    $name = strtoupper($name);
+                    Alert::warning(translate('Warning'), translate("You have No $name Template"));
+                    return redirect()->route('dashboard');
+                }
             }
 
         } catch (\Throwable $th) {
@@ -68,6 +82,13 @@ class CampaignController extends Controller
             return back()->withErrors($th->getMessage());
         }
         
+    }
+
+    public function email_campaign() {
+        return view('campaign.email-campaign');
+    }
+    public function sms_campaign() {
+        return view('campaign.sms-campaign');
     }
 
     public function type($type)
@@ -92,7 +113,7 @@ class CampaignController extends Controller
     public function create()
     {
 
-        if (templateCount() > 0 && smsTemplateCount() > 0) {
+        if (templateCount() > 0 || smsTemplateCount() > 0) {
                 return view('campaign.set_campaign');
             }else{
                 Alert::warning(translate('Warning'), translate('You have No Email Template & SMS Body. Please Create An Email Template & SMS Body First.'));
@@ -486,7 +507,7 @@ class CampaignController extends Controller
                                                             ->first();
                                                             
             $get_sender_email_address = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first();
-    
+
             if($get_sender_email_address->sender_email_address == null)
             {
                 Alert::warning('Hi,', translate('Please provider sender email address'));
@@ -508,9 +529,9 @@ class CampaignController extends Controller
         
             $maildoll = new Swift_Mailer($transport);
             }else{
-                
-                $getUserActiveEmailDetails = EmailService::where('from', Auth::user()->email)->first();
-                                                            
+
+                $getUserActiveEmailDetails = EmailService::where('user_id', Auth::id())->first();
+
                 $get_sender_email_address = SenderEmailId::where('owner_id', $owner_id)->where('email_service_id', $getUserActiveEmailDetails->id)->first();
                 if($get_sender_email_address->sender_email_address == null)
                 {
@@ -561,7 +582,6 @@ class CampaignController extends Controller
                                 user_email_limit_decrement(trimDomain(full_domain())); // user_email_limit_decrement
 
                                 $data['tracker'] = $tracker;
-                                dd($data);
                                 Mail::send('template_builder.template-detail', $data, function($message) use ($subject, $campaignEmail, $get_sender_email_address) {
                                     $message->to($campaignEmail->emails->email)
                                             ->setFrom(
@@ -674,25 +694,31 @@ class CampaignController extends Controller
                  */            
                 $email_limit = EmailSMSLimitRate::where('owner_id', Auth::user()->id)
                                                 ->first();
-                /**
-                 * Decreament from limit
-                 */
-                if($email_limit->email > 0) {
-                    EmailSMSLimitRate::where('owner_id', Auth::user()->id)
-                                    ->decrement('email', count($campaignEmails));
+
+                if (!is_null($email_limit)) {
+                    /**
+                     * Decreament from limit
+                     */
+                    if ($email_limit->email > 0) {
+                        EmailSMSLimitRate::where('owner_id', Auth::user()->id)
+                            ->decrement('email', count($campaignEmails));
+                    }
                 }
+
                 /**
                  * Check Current Limit
                  */
                 $current_email_limit = EmailSMSLimitRate::where('owner_id', Auth::user()->id)
                                                         ->first();
+            if (!is_null($current_email_limit)) {
                 /**
                  * Updating Due limit into Zero
                  */
                 if ($current_email_limit->email <= 0) {
                     $current_email_limit->email = 0;
                     $current_email_limit->save();
-                
+
+                }
             }
                 /**
                  * CAMPAIGN LOG

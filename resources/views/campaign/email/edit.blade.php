@@ -10,6 +10,9 @@
     </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box py-10 sm:py-20 mt-5">
+        <div class="flex items-center ml-8">
+            <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+        </div>
         <div class="wizard flex lg:flex-row justify-center px-5 sm:px-20">
             <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
                 <button class="w-10 h-10 rounded-full button text-gray-600 bg-gray-200 dark:bg-dark-1">1</button>
@@ -56,7 +59,7 @@
                     <div class="mt-3">
                         <label>@translate(Description)</label>
                         <div class="mt-2">
-                            <textarea data-simple-toolbar="true" class="editor" name="description" id="description">
+                            <textarea data-simple-toolbar="true" maxlength="100" class="editor" name="description" id="description">
                                 {{ $edit_campaign->description }}
                             </textarea>
                         </div>

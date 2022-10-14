@@ -29,7 +29,7 @@
                     
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                         <div class="report-box zoom-in">
-                            <a href="{{ route('campaign.index') }}">
+                            <a href="{{ route('campaign.index', 'email') }}">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="columns" class="report-box__icon text-theme-11"></i>
@@ -43,7 +43,7 @@
 
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                         <div class="report-box zoom-in">
-                            <a href="{{ route('campaign.index') }}">
+                            <a href="{{ route('campaign.index', 'sms') }}">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="columns" class="report-box__icon text-theme-11"></i>

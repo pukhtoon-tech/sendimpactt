@@ -43,6 +43,7 @@ use App\Models\EmailTracker;
 use App\Models\ScheduleEmail;
 use App\Models\ApiKey;
 use App\Models\VoiceServer;
+use Illuminate\Support\Facades\Auth;
 
 function formatCode($code)
 {
@@ -200,6 +201,52 @@ function SMScampaignCount()
 function emailGroupCount()
 {
     return EmailGroup::Active()->where('owner_id', Auth::user()->id)->where('type', 'email')->count();
+}
+
+function allEmailGroupCount()
+{
+    return EmailGroup::Active()->where('owner_id', Auth::user()->id)->count();
+}
+
+function getGroupNameOrID($email_id)
+{
+
+     $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $email_id)->pluck('email_group_id')->toArray();
+     if (count($data) > 0 ) {
+         return EmailGroup::Active()->where('owner_id', Auth::id())->whereIn('id', $data)->get();
+     } else {
+         return array();
+     }
+}
+
+function getGroupNameOrIDBySms($email_id) {
+    $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $email_id)->pluck('email_group_id')->toArray();
+    if (count($data) > 0 ) {
+        return EmailGroup::Active()->where('owner_id', Auth::id())->where('type', 'sms')->whereIn('id', $data)->get();
+    } else {
+        return array();
+    }
+}
+
+function getGroupNameOrIDByEmail($email_id) {
+    $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $email_id)->pluck('email_group_id')->toArray();
+    if (count($data) > 0 ) {
+        return EmailGroup::Active()->where('owner_id', Auth::id())->where('type', 'email')->whereIn('id', $data)->get();
+    } else {
+        return array();
+    }
+}
+
+
+
+function selectedUserEmailGroups($id, $gID)
+{
+    $data = EmailListGroup::where('owner_id', Auth::id())->where('email_id', $id)->where('email_group_id', $gID)->get();
+    if (count($data) > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // SMSGroupCount
@@ -842,6 +889,12 @@ function emailGroups($type)
     return EmailGroup::where('owner_id', Auth::user()->id)->where('type', $type)->get();
 }
 
+/*emailGroups*/
+function allEmailGroups()
+{
+    return EmailGroup::where('owner_id', Auth::user()->id)->get();
+}
+
 /*emailGroupEmails*/
 function emailGroupEmails($group_id)
 {
@@ -1317,6 +1370,11 @@ function emailGroupEmails($group_id)
                   # code...
                   break;
           }
+      }
+
+
+      function isSMTServerConfigured() {
+          return true; //EmailService::Active()->where('user_id', Auth::id())->first()->is_success ?? false;
       }
 
   /**
@@ -2178,19 +2236,14 @@ function emailGroupEmails($group_id)
          * NEW CSV CONVERTER
          */
 
-        $cols = ['id', 
-            'owner_id', 
-            'name', 
-            'email', 
-            'country_code', 
-            'phone', 
-            'favourites', 
-            'blocked', 
-            'trashed', 
-            'is_subscribed', 
-            'deleted_at', 
-            'created_at', 
-            'updated_at'];
+        $cols = [
+            'first_name',
+            'last_name',
+            'company_name',
+            'email',
+            'phone',
+            'country_code'
+        ];
 
         $csv = file($csv_data);
         $output = [];
@@ -2200,7 +2253,7 @@ function emailGroupEmails($group_id)
                 $newLine = [];
                 $values = explode(',', $line);
                 foreach ($values as $col_index => $value) {
-                    if ($value != null) {
+                    if ($value != null && $value != '' && $value != 'NULL') {
                         $newLine[$cols[$col_index]] = $value;
                     }
                 }
@@ -2218,7 +2271,7 @@ function emailGroupEmails($group_id)
 
     function csv_path()
     {
-        return public_path('sample_data.csv');
+        return public_path('sample.csv');
     }
 
     /**
@@ -2557,6 +2610,12 @@ function chatProviders()
     function campaignTotalRan($id)
     {
         return EmailTracker::where('campaign_id', $id)->count();
+    }
+
+    function campaignName($id) {
+        $data = Campaign::where('id', $id)->first();
+
+        return $data->name ?? 'Not Found';
     }
 
 
@@ -3085,6 +3144,12 @@ function getTokenUserId($token)
    function allCampaigns($type)
    {
        return Campaign::where('type', $type)->latest()->get();
+   }
+
+
+   function allCampaignsByCustomer($type)
+   {
+       return Campaign::where('type', $type)->Active()->where('owner_id', Auth::id())->latest()->get();
    }
 
    // checkCampaignExistsInAutoresponder

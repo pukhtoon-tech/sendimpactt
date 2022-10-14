@@ -30,7 +30,9 @@
                 <thead>
                     <tr>
                         <th class="whitespace-no-wrap">@translate(SL.)</th>
-                        <th class="text-center whitespace-no-wrap">@translate(Name)</th>
+                        <th class="text-center whitespace-no-wrap">@translate(First Name)</th>
+                        <th class="text-center whitespace-no-wrap">@translate(Last Name)</th>
+                        <th class="text-center whitespace-no-wrap">@translate(Company Name)</th>
                         <th class="text-center whitespace-no-wrap">@translate(PHONE)</th>
                         <th class="text-center whitespace-no-wrap">@translate(DATE)</th>
                         <th class="text-center whitespace-no-wrap">@translate(ACTION)</th>
@@ -46,7 +48,18 @@
                             </td>
                             <td class="text-center tooltip" title="@translate(Recipient Email)">
 
-                                    {{ $phone->name ?? 'No name' }}
+                                {{ $phone->first_name ?? $phone->name ?? 'No first name' }}
+
+                            </td>
+                            <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                {{ $phone->last_name ?? 'No last name' }}
+
+                            </td>
+
+                            <td class="text-center tooltip" title="@translate(Recipient Email)">
+
+                                {{ $phone->company_name ?? 'No company' }}
 
                             </td>
                             <td class="text-center tooltip" title="@translate(Campaign Name)">+{{ $phone->country_code }}{{ $phone->phone }}</td>
@@ -107,14 +120,28 @@
         @csrf
 
             <div class="mt-3">
-            <div class="input-form">
-                <label class="flex flex-col sm:flex-row"> @translate(Name)*</label>
-                <input type="text" name="name" class="input w-full border mt-2" placeholder="Ex: John Doe" required>
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(First Name)*</label>
+                    <input type="text" name="fname" data-parsley-required class="input w-full border mt-2" placeholder="Ex: John" required>
+                </div>
             </div>
+
+            <div class="mt-3">
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(Last Name)*</label>
+                    <input type="text" name="lname" data-parsley-required class="input w-full border mt-2" placeholder="Ex: Doe" required>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="input-form">
+                    <label class="flex flex-col sm:flex-row"> @translate(Company Name)*</label>
+                    <input type="text" name="cname" data-parsley-required class="input w-full border mt-2" placeholder="Ex: MT Tech" required>
+                </div>
             </div>
 
             <div class="mt-6">
-            <div class="input-form mt-2">
+                <div class="input-form mt-2">
 
 
                 <label class="flex flex-col sm:flex-row"> @translate(Contact Number)*</label>
@@ -136,13 +163,26 @@
                     </div>
 
 
-
-                <input type="number" name="phone" class="input w-full border" placeholder="Ex: 1825731327">
+                    <input type="number" name="phone" class="input w-full border" placeholder="Ex: 1825731327">
 
                 </div>
 
 
                  </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="input-form">
+
+                    <label><strong>Phone's Groups :</strong></label><br/>
+
+                    <select class="tail-select w-full"  multiple data-live-search="true" name="groups[]">
+                        @forelse(emailGroups('sms') as $group)
+                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
             </div>
 
        <button type="submit"

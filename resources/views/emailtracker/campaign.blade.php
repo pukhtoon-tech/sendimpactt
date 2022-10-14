@@ -7,6 +7,9 @@
 @section('subcontent')
   <h2 class="intro-y text-lg font-medium mt-10">{{ $campaign->campaign_name->name }}</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="flex items-center ml-8">
+            <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+        </div>
         @include('components.campaign-statistics')
     </div>
 @endsection
