@@ -80,11 +80,11 @@
 
                                 <div class="mt-3">
                                     <div class="input-form"><label class="flex flex-col sm:flex-row">
-                                            <label>@translate(last Name)
+                                            <label>@translate(Company Name)
                                             </label>
                                         </label>
                                         <input type="text" name="cname" value="{{ $email->company_name ?? null }}"
-                                               class="input w-full border mt-2" placeholder="@translate(last Name)">
+                                               class="input w-full border mt-2" placeholder="@translate(Company Name)">
                                     </div>
                                 </div>
 
