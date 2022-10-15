@@ -5,9 +5,9 @@
 @endsection
 
 @section('subcontent')
-  <h2 class="intro-y text-lg font-medium mt-10">@translate(Campaign Statistics)</h2>
+  <!-- <h2 class="intro-y text-lg font-medium mt-10">@translate(Campaign Statistics)</h2> -->
   <div class="flex items-center ml-8">
-      <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
+      <!-- <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a> -->
   </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
 

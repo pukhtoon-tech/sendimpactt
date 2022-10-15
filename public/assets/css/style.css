@@ -740,6 +740,10 @@ select::-ms-expand {
 .max_50 {
     max-width: 50%;
 }
+.pagination>.page-item {
+    margin: 10px !important;
+    font-size: 1.5rem;
+}
 .preview-template{
     width: 100%;
     height: 200px;
