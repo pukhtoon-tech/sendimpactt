@@ -1,5 +1,24 @@
             <!-- BEGIN: Inbox Filter -->
-                
+           <div class="flex justify-end">
+            <div class="dropdown">
+                <button class="dropdown-toggle button px-2 mt-2 mb-2 border text-gray-700 dark:bg-dark-5 dark:text-gray-300 tooltip" title="Groups">
+                    <span>
+                        See Groups checkboxes
+                    </span>
+                </button>
+                <div class="group_content pt-2 dropdown-box">
+                    <div class="notification-content__box dropdown-box__content box dark:bg-dark-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              Default checkbox
+                            </label>
+                          </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+
             <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
                 <div class="w-full flex sm:w-auto relative mr-auto mt-3 sm:mt-0">
 
@@ -7,25 +26,6 @@
                     <div class="absolute search_icon_mail">
                         <x-feathericon-search class="mt-2"/>
                     </div>
-
-
-{{--                    <div class="multiselect">--}}
-{{--                        <div class="selectBox" onclick="showCheckboxes()">--}}
-{{--                            <select>--}}
-{{--                                <option>Select an option</option>--}}
-{{--                            </select>--}}
-{{--                            <div class="overSelect"></div>--}}
-{{--                        </div>--}}
-{{--                        <div id="checkboxes">--}}
-{{--                            <label for="one">--}}
-{{--                                <input type="checkbox" id="one" />First checkbox</label>--}}
-{{--                            <label for="two">--}}
-{{--                                <input type="checkbox" id="two" />Second checkbox</label>--}}
-{{--                            <label for="three">--}}
-{{--                                <input type="checkbox" id="three" />Third checkbox</label>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
 
                 </div>
             </div>

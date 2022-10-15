@@ -66,7 +66,7 @@
                       <div class="flex items-center mt-3 sm:mt-0 border-t sm:border-0 border-gray-200 pt-5 sm:pt-0 mt-5 sm:mt-0 -mx-5 sm:mx-0 px-5 sm:px-0">
                           <input class="input border border-gray-500 checkAll" id="check_all" type="checkbox">
 
-                         <button type="submit" class="button w-50 ml-5 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white group-email">
+                         <button type="submit" class="button w-50 ml-5 mr-2 mb-2 flex items-center justify-end bg-theme-1 text-white group-email">
                              <i data-feather="activity" class="w-4 h-4 mr-2"></i> @translate(Update Group) </button>
 
                       </div>
