@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="min-h-screen py-5">
+            <div class="min-h-scree py-5">
                 <div class='overflow-x-auto w-full'>
                     <table class='mx-auto w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
                         <thead class="bg-gray-900">

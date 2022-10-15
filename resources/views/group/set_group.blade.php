@@ -9,7 +9,7 @@
         <h2 class="intro-y text-lg font-medium mr-auto">@translate(Select Group Type)</h2>
     </div>
     <!-- BEGIN: Wizard Layout -->
-    <div class="intro-y box py-10 sm:py-20 mt-5">
+    <div class="intro-y box py-5 sm:py-20 mt-5">
         <div class="flex items-center ml-8">
             <a href="{{ url()->previous() }}" class=""><x-feathericon-arrow-left /></a>
         </div>
@@ -20,8 +20,8 @@
                     <div class="intro-y col-span-12 md:col-span-6 lg:col-span-6">
                         <a href="{{ route('group.create.type', 'email') }}" id="">
                             <div class="box shadow">
-                                <div class="flex items-start px-5 pt-5">
-                                    <div class="w-full flex flex-col lg:flex-row items-center">
+                                <div class="flex justify-center items-start px-5 pt-5">
+                                    <div class="max_50 flex flex-col lg:flex-row items-center">
                                         <div class="mb-4">
                                             <img alt="#EMAILS" class="rounded-md" src="{{ notFound('email-group.png') }}">
                                         </div>
@@ -38,8 +38,8 @@
                         <a href="{{ route('group.create.type', 'sms') }}" id="">
                         
                             <div class="box shadow">
-                                <div class="flex items-start px-5 pt-5">
-                                    <div class="w-full flex flex-col lg:flex-row items-center">
+                                <div class="flex justify-center items-start px-5 pt-5">
+                                    <div class="max_50 flex flex-col lg:flex-row items-center">
                                         <div class="mb-4">
                                             <img alt="#GROUPS" class="rounded-md" src="{{ notFound('sms-group.png') }}">
                                         </div>
