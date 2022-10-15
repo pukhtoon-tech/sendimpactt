@@ -604,9 +604,9 @@
             {{-- Campaign --}}
 
             <li>
-                <a href="{{ route('campaign.type', 'email') }}"
-                    class="side-menu {{ request()->is('campaign/type/email') ? 'side-menu--active' : '' }}">
-                    <div class="{{ request()->is('campaign/type/email') ? 'mldl-active-menu' : 'flex items-center' }}">
+                <a href="{{ route('campaign.email-campaign') }}"
+                    class="side-menu {{ request()->routeIs('campaign.email-campaign') ? 'side-menu--active' : '' }}">
+                    <div class="{{ request()->routeIs('campaign.email-campaign') ? 'mldl-active-menu' : 'flex items-center' }}">
                         <div class="side-menu__icon">
                             <i data-feather="align-left"></i>
                         </div>

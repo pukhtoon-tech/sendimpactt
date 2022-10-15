@@ -27,6 +27,7 @@
                     </tr>
                 </thead>
                 <tbody class="campaignLogName">
+
                     @forelse (listCampaignEmails($id) as $log)
                         <tr class="intro-x">
                             <td class="text-center">
@@ -34,13 +35,13 @@
                                     <img alt="#{{ $log->id }}" class="tooltip rounded-full" src="{{ commonAvatar($log->id) }}" title="{{ $log->id }}">
                                 </div>
                             </td>
-                            
-                            <td class="text-center tooltip" title="@translate(Campaign Name)">
-                                    {{ $log->emails->email }}
+                            {{ $data = getCampaignName($log->email_id) }}
+                            <td class="text-center tooltip" title="@translate(Email Name)">
+                                    {{ $data->email ?? '-' }}
                             </td>
                             
                             <td class="text-center tooltip" title="@translate(Campaign Name)">
-                                    {{ $log->emails->phone ?? '-' }}
+                                    {{ $data->phone ?? '-' }}
                             </td>
 
                             <td class="text-center tooltip" title="@translate(Campaign Date)">{{ $log->created_at }}</td>

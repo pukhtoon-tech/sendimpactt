@@ -1742,10 +1742,17 @@ function emailGroupEmails($group_id)
                  return Campaign::where('id', $id)->first();
              }
 
+            function getContactName($id)
+            {
+                return EmailContact::where('id', $id)->first();
+            }
+
+
             function getCampaignEmails($campaign_id)
              {
                  return CampaignEmail::where('campaign_id', $campaign_id)->count();
              }
+
 
             function listCampaignEmails($campaign_id)
              {

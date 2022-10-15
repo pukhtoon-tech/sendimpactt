@@ -79,6 +79,6 @@
 
 @endsection
 
-@section('script')
-<script src="{{ filePath('bladejs/bounce.js') }}"></script>
-@endsection
+    @section('script')
+    <script src="{{ filePath('bladejs/bounce.js') }}"></script>
+    @endsection
