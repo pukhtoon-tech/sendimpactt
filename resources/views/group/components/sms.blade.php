@@ -1,7 +1,7 @@
-                
+<!--                 
 <button type="submit" class="button w-50 ml-5 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white group-email">
         <i data-feather="activity" class="w-4 h-4 mr-2"></i> @translate(Update Group) 
-</button>
+</button> -->
             
             <div id="emailsSection"></div>
             <!-- BEGIN: Inbox Content -->

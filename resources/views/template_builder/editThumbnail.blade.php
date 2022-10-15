@@ -32,7 +32,7 @@
                     <div class="mt-3">
                         <label>@translate(Template Preview Image) <small>@translate(optional)</small> </label>
                         <div class="mt-2">
-                            <input name="preview" type="file" class="dropify" data-default-file="{{ asset($template->preview ?? notFound('no-preview.png')) }}" data-height="300" data-allowed-file-extensions="jpg png jpeg" />
+                            <input name="preview" type="file" class="dropify" data-default-file="{{ asset($template->preview ?? notFound('no-preview.png')) }}" data-height="200" data-allowed-file-extensions="jpg png jpeg" />
                         </div>
                     </div>
 

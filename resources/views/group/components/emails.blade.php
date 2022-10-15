@@ -1,7 +1,7 @@
-
+<!-- 
 <button type="submit" class="button w-50 ml-5 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white group-email">
         <i data-feather="activity" class="w-4 h-4 mr-2"></i> @translate(Update Group) 
-</button>
+</button> -->
             
             <div id="emailsSection"></div>
             <!-- BEGIN: Inbox Content -->
@@ -18,10 +18,12 @@
                 </div>
 
                 <div class="col-span-12 lg:col-span-9 xxl:col-span-10" id="campaignLoadPage"></div>
-
-                <button type="submit" class="button w-50 ml-5 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white group-email">
+                <div class="text-right">
+                <button type="submit" class="button w-50 ml-5 mr-2 mb-2 inline-flex  bg-theme-1 text-white group-email">
                         <i data-feather="activity" class="w-4 h-4 mr-2"></i> @translate(Update Group) 
                 </button>
+                </div>
+
 
             </div>
             <!-- END: Inbox Content -->

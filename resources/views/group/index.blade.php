@@ -5,9 +5,9 @@
 @endsection
 
 @section('subcontent')
-  <h2 class="intro-y text-lg font-medium mt-10">@translate(Group List)</h2>
+  <h2 class="intro-y text-lg font-medium mt-10 w-200">@translate(Group List)</h2>
   <div class="grid grid-cols-12 gap-6 mt-5">
-      <a href="{{ route('group.create') }}" class="button text-white bg-theme-1 shadow-md mr-2 tooltip" title="@translate(Add New Group)">@translate(Add Group)</a>
+      <a href="{{ route('group.create') }}" class="button text-white bg-theme-1 shadow-md mr-2 tooltip w-200" title="@translate(Add New Group)">@translate(Add Group)</a>
       <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
             <input type="text" id="groupIndex" class=" input w-full sm:w-64 box px-4 text-gray-700 dark:text-gray-300 placeholder-theme-13" title="@translate(Search)" placeholder="Search...">
             <div class="absolute search_icon_mail">
