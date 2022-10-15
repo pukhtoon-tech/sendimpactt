@@ -7,8 +7,10 @@
 
         @endphp
 
+        @dump(sch)
 
-        <h2 class="intro-y text-lg font-medium mt-10">@translate(Campaigns Schedule List)</h2>
+
+        <h2 class="intro-y text-lg font-medium mt-10">@translate(Schedule Campaigns)</h2>
 
 
         <div class="grid grid-cols-12 gap-6 mt-5">
@@ -97,23 +99,59 @@
 
 
         {{-- caleneder --}}
-        <div class="intro-y grid grid-cols-12 gap-6 mt-5">
-            <div class="col-span-12 lg:col-span-12">
-                <!-- BEGIN: Basic Datepicker -->
-                <div class="intro-y box">
+{{--        <div class="intro-y grid grid-cols-12 gap-6 mt-5">--}}
+{{--            <div class="col-span-12 lg:col-span-12">--}}
+{{--                <!-- BEGIN: Basic Datepicker -->--}}
+{{--                <div class="intro-y box">--}}
 
-                    {{-- CALENDER --}}
-                    <div class="ui container">
-                        <div class="ui grid">
-                            <div class="ui sixteen column mt-5">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- CALENDER --}}
-                </div>
-            </div>
-        </div>
+{{--                    --}}{{-- CALENDER --}}
+{{--                    <div class="ui container">--}}
+{{--                        <div class="ui grid">--}}
+{{--                            <div class="ui sixteen column mt-5">--}}
+{{--                                <div id="calendar"></div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    --}}{{-- CALENDER --}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
     {{-- caleneder::END --}}
 </div>
+{{--<script src="{{ filePath('assets/js/jquery.js') }}"></script>--}}
+{{--<script src="{{ filePath('bladejs/campaigns/index.js') }}"></script>--}}
+
+{{--<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>--}}
+{{--<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>--}}
+
+{{--<script>--}}
+{{--    $(document).ready(function () {--}}
+
+{{--        $('#calendar').fullCalendar({--}}
+{{--            // themeSystem: themeSystem,--}}
+{{--            header: {--}}
+{{--                left: 'prev,next today',--}}
+{{--                center: 'title',--}}
+{{--                right: 'month,basicWeek,basicDay'--}}
+{{--            },--}}
+{{--            defaultDate: '{{ Carbon\Carbon::now()->format('Y-m-d') }}',--}}
+{{--            weekNumbers: true,--}}
+{{--            navLinks: true, // can click day/week names to navigate views--}}
+{{--            editable: true,--}}
+{{--            eventLimit: true, // allow "more" link when too many events--}}
+{{--            events: [--}}
+{{--                    @foreach($calendar as $cal)--}}
+{{--                {--}}
+{{--                    id:1,--}}
+{{--                    title: '{{ $cal->campaign->name }}',--}}
+{{--                    start: '{{ $cal->scheduled_at }}'--}}
+{{--                },--}}
+{{--                @endforeach--}}
+
+{{--            ]--}}
+{{--        });--}}
+
+{{--    });--}}
+
+{{--</script>--}}
