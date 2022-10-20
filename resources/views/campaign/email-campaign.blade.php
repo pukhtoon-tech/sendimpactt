@@ -75,43 +75,13 @@
             crossorigin="anonymous"></script>
     <script src="{{ filePath('assets/js/apexcharts.js') }}"></script>
     <script src="{{ filePath('bladejs/campaigns/email.js') }}"></script>
+    <script src="{{ filePath('bladejs/mail-logs/index.js') }}"></script>
 
     <script src="{{ filePath('bladejs/campaigns/index.js') }}"></script>
     <script src="{{ filePath('bladejs/bounce.js') }}"></script>
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
-
-    <script>
-        $(document).ready(function () {
-
-            $('#calendar').fullCalendar({
-                // themeSystem: themeSystem,
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay'
-                },
-                defaultDate: '{{ Carbon\Carbon::now()->format('Y-m-d') }}',
-                weekNumbers: true,
-                navLinks: true, // can click day/week names to navigate views
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [
-                        @foreach($calendar as $cal)
-                    {
-                        id: 1,
-                        title: '{{ $cal->campaign->name }}',
-                        start: '{{ $cal->scheduled_at }}'
-                    },
-                    @endforeach
-
-                ]
-            });
-
-        });
-
-    </script>
 
     <script>
 
