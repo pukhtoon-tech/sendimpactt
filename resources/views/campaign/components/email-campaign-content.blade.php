@@ -55,7 +55,7 @@
     </div>
 
     {{-- NOTE --}}
-    <div class="bg-indigo-900 text-center py-4 lg:px-4 rounded mt-4">
+    <!-- <div class="bg-indigo-900 text-center py-4 lg:px-4 rounded mt-4">
         <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
              role="alert">
             <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">@translate(Note)</span>
@@ -63,7 +63,7 @@
                 @translate(Try schedule mailing for big amount of bulk email. No service in the world allows you to send 10,000 emails at once for free. Email providers like Gmail, Outlook, and Yahoo limit the number of daily recipients to 500 and consider you a spammer for trying to send more. Configure Cron Job in your server. Check Help menu for more information.)
             </span>
         </div>
-    </div>
+    </div> -->
     {{-- NOTE::END --}}
 
     <div class="grid grid-cols-12 gap-6 mt-5">
