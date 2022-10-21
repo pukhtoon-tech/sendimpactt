@@ -67,7 +67,7 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
 
             <a href="{{ route('campaign.create.type', 'email') }}"
-               class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
+               class="button text-white bg-theme-1 shadow-md mr-2 w-3/12 tooltip"
                title="@translate(Add new Campaign)">
                 @translate(Add New Email Campaign)
             </a>
