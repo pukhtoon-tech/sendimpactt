@@ -28,16 +28,21 @@ class UserController extends Controller
 
             $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required',
             ],
             [
                 'name.required' => 'Name is required',
                 'email.required' => 'Email is required',
-                'email.email' => 'Email is invalid',
-                'email.unique' => 'Email already exists',
             ]);
 
-            $user_update = User::where('id', Auth::user()->id)->first();
+            $user_update = User::where('id', \Illuminate\Support\Facades\Auth::id())->first();
+
+            if ($user_update->email != $request->email) {
+               $check = User::where('email', $request->email)->get();
+               if (count($check) > 0) {
+                   return back()->withErrors('Email already exist');
+               }
+            }
             $user_update->name = $request->name;
             $user_update->email = $request->email;
             
@@ -55,6 +60,29 @@ class UserController extends Controller
             return back()->withErrors($th->getMessage());
         }
         
+    }
+
+    public function domainVerify(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $request->validate([
+            'domain' => 'required',
+        ],
+            [
+                'domain.required' => 'Domain Name is required',
+            ]);
+        try {
+            $domain = $request->get('domain');
+            if(checkdnsrr($domain , "A"))
+            {
+                notify()->success(translate('Domain is verified'));
+                return back();
+            } else {
+                return back()->withErrors('Domain is not verified');
+            }
+        } catch (\Throwable $th) {
+            Alert::error(translate('Whoops'), translate('Something went wrong'));
+            return back()->withErrors($th->getMessage());
+        }
     }
 
     /**

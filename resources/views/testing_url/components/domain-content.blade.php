@@ -11,15 +11,17 @@
                 </div>
                 <div class="p-5">
 
-                <form action="{{ route('user.update') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('domain.verify') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="grid grid-cols-12 gap-5">
                         <div class="col-span-12">
-                            <div class="border border-gray-200 dark:border-dark-5 rounded-md p-5">
-                                <h2>Domain Validation</h2>
-
+                            <div>
+                                <label>@translate(Domain Name) <small>@translate(required)</small> </label>
+                                <input type="text" required class="input w-full border bg-gray-100 mt-2" placeholder="Enter Domain Name" name="domain" data-parsley-required>
                             </div>
+
+                            <button type="submit" class="button w-50 bg-theme-1 text-white mt-3">@translate(Verify)</button>
                         </div>
                     </div>
 

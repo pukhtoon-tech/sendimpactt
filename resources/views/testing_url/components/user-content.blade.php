@@ -37,7 +37,7 @@
                                                                 src='' /> 
                                                         </div>
                                                         <div>
-                                                            <p> <label for="">First Name</label> </p>
+                                                            <p> <label for="">Test User</label> </p>
                                                            
                                                         </div>
                                                     </div>

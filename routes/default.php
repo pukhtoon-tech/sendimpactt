@@ -102,6 +102,14 @@ Route::group(['middleware' => ['auth', 'email.verified', 'installed', 'saas.user
         ->name('user.personal.update');
 
     /**
+     * Organization
+     */
+
+    Route::any('/domain/verify', [UserController::class, 'domainVerify'])->middleware('installed')
+        ->name('domain.verify');
+
+
+    /**
     * Organization
     */
 

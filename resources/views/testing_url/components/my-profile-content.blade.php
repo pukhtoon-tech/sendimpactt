@@ -29,10 +29,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-40 mx-auto cursor-pointer relative mt-5">
-                                    <button type="button" class="button w-full bg-theme-1 text-white">@translate(Change Photo)</button>
-                                    <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="avatar" class="w-full h-full top-0 left-0 absolute opacity-0">
-                                </div>
+{{--                                <div class="w-40 mx-auto cursor-pointer relative mt-5">--}}
+{{--                                    <button type="button" class="button w-full bg-theme-1 text-white">@translate(Change Photo)</button>--}}
+{{--                                    <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="avatar" class="w-full h-full top-0 left-0 absolute opacity-0">--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                         <div class="col-span-12 xl:col-span-8">
