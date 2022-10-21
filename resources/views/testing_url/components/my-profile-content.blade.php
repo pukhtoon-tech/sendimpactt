@@ -19,7 +19,7 @@
                     @csrf
                     
                     <div class="grid grid-cols-12 gap-5">
-                        <div class="col-span-12 xl:col-span-4">
+                        <div class="col-span-12 xl:col-span-4 hidden">
                             <div class="border border-gray-200 dark:border-dark-5 rounded-md p-5">
                                 <div class="w-40 h-40 relative image-fit cursor-default mx-auto">
                                     <div class="avatar-upload">
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-span-12 xl:col-span-8">
+                        <div class="col-span-12 xl:col-span-12">
                             <div>
                                 <label>@translate(Display Name) <small>@translate(required)</small> </label>
                                 <input type="text" class="input w-full border bg-gray-100 mt-2" placeholder="Enter Name" value="{{ userInfo()->name }}" name="name" data-parsley-required>
