@@ -9,6 +9,7 @@
         <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
             <div class="report-box">
                 <div class="box p-5">
+                    <div class="text-base text-gray-600 mb-4 mt-1">@translate(Campaign Email Usage)</div>
                     <div class="flex">
 
                         @translate(Total Emails) {{ availableEmail() + usedEmail() }}
@@ -17,21 +18,20 @@
                         <br>
                         @translate(Available Emails) {{ emailLeftCount() }}
 
-                        <div class="ml-auto">
-
+                        <div class="ml-auto hidden">
                             <div>
                                 <div id="chart-emails"></div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="text-base text-gray-600 mt-1">@translate(Campaign Email Usage)</div>
                 </div>
             </div>
         </div>
         <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
             <div class="report-box">
                 <div class="box p-5">
+                    <div class="text-base text-gray-600 mb-4 mt-1">@translate(Campaign SMS Usage)</div>
                     <div class="flex">
 
                         @translate(Total SMS) {{ availableSMS() + usedSMS() }}
@@ -39,23 +39,20 @@
                         @translate(Sent SMS) {{ usedSMS() }}
                         <br>
                         @translate(Available SMS) {{ smsLeftCount() }}
-
-                        <div class="ml-auto">
-
+                        <div class="ml-auto hidden">
                             <div>
                                 <div id="chart-sms"></div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="text-base text-gray-600 mt-1">@translate(Campaign SMS Usage)</div>
                 </div>
             </div>
         </div>
     </div>
 
     {{-- NOTE --}}
-    <div class="bg-indigo-900 text-center py-4 lg:px-4 rounded mt-4">
+    <!-- <div class="bg-indigo-900 text-center py-4 lg:px-4 rounded mt-4">
         <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
              role="alert">
             <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">@translate(Note)</span>
@@ -63,14 +60,14 @@
                 @translate(Try schedule mailing for big amount of bulk email. No service in the world allows you to send 10,000 emails at once for free. Email providers like Gmail, Outlook, and Yahoo limit the number of daily recipients to 500 and consider you a spammer for trying to send more. Configure Cron Job in your server. Check Help menu for more information.)
             </span>
         </div>
-    </div>
+    </div> -->
     {{-- NOTE::END --}}
 
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
 
             <a href="{{ route('campaign.create.type', 'email') }}"
-               class="button text-white bg-theme-1 shadow-md mr-2 w-4/12 tooltip"
+               class="button text-white bg-theme-1 shadow-md mr-2 w-3/12 tooltip"
                title="@translate(Add new Campaign)">
                 @translate(Add New Email Campaign)
             </a>
@@ -96,7 +93,7 @@
                     <th class="text-center whitespace-no-wrap">@translate(SERVER)</th>
                     <th class="text-center whitespace-no-wrap">@translate(STATUS)</th>
                     <th class="text-center whitespace-no-wrap">@translate(CREATED)</th>
-                    <th class="text-center whitespace-no-wrap">@translate(INSTANT MAILING)</th>
+                    <th class="text-center whitespace-no-wrap">MAIL NOW</th>
                     <th class="text-center whitespace-no-wrap">@translate(SCHEDULE)</th>
                     <th class="text-center whitespace-no-wrap">@translate(ACTIONS)</th>
                 </tr>
@@ -158,19 +155,19 @@
                                 @if (emailLimitCheck($campaign->owner_id) && LimitStatus())
 
                                     @if(isSMTServerConfigured())
-                                        <a class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex items-center"
+                                        <a class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex justify-center items-center"
                                            title="@translate(Click To Start Mailer Engine)"
                                            href="{{ route('campaign.send.email', [$campaign->id, $campaign->template->id]) }}"
                                            onclick="loaderSending()">
-                                            @translate(INSTANT MAILING)
+                                            MAIL NOW
                                         </a>
                                     @else
                                         <a style="pointer-events: none; background-color: grey"
-                                           class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex items-center"
+                                           class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex justify-center items-center"
                                            title="@translate(Click To Start Mailer Engine)"
                                            href="{{ route('campaign.send.email', [$campaign->id, $campaign->template->id]) }}"
                                            onclick="loaderSending()">
-                                            @translate(INSTANT MAILING)
+                                            MAIL NOW
                                         </a>
                                     @endif
                                 @else
@@ -215,17 +212,17 @@
                                 @if (emailLimitCheck($campaign->owner_id) && LimitStatus())
 
                                     @if(isSMTServerConfigured())
-                                        <a class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex items-center"
+                                        <a class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex justify-center items-center"
                                            title="@translate(Click To Schedule Mailer Engine)"
                                            href="{{ route('campaign.schedule.email', [$campaign->id, $campaign->template->id]) }}">
-                                            @translate(SCHEDULE MAILING)
+                                            SCHEDULE
                                         </a>
                                     @else
                                         <a style="pointer-events: none; background-color: grey"
-                                           class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex items-center"
+                                           class="button tooltip w-40 h6 inline-block mr-1 mb-2 bg-theme-1 text-white inline-flex justify-center items-center"
                                            title="@translate(Click To Schedule Mailer Engine)"
                                            href="{{ route('campaign.schedule.email', [$campaign->id, $campaign->template->id]) }}">
-                                            @translate(SCHEDULE MAILING)
+                                            SCHEDULE
                                         </a>
                                     @endif
 
